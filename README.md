@@ -14,7 +14,7 @@ The NGS data we are going to analyse are derived from whole-genome sequencing of
 
 ## The pipeline/workflow
 
-Bioinformatics pipelines or workflows consist of sequential data processing and analysis steps that utilize different software tools, with the output file(s) from one step often serving as the input file(s) for the subsequent step(s). These pipelines require input files that conform to standarized data formats.
+Bioinformatics pipelines or workflows consist of sequential data processing and analysis steps that utilise different software tools, with the output file(s) from one step often serving as the input file(s) for the subsequent step(s). These pipelines require input files that conform to standardized data formats.
 
 The goal of our pipeline is to identify DNA sequence differences (variants) in the genome of the L*er* ecotype of *A. thaliana* relative to the reference genome assembly for the Columbia (Col-0) ecotype. To this end, these are the steps in the pipeline that we will work through sequentially:
 
@@ -55,15 +55,16 @@ TGATTCGCTTNGNNNNNNNNNGTCGCCACAGCANNNNNNNNNNNNNNNNCGTATAGCATACNNNNNNNNNNNNNNTACGA
 <<<?@@????#3#########21@=????????###################################################################
 ```
 
-The first four lines show data for one read and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads. The second read in each pair is contained in `SRR3156163_2.fastq.gz`.
-The first line for each read contains a unique identifier and, as these are paired-end reads, `/1` indicates that this is the first read in the pair.
+The first four lines show data for one read and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads. The second read in each pair is contained in `SRR3156163_2.fastq.gz`. The first line for each read contains a unique identifier and, as these are paired-end reads, `/1` indicates that this is the first read in the pair.
 
 The quality score of each base identified in a sequencing read is encoded as a single character on the fourth line. These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII code characters](https://drive5.com/usearch/manual/quality_score.html) such that each character encodes a quality score for the corresponding base in the read. A Phred quality score is logarithmically related to the probability of an incorrect base call *P*, expressed as 1 error in 10<sup>*Q*/10</sup> base calls of *Q* quality, or
 
-> *Q* = -10log<sub>10</sub>*P*
-> *P* = 10<sup>-*Q*/10</sup>
+> *Q* = -10log<sub>10</sub>*P* 
+> *P* = 10<sup>-*Q*/10</sup> 
 
-Accordingly, the ASCII character `@` encodes a *Q*-score of 32 and a base-calling error probability of 0.00079. Is the first read composed of mostly high-quality or low-quality base calls?
+Accordingly, the ASCII character `@` encodes a *Q*-score of 32 and a base-calling error probability of 0.00079.
+
+Is the first read composed of mostly high-quality or low-quality base calls?
 
 ### Exercise 1
 
@@ -71,11 +72,11 @@ Print the last four lines of this file to screen in order to inspect the quality
 
 <details>
   <summary>Solution</summary>
-
+  
   ```
   zcat fastq/SRR3156163_1.fastq.gz | tail -n 4
   ```
-
+  
   #### Output:
   ```
   @SRR3156163.51332776 51332776/1
