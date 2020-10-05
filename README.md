@@ -2,11 +2,11 @@
 
 This [link](https://ajtock.github.io/NGS_intro_Cambridge_SysBio/) will take you to the GitHub Pages rendering of this repository.
 
-Following the success of dye-terminator (Sanger) sequencing in the Human Genome Project, a "next" generation of sequencing technologies became available which were faster, cheaper and produced many more reads in parallel. Despite their higher throughput, the reads were shorter and of lower quality than those produced by Sanger sequencing. One high-throughput sequencing technology became ubiquitous, Illumina sequencing by synthesis (on GAI/GAII/HiSeq/ MiSeq/NextSeq instruments). This technology was developed by Cambridge scientists Shankar Balasubramanian and David Klenerman in the Department of Chemistry, who formed a company called Solexa in 1998. Illumina acquired Solexa in 2007. A third generation of sequencing machines from Pacific Biosciences (PacBio), Oxford Nanopore Technologies (ONT) and Ion Torrent have become available more recently, with PacBio and ONT providing average read lengths of 10--18 kilobases.
+Following the success of dye-terminator (Sanger) sequencing in the Human Genome Project, a "next" generation of sequencing technologies became available which were faster, cheaper and produced many more reads in parallel. Despite their higher throughput, the reads were shorter and of lower quality than those produced by Sanger sequencing. One high-throughput sequencing technology became ubiquitous, Illumina sequencing by synthesis (on GAI/GAII/HiSeq/ MiSeq/NextSeq instruments). This technology was developed by Cambridge scientists Shankar Balasubramanian and David Klenerman in the Department of Chemistry, who formed a company called Solexa in 1998. Illumina acquired Solexa in 2007. A third generation of sequencing machines from Pacific Biosciences (PacBio), Oxford Nanopore Technologies (ONT) and Ion Torrent have become available more recently, with PacBio and ONT providing average read lengths of 10–18 kilobases.
 
 This practical aims to familiarise you with Illumina next-generation sequencing (NGS) data and some of the software available for their analysis.
 
-If you have any questions, please email Andy Tock (ajt200@cam.ac.uk).
+If you have any questions, please email Andy Tock at <ajt200@cam.ac.uk>.
 
 ## The data
 
@@ -26,7 +26,7 @@ The goal of our pipeline is to identify DNA sequence differences (variants) in t
 
 ## Inspecting the reads in FASTQ format
 
-The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardized format that NGS data analysis tools have been developed to handle. These files have been downloaded on the computers in the Craik-Marshall Building that you are accessing remotely, so there's no need to download them unless you are working on your own computer. The files are located in the `fastq/` directory (folder). 
+The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardized format that NGS data analysis tools have been developed to handle. These files have been downloaded on the computers in the Craik-Marshall Building that you are accessing remotely, so there's no need to download them unless you are working on your own computer. The files are located in the `fastq/` directory. 
 
 Data in FASTQ format conform to these standards:
 
@@ -44,13 +44,16 @@ zcat fastq/SRR3156163_1.fastq.gz | head -n 8
 ```
 
 ### Output:
-> @SRR3156163.1 1/1 
-> TTTGCTTGTNNNNNNNNNNNNNTCATCATGAANNNNNNNNNNNNNNNNNNGTCAGATACAANNNNNNNNNNNNNNTTGTGGAAGCAGGAGATGTGGNNGT  
-> +  
-> <<<@@????###########################################################################################  
-> @SRR3156163.2 2/1  
-> TGATTCGCTTNGNNNNNNNNNGTCGCCACAGCANNNNNNNNNNNNNNNNCGTATAGCATACNNNNNNNNNNNNNNTACGAGCTGCATTAAAGTAGCGCAG  
-> +  
-> <<<?@@????#3#########21@=????????###################################################################  
+> @SRR3156163.1 1/1
+> TTTGCTTGTNNNNNNNNNNNNNTCATCATGAANNNNNNNNNNNNNNNNNNGTCAGATACAANNNNNNNNNNNNNNTTGTGGAAGCAGGAGATGTGGNNGT
+> +
+> <<<@@????###########################################################################################
+> @SRR3156163.2 2/1
+> TGATTCGCTTNGNNNNNNNNNGTCGCCACAGCANNNNNNNNNNNNNNNNCGTATAGCATACNNNNNNNNNNNNNNTACGAGCTGCATTAAAGTAGCGCAG
+> +
+> <<<?@@????#3#########21@=????????###################################################################
 
-The first four lines show data for one read, and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads. The second read in each pair is contained in `SRR3156163_2.fastq.gz`.
+The first four lines show data for one read, and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads. The second read in each pair is contained in `SRR3156163_2.fastq.gz`. The quality score of each base identified in a sequencing read is encoded as a single character on the third line. These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII code characters](https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/QualityScoreEncoding_swBS.htm) such that each character encodes a quality score (**Q**) for the correspodning base in the read. These scores are expressed as 1 error in 10<sup>**Q**/10</sup> base calls of **Q** quality, or
+
+> *Q* = -log<sub>10</sub>**P**
+
