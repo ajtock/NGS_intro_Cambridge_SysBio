@@ -28,6 +28,14 @@ The goal of our pipeline is to identify DNA sequence differences (variants) in t
 
 The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardized format that NGS data analysis tools have been developed to handle. These files have been downloaded on the computers in the Craik-Marshall Building that you are accessing remotely, so there's no need to download them unless you are working on your own computer. The files are located in the `fastq/` directory (folder). 
 
+Data in FASTQ format conform to these standards:
+
+Line | Description
+---- | -----------
+1 | Begins with '@', followed by information about the read
+2 | The DNA sequence
+3 | Begins with '+'
+4 | A character string of the same length as the sequence, encoding quality scores for each base
 Let's first have a look at one of the files to inspect its format. Open a terminal window and use `zcat` and `head` to print out the first eight lines of `SRR3156163_1.fastq.gz` to your screen. We need to use `zcat` here to uncompress the gzip-compressed file. The `|` pipes the output of the `zcat` command to the `head` command.
 
 ```
@@ -45,13 +53,3 @@ zcat fastq/SRR3156163_1.fastq.gz | head -n 8
 > <<<?@@????#3#########21@=????????###################################################################
 
 The first four lines show data for one read, and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads. The second read in each pair is contained in `SRR3156163_2.fastq.gz`.
-
-Data in FASTQ format conform to these standards:
-
-Line | Description
----- | -----------
-1 | Begins with '@', followed by information about the read
-2 | The DNA sequence
-3 | Begins with '+'
-4 | A character string of the same length as the sequence, encoding quality scores for each base
-
