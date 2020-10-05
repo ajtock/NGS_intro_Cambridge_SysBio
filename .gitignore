@@ -1,0 +1,12 @@
+*.fastq.gz
+*.fastq
+*.fq.gz
+*.fq
+*.fa*
+*.fasta*
+*.sam*
+*.bam*
+*.bedGraph
+*.bigWig
+*.bw
+*.bed
