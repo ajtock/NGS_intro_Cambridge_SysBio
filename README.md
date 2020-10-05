@@ -78,11 +78,10 @@ Print the last four lines of this file to screen in order to inspect the quality
 
   #### Output:
   ```
-  @SRR3156163.1 1/1
-  TTTGCTTGTNNNNNNNNNNNNNTCATCATGAANNNNNNNNNNNNNNNNNNGTCAGATACAANNNNNNNNNNNNNNTTGTGGAAGCAGGAGATGTGGNNGT
+  @SRR3156163.51332776 51332776/1
+  TTGCTGTGTGGTGTGTCTTGGTTTTTTGTTTGTTTTTTGGGGTTGTTTTGTGTGGTTTTTGGGGTTTTTGTTGTGTTTGTAGTGTTTAGTTATGGTTTGT
   +
-  <<<@@????###########################################################################################
-
+  8---@429@###########################################################################################
   ```
 </details>
 
