@@ -71,12 +71,12 @@ Is the first read composed of mostly high-quality or low-quality base calls?
 Print the last four lines of this file to screen in order to inspect the quality of the last read in the file. Is it generally better or worse than the first read?
 
 <details>
-  <summary>Solution</summary>
-  
+  <summary>Solution</summary><p>
+
   ```
   zcat fastq/SRR3156163_1.fastq.gz | tail -n 4
   ```
-  
+
   #### Output:
   ```
   @SRR3156163.51332776 51332776/1
@@ -84,5 +84,5 @@ Print the last four lines of this file to screen in order to inspect the quality
   +
   8---@429@###########################################################################################
   ```
-</details>
+</p></details>
 
