@@ -46,11 +46,11 @@ zcat fastq/SRR3156163_1.fastq.gz | head -n 8
 ### Output:
 > @SRR3156163.1 1/1
 > TTTGCTTGTNNNNNNNNNNNNNTCATCATGAANNNNNNNNNNNNNNNNNNGTCAGATACAANNNNNNNNNNNNNNTTGTGGAAGCAGGAGATGTGGNNGT
-> \+
-> <<<@@????##########################################################################################\#
+> \\+
+> <<<@@????###########################################################################################
 > @SRR3156163.2 2/1
 > TGATTCGCTTNGNNNNNNNNNGTCGCCACAGCANNNNNNNNNNNNNNNNCGTATAGCATACNNNNNNNNNNNNNNTACGAGCTGCATTAAAGTAGCGCAG
-> \+
-> <<<?@@????#3#########21@=????????##################################################################\#
+> \\+
+> <<<?@@????#3#########21@=????????###################################################################
 
 The first four lines show data for one read, and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads. The second read in each pair is contained in `SRR3156163_2.fastq.gz`.
