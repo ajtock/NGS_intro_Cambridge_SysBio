@@ -26,7 +26,7 @@ The goal of our pipeline is to identify DNA sequence differences (variants) in t
 
 ## Inspecting the reads in FASTQ format
 
-The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardized format that NGS data analysis tools have been developed to handle. These files have been downloaded on the computers in the Craik-Marshall Building that you are accessing remotely, so there's no need to download them unless you are working on your own computer. The files are located in the `fastq/` directory. 
+The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardized format that NGS data analysis tools have been developed to handle. These files have been downloaded on the computers in the Craik-Marshall Building that you are accessing remotely, so there's no need to download them unless you are working on your own computer. The files are located in the `fastq/` directory.
 
 Data in FASTQ format conform to these standards:
 
@@ -45,17 +45,46 @@ zcat fastq/SRR3156163_1.fastq.gz | head -n 8
 
 ### Output:
 ```
-@SRR3156163.1 1/1 
-TTTGCTTGTNNNNNNNNNNNNNTCATCATGAANNNNNNNNNNNNNNNNNNGTCAGATACAANNNNNNNNNNNNNNTTGTGGAAGCAGGAGATGTGGNNGT 
-+ 
-<<<@@????########################################################################################### 
-@SRR3156163.2 2/1 
-TGATTCGCTTNGNNNNNNNNNGTCGCCACAGCANNNNNNNNNNNNNNNNCGTATAGCATACNNNNNNNNNNNNNNTACGAGCTGCATTAAAGTAGCGCAG 
-+ 
-<<<?@@????#3#########21@=????????################################################################### 
+@SRR3156163.1 1/1
+TTTGCTTGTNNNNNNNNNNNNNTCATCATGAANNNNNNNNNNNNNNNNNNGTCAGATACAANNNNNNNNNNNNNNTTGTGGAAGCAGGAGATGTGGNNGT
++
+<<<@@????###########################################################################################
+@SRR3156163.2 2/1
+TGATTCGCTTNGNNNNNNNNNGTCGCCACAGCANNNNNNNNNNNNNNNNCGTATAGCATACNNNNNNNNNNNNNNTACGAGCTGCATTAAAGTAGCGCAG
++
+<<<?@@????#3#########21@=????????###################################################################
 ```
 
-The first four lines show data for one read, and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads. The second read in each pair is contained in `SRR3156163_2.fastq.gz`. The quality score of each base identified in a sequencing read is encoded as a single character on the third line. These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII code characters](https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/QualityScoreEncoding_swBS.htm) such that each character encodes a quality score (*Q*) for the correspodning base in the read. These scores are expressed as 1 error in 10<sup>*Q*/10</sup> base calls of *Q* quality, or
+The first four lines show data for one read and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads. The second read in each pair is contained in `SRR3156163_2.fastq.gz`.
+The first line for each read contains a unique identifier and, as these are paired-end reads, `/1` indicates that this is the first read in the pair.
 
-> *Q* = -log<sub>10</sub>*P*
+The quality score of each base identified in a sequencing read is encoded as a single character on the fourth line. These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII code characters](https://drive5.com/usearch/manual/quality_score.html) such that each character encodes a quality score for the corresponding base in the read. A Phred quality score is logarithmically related to the probability of an incorrect base call *P*, expressed as 1 error in 10<sup>*Q*/10</sup> base calls of *Q* quality, or
+
+> *Q* = -10log<sub>10</sub>*P*
+> *P* = 10<sup>-*Q*/10</sup>
+
+Accordingly, the ASCII character `@` encodes a *Q*-score of 32 and a base-calling error probability of 0.00079. Is the first read composed of mostly high-quality or low-quality base calls?
+
+### Exercise 1
+
+Print the last four lines of this file to screen in order to inspect the quality of the last read in the file. Is it generally better or worse than the first read?
+
+<details>
+  <summary>Click to expand!</summary>
+  
+  ### Solution 1:
+
+  ```
+  zcat fastq/SRR3156163_1.fastq.gz | tail -n 4
+  ```
+
+  #### Output:
+  ```
+  @SRR3156163.1 1/1
+  TTTGCTTGTNNNNNNNNNNNNNTCATCATGAANNNNNNNNNNNNNNNNNNGTCAGATACAANNNNNNNNNNNNNNTTGTGGAAGCAGGAGATGTGGNNGT
+  +
+  <<<@@????###########################################################################################
+
+  ```
+</details>
 
