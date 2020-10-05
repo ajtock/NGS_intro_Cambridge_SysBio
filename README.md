@@ -69,10 +69,9 @@ Accordingly, the ASCII character `@` encodes a *Q*-score of 32 and a base-callin
 
 Print the last four lines of this file to screen in order to inspect the quality of the last read in the file. Is it generally better or worse than the first read?
 
+### Solution 1:
 <details>
   <summary>Click to expand!</summary>
-  
-  ### Solution 1:
 
   ```
   zcat fastq/SRR3156163_1.fastq.gz | tail -n 4
