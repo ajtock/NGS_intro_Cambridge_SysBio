@@ -1,6 +1,6 @@
 # Introduction to next-generation sequencing data: tools and resources (Cambridge Part III Systems Biology module DAH 1.4)
 
-This [link](https://ajtock.github.io/NGS_intro_Cambridge_SysBio/) will take you to the GitHub pages rendering on this repository.
+This [link](https://ajtock.github.io/NGS_intro_Cambridge_SysBio/) will take you to the GitHub Pages rendering of this repository.
 
 Following the success of dye-terminator (Sanger) sequencing in the Human Genome Project, a "next" generation of sequencing technologies became available which were faster, cheaper and produced many more reads in parallel. Despite their higher throughput, the reads were shorter and of lower quality than those produced by Sanger sequencing. One high-throughput sequencing technology became ubiquitous, Illumina sequencing by synthesis (on GAI/GAII/HiSeq/ MiSeq/NextSeq instruments). This technology was developed by Cambridge scientists Shankar Balasubramanian and David Klenerman in the Department of Chemistry, who formed a company called Solexa in 1998. Illumina acquired Solexa in 2007. A third generation of sequencing machines from Pacific Biosciences (PacBio), Oxford Nanopore Technologies (ONT) and Ion Torrent have become available more recently, with PacBio and ONT providing average read lengths of 10--18 kilobases.
 
