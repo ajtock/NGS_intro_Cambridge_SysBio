@@ -14,7 +14,7 @@ The NGS data we are going to analyse are derived from whole-genome sequencing of
 
 ## The pipeline/workflow
 
-Bioinformatics pipelines or workflows consist of sequential data processing and analysis steps that utilise different software tools, with the output file(s) from one step often serving as the input file(s) for the subsequent step(s). These pipelines require input files that conform to standardized data formats.
+Bioinformatics pipelines or workflows consist of sequential data processing and analysis steps that utilise different software tools, with the output file(s) from one step often serving as the input file(s) for the subsequent step(s). These pipelines require input files that conform to standardised data formats.
 
 The goal of our pipeline is to identify DNA sequence differences (variants) in the genome of the L*er* ecotype of *A. thaliana* relative to the reference genome assembly for the Columbia (Col-0) ecotype. To this end, these are the steps in the pipeline that we will work through sequentially:
 
@@ -26,7 +26,7 @@ The goal of our pipeline is to identify DNA sequence differences (variants) in t
 
 ## Inspecting the reads in FASTQ format
 
-The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardized format that NGS data analysis tools have been developed to handle. These files have been downloaded on the computers in the Craik-Marshall Building that you are accessing remotely, so there's no need to download them unless you are working on your own computer. The files are located in the `fastq/` directory.
+The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardised format that NGS data analysis tools have been developed to handle. These files have been downloaded on the computers in the Craik-Marshall Building that you are accessing remotely, so there's no need to download them unless you are working on your own computer. The files are located in the `fastq/` directory.
 
 Data in FASTQ format conform to these standards:
 
@@ -59,8 +59,8 @@ The first four lines show data for one read and the next four lines show data fo
 
 The quality score of each base identified in a sequencing read is encoded as a single character on the fourth line. These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII code characters](https://drive5.com/usearch/manual/quality_score.html) such that each character encodes a quality score for the corresponding base in the read. A Phred quality score is logarithmically related to the probability of an incorrect base call *P*, expressed as 1 error in 10<sup>*Q*/10</sup> base calls of *Q* quality, or
 
-> *Q* = -10log<sub>10</sub>*P* 
-> *P* = 10<sup>-*Q*/10</sup> 
+> *Q* = -10log<sub>10</sub>*P*  
+> *P* = 10<sup>-*Q*/10</sup>  
 
 Accordingly, the ASCII character `@` encodes a *Q*-score of 32 and a base-calling error probability of 0.00079.
 
