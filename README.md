@@ -44,14 +44,16 @@ zcat fastq/SRR3156163_1.fastq.gz | head -n 8
 ```
 
 ### Output:
-> @SRR3156163.1 1/1 
-> TTTGCTTGTNNNNNNNNNNNNNTCATCATGAANNNNNNNNNNNNNNNNNNGTCAGATACAANNNNNNNNNNNNNNTTGTGGAAGCAGGAGATGTGGNNGT 
-> + 
-> <<<@@????########################################################################################### 
-> @SRR3156163.2 2/1 
-> TGATTCGCTTNGNNNNNNNNNGTCGCCACAGCANNNNNNNNNNNNNNNNCGTATAGCATACNNNNNNNNNNNNNNTACGAGCTGCATTAAAGTAGCGCAG 
-> + 
-> <<<?@@????#3#########21@=????????################################################################### 
+```
+@SRR3156163.1 1/1 
+TTTGCTTGTNNNNNNNNNNNNNTCATCATGAANNNNNNNNNNNNNNNNNNGTCAGATACAANNNNNNNNNNNNNNTTGTGGAAGCAGGAGATGTGGNNGT 
++ 
+<<<@@????########################################################################################### 
+@SRR3156163.2 2/1 
+TGATTCGCTTNGNNNNNNNNNGTCGCCACAGCANNNNNNNNNNNNNNNNCGTATAGCATACNNNNNNNNNNNNNNTACGAGCTGCATTAAAGTAGCGCAG 
++ 
+<<<?@@????#3#########21@=????????################################################################### 
+```
 
 The first four lines show data for one read, and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads. The second read in each pair is contained in `SRR3156163_2.fastq.gz`. The quality score of each base identified in a sequencing read is encoded as a single character on the third line. These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII code characters](https://support.illumina.com/help/BaseSpace_OLH_009008/Content/Source/Informatics/BS/QualityScoreEncoding_swBS.htm) such that each character encodes a quality score (*Q*) for the correspodning base in the read. These scores are expressed as 1 error in 10<sup>*Q*/10</sup> base calls of *Q* quality, or
 
