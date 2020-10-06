@@ -89,7 +89,7 @@ Is the first read composed of mostly high-quality or low-quality base calls?
 Construct a command that will print to screen the 500th read in `SRR3156163_1.fastq.gz` in order to inspect its quality.
 
 <details>
-  <summary>Solution (click to reveal/hide)</summary><p>
+  <summary>*Solution (click to reveal/hide)*</summary><p>
 
   ```
   zcat fastq/SRR3156163_1.fastq.gz | head -n 2000 | tail -n 4
