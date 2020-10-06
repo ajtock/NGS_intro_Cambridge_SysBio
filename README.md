@@ -87,7 +87,6 @@ Is the first read composed of mostly high-quality or low-quality base calls?
 ### Exercise 1
 
 Construct a command that will print to screen the 500th read in `SRR3156163_1.fastq.gz` in order to inspect its quality.
-Is the 500th read generally better or worse than the first read?
 
 <details>
   <summary>Solution (click to reveal/hide)</summary><p>
@@ -104,4 +103,6 @@ Is the 500th read generally better or worse than the first read?
   CCCFFFFFHHGHHIJJJJJJGIIFIJIJJJJJJJIJIJJJJJJJCGHFFFFFFDEDD;@CDDCCBCACDDCDEDDBBB8ADEDDD<>?BDDD>BDCBCC?
   ```
 </p></details>
+
+Is the 500th read generally better or worse than the first read?
 
