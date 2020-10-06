@@ -74,34 +74,34 @@ The second read in each pair is contained in `SRR3156163_2.fastq.gz`.
 The first line for each read contains a unique identifier and, as these are paired-end reads, `/1` indicates that this is the first read in the pair.
 
 The quality score of each base identified in a sequencing read is encoded as a single character on the fourth line.
-These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII code characters](https://drive5.com/usearch/manual/quality_score.html) such that each character encodes a quality score for the corresponding base in the read.
+These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII\_BASE 33 characters](https://drive5.com/usearch/manual/quality_score.html) such that each character encodes a quality score for the corresponding base in the read.
 A Phred quality score is logarithmically related to the probability of an incorrect base call *P*, expressed as 1 error in 10<sup>*Q*/10</sup> base calls of *Q* quality, or
 
 > *Q* = -10log<sub>10</sub>*P*  
 > *P* = 10<sup>-*Q*/10</sup>  
 
-Accordingly, the ASCII character `@` encodes a *Q*-score of 32 and a base-calling error probability of 0.00079.
+Accordingly, the ASCII character `@` encodes a *Q*-score of 31 and a base-calling error probability of 0.00079.
 
 Is the first read composed of mostly high-quality or low-quality base calls?
 
 ### Exercise 1
 
-Print the last four lines of this file to screen in order to inspect the quality of the last read in the file.
-Is it generally better or worse than the first read?
+Construct a command that will print to screen the 500th read in `SRR3156163_1.fastq.gz` in order to inspect its quality.
+Is the 500th read generally better or worse than the first read?
 
 <details>
   <summary>Solution</summary><p>
 
   ```
-  zcat fastq/SRR3156163_1.fastq.gz | tail -n 4
+  zcat fastq/SRR3156163_1.fastq.gz | head -n 2000 | tail -n 4
   ```
 
   #### Output:
   ```
-  @SRR3156163.51332776 51332776/1
-  TTGCTGTGTGGTGTGTCTTGGTTTTTTGTTTGTTTTTTGGGGTTGTTTTGTGTGGTTTTTGGGGTTTTTGTTGTGTTTGTAGTGTTTAGTTATGGTTTGT
+  @SRR3156163.500 500/1
+  GAGGAAGCTTGACGCAGCGGAGGAATCTTTGCTGACCCCATCGGTCGTATAACTTCGTATAATGTATGCTATACGAAGTTATTACGGTCGTGGAGCAAGG
   +
-  8---@429@###########################################################################################
+  CCCFFFFFHHGHHIJJJJJJGIIFIJIJJJJJJJIJIJJJJJJJCGHFFFFFFDEDD;@CDDCCBCACDDCDEDDBBB8ADEDDD<>?BDDD>BDCBCC?
   ```
 </p></details>
 
