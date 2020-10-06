@@ -49,9 +49,9 @@ Line | Description
 4 | A character string of the same length as the sequence, encoding quality scores for each base
 
 Let's first have a look at one of the files to inspect its format.
-Open a terminal window and use `zcat` and `head` to print out the first eight lines of `SRR3156163_1.fastq.gz` to your screen.
+In a Unix command-line shell, use `zcat` and `head` to print to screen the first eight lines of `SRR3156163_1.fastq.gz`.
 We need to use `zcat` here to uncompress the gzip-compressed file.
-The `|` pipes the output of the `zcat` command to the `head` command.
+The `|` part pipes the output of the `zcat` command to the `head` command.
 
 ```
 zcat fastq/SRR3156163_1.fastq.gz | head -n 8
