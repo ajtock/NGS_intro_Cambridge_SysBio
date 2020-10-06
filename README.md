@@ -90,7 +90,7 @@ Construct a command that will print to screen the 500th read in `SRR3156163_1.fa
 Is the 500th read generally better or worse than the first read?
 
 <details>
-  <summary>Solution</summary><p>
+  <summary>Solution (click to show/hide)</summary><p>
 
   ```
   zcat fastq/SRR3156163_1.fastq.gz | head -n 2000 | tail -n 4
