@@ -333,13 +333,17 @@ SRR3156163_2_fastqc.html
 SRR3156163_2_fastqc.zip
 ```
 
-The HTML files contain graphical summaries of the FastQC results.
-Let's have a look by opening them in a web browser.
+The HTML files contain graphs and tables summarising the FastQC results.
+Have a look by opening them in a web browser.
 
 ```
 firefox \*.html
 ```
 
+### FastQC HTML output
 
+* [Basic statistics](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/1%20Basic%20Statistics.html)
+* [Per base sequence quality](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html)
+* [Per sequence quality scores](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/3%20Per%20Sequence%20Quality%20Scores.html)
 
 
