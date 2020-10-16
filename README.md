@@ -80,7 +80,8 @@ A Phred quality score is logarithmically related to the probability of an incorr
 > *Q* = -10log<sub>10</sub>*P*  
 > *P* = 10<sup>-*Q*/10</sup>  
 
-Accordingly, the ASCII character `@` encodes a *Q*-score of 31 and a base-calling error probability of 0.00079.
+Accordingly, the ASCII\_BASE 33 character `@` encodes a *Q*-score of 31 and a base-calling error probability of 0.00079.
+In the past, Illumina sequencing instruments used the [ASCII\_BASE 64 quality encoding](https://drive5.com/usearch/manual/quality_score.html).
 
 Is the first read composed of mostly high-quality or low-quality base calls?
 
@@ -255,21 +256,21 @@ BUGS
 
 In the above output, you will see the `-o --outdir` option, which allows you to specify an output directory to which the FastQC results will be written.
 However, this directory must exist before running FastQC, so we'd better make it if we want to make use of this option.
-The -p option in the `mkdir` command below allows us to make a directory containing subdirectories.
+The `-p` option in the `mkdir` command below allows us to make a new directory containing subdirectories.
 
 ```
 mkdir -p results/fastqc/raw_reads
 ```
 
 Now let's run FastQC on each of our two gzip-compressed FASTQ files located in the `fastq/` directory by using the `*.fastq.gz` wildcard.
+Compressed or uncompressed files can be provided as inputs.
 
 ```
 fastqc --outdir results/fastqc/raw_reads \
        fastq/*.fastq.gz
 ```
 
-Progress made by FastQC on analysing each file will be printed to the screen.
-
+Progress made by FastQC on analysing each file will be printed to screen.
 
 ### Output:
 ```
@@ -317,7 +318,7 @@ Approx 95% complete for SRR3156163_2.fastq.gz
 Analysis complete for SRR3156163_2.fastq.gz
 ```
 
-Navigate into the output directory and list the files inside.
+Navigate to the output directory and list its contents.
 
 ```
 cd results/fastqc/raw_reads/
@@ -336,9 +337,8 @@ The HTML files contain graphical summaries of the FastQC results.
 Let's have a look by opening them in a web browser.
 
 ```
-firefox *.html
+firefox \*.html
 ```
-
 
 
 
