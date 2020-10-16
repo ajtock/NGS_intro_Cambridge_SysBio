@@ -349,9 +349,21 @@ Each HTML file contains statistics and graphs summarising the FastQC results:
 * [Overrepresented sequences](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html)
 * [Adapter content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/10%20Adapter%20Content.html)
 
-Have a look at the two HTML files by opening them in a web browser.
+### Exercise
+
+Have a look at the FastQC-generated HTML file for each FASTQ file by opening them in a web browser.
 
 ```
 firefox *.html
 ```
 
+What quality issues can you see in these reports, and how could they be fixed?
+
+<details>
+  <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
+
+  They are generally high-quality sequencing reads. However, there are some issues that should be fixed:
+  1. Per-base sequence quality decreases towards their ends (particularly towards their 3′ ends)
+  2. There are many duplicated sequencing reads, which could have result from PCR amplification biases
+  3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_1.fastq.gz`
+</p></details>
