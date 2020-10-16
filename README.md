@@ -333,14 +333,10 @@ SRR3156163_2_fastqc.html
 SRR3156163_2_fastqc.zip
 ```
 
-The HTML files contain graphs and tables summarising the FastQC results.
-Have a look by opening them in a web browser.
-
-```
-firefox *.html
-```
 
 ### FastQC summary statistics and graphs
+
+Each HTML file contains statistics and graphs summarising the FastQC results:
 
 * [Basic statistics](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/1%20Basic%20Statistics.html)
 * [Per base sequence quality](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/2%20Per%20Base%20Sequence%20Quality.html)
@@ -352,4 +348,10 @@ firefox *.html
 * [Sequence duplication levels](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/8%20Duplicate%20Sequences.html)
 * [Overrepresented sequences](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html)
 * [Adapter content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/10%20Adapter%20Content.html)
+
+Have a look at the two HTML files by opening them in a web browser.
+
+```
+firefox *.html
+```
 
