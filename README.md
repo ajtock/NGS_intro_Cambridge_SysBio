@@ -363,7 +363,7 @@ What quality issues can you see in these reports, and how could they be fixed?
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
   They are generally high-quality sequencing reads. However, there are some issues that should be fixed:
-  1. Per-base sequence quality decreases towards their ends (particularly towards their 3′ ends)
-  2. There are many duplicated sequencing reads, which could have result from PCR amplification biases
+  1. Per-base sequence quality decreases towards the ends of the reads (particularly towards their 3′ ends)
+  2. There are many duplicated reads, which may have resulted from PCR amplification biases
   3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_1.fastq.gz`
 </p></details>
