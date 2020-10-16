@@ -354,7 +354,7 @@ Each HTML file contains statistics and graphs summarising the FastQC results:
 Have a look at the FastQC-generated HTML file for each FASTQ file by opening them in a web browser.
 
 ```
-firefox *.html
+firefox SRR3156163_1_fastqc.html SRR3156163_2_fastqc.html
 ```
 
 What quality issues can you see in these reports, and how could they be fixed?
@@ -362,8 +362,15 @@ What quality issues can you see in these reports, and how could they be fixed?
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
-  They are generally high-quality sequencing reads. However, there are some issues that should be fixed:
+  They are generally high-quality sequencing reads. However, there are some issues that should be addressed:
   1. Per-base sequence quality decreases towards the ends of the reads (particularly towards their 3′ ends)
   2. There are many duplicated reads, which may have resulted from PCR amplification biases
   3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_1.fastq.gz`
+
+The first and third of these issues can be resolved using software developed to trim off sequencing adapters and low-quality bases.
+Duplication can be addressed by either discarding duplicate reads or duplicate alignments to a reference genome.
 </p></details>
+
+
+## Removing adapter sequences and low-quality bases using Cutadapt
+
