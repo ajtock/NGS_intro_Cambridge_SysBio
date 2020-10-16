@@ -337,7 +337,7 @@ The HTML files contain graphs and tables summarising the FastQC results.
 Have a look by opening them in a web browser.
 
 ```
-firefox \*.html
+firefox *.html
 ```
 
 ### FastQC HTML output
