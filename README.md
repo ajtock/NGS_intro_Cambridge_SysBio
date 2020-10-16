@@ -109,16 +109,19 @@ Is the 500th read generally better or worse than the first read?
 ## Evaluating read quality using FastQC
 
 Read quality can be evaluated in a more systematic way using dedicated software, such as [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
-Let's make sure FastQC is installed with commands that will show the version and parameters.
+Let's make sure FastQC is installed by invoking the executable file `fastqc` with an option that will report the version.
 
 ```
 fastqc --version
 ```
 
-### FastQC version part of output:
+### Output (abbreviated):
 ```
 FastQC v0.11.9
 ```
+
+The `--version` and `--help` options are usually, but not always, available for most tools.
+The latter generally shows an example of typical usage of the executable file with arguments, along with a list of options for the program.
 
 ```
 fastqc --help
@@ -249,5 +252,94 @@ BUGS
                    
     
 ```
+
+In the above output, you will see the `-o --outdir` option, which allows you to specify an output directory to which the FastQC results will be written.
+However, this directory must exist before running FastQC, so we'd better make it if we want to make use of this option.
+The -p option in the `mkdir` command below allows us to make a directory containing subdirectories.
+
+```
+mkdir -p results/fastqc/raw_reads
+```
+
+Now let's run FastQC on each of our two gzip-compressed FASTQ files located in the `fastq/` directory by using the `*.fastq.gz` wildcard.
+
+```
+fastqc --outdir results/fastqc/raw_reads \
+       fastq/*.fastq.gz
+```
+
+Progress made by FastQC on analysing each file will be printed to the screen.
+
+
+### Output:
+```
+Started analysis of SRR3156163_1.fastq.gz
+Approx 5% complete for SRR3156163_1.fastq.gz
+Approx 10% complete for SRR3156163_1.fastq.gz
+Approx 15% complete for SRR3156163_1.fastq.gz
+Approx 20% complete for SRR3156163_1.fastq.gz
+Approx 25% complete for SRR3156163_1.fastq.gz
+Approx 30% complete for SRR3156163_1.fastq.gz
+Approx 35% complete for SRR3156163_1.fastq.gz
+Approx 40% complete for SRR3156163_1.fastq.gz
+Approx 45% complete for SRR3156163_1.fastq.gz
+Approx 50% complete for SRR3156163_1.fastq.gz
+Approx 55% complete for SRR3156163_1.fastq.gz
+Approx 60% complete for SRR3156163_1.fastq.gz
+Approx 65% complete for SRR3156163_1.fastq.gz
+Approx 70% complete for SRR3156163_1.fastq.gz
+Approx 75% complete for SRR3156163_1.fastq.gz
+Approx 80% complete for SRR3156163_1.fastq.gz
+Approx 85% complete for SRR3156163_1.fastq.gz
+Approx 90% complete for SRR3156163_1.fastq.gz
+Approx 95% complete for SRR3156163_1.fastq.gz
+Analysis complete for SRR3156163_1.fastq.gz
+Started analysis of SRR3156163_2.fastq.gz
+Approx 5% complete for SRR3156163_2.fastq.gz
+Approx 10% complete for SRR3156163_2.fastq.gz
+Approx 15% complete for SRR3156163_2.fastq.gz
+Approx 20% complete for SRR3156163_2.fastq.gz
+Approx 25% complete for SRR3156163_2.fastq.gz
+Approx 30% complete for SRR3156163_2.fastq.gz
+Approx 35% complete for SRR3156163_2.fastq.gz
+Approx 40% complete for SRR3156163_2.fastq.gz
+Approx 45% complete for SRR3156163_2.fastq.gz
+Approx 50% complete for SRR3156163_2.fastq.gz
+Approx 55% complete for SRR3156163_2.fastq.gz
+Approx 60% complete for SRR3156163_2.fastq.gz
+Approx 65% complete for SRR3156163_2.fastq.gz
+Approx 70% complete for SRR3156163_2.fastq.gz
+Approx 75% complete for SRR3156163_2.fastq.gz
+Approx 80% complete for SRR3156163_2.fastq.gz
+Approx 85% complete for SRR3156163_2.fastq.gz
+Approx 90% complete for SRR3156163_2.fastq.gz
+Approx 95% complete for SRR3156163_2.fastq.gz
+Analysis complete for SRR3156163_2.fastq.gz
+```
+
+Navigate into the output directory and list the files inside.
+
+```
+cd results/fastqc/raw_reads/
+ls -1
+```
+
+### Output:
+```
+SRR3156163_1_fastqc.html
+SRR3156163_1_fastqc.zip
+SRR3156163_2_fastqc.html
+SRR3156163_2_fastqc.zip
+```
+
+The HTML files contain graphical summaries of the FastQC results.
+Let's have a look by opening them in a web browser.
+
+```
+firefox *.html
+```
+
+
+
 
 
