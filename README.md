@@ -368,7 +368,7 @@ What quality issues can you see in these reports, and how could they be fixed?
   3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_1.fastq.gz`
 
 The first and third of these issues can be resolved using software developed to trim off sequencing adapters and low-quality bases.
-Duplication can be addressed by either discarding duplicate reads or duplicate alignments to a reference genome.
+Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
 </p></details>
 
 
