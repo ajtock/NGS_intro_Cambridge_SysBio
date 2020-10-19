@@ -17,6 +17,7 @@ If you have any questions, please email Andy Tock at <ajt200@cam.ac.uk>.
 
 The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) ecotype of the model plant species *Arabidopsis thaliana*, and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
 The data are paired-end reads and so there are two files (`SRR3156163_1.fastq.gz` contains the first read in each pair and `SRR3156163_2.fastq.gz` the second).
+Each read in a pair was sequenced with 100 chemistry cycles (resulting in 100 consecutive base calls per read) on an Illumina HiSeq 2000 instrument.
 The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3156163), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
 
 ## The pipeline/workflow
@@ -28,7 +29,7 @@ The goal of our pipeline is to identify DNA sequence differences (variants) in t
 To this end, these are the steps in the pipeline that we will work through sequentially:
 
 1. Evaluation of sequencing read quality, including at the level of individual bases
-2. Removal of contaminants (e.g., sequencing adapters) and low-quality bases
+2. Removal of technical sequences (e.g., sequencing adapters) and low-quality bases
 3. Alignment of reads (L*er*) to a reference genome (Col-0)
 4. Filtering of alignments based on the quality of these mappings to the reference genome
 5. Detection of DNA sequence differences between the L*er* and Col-0 genomes (variant calling)
@@ -349,7 +350,7 @@ Each HTML file contains statistics and graphs summarising the FastQC results:
 * [Overrepresented sequences](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html)
 * [Adapter content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/10%20Adapter%20Content.html)
 
-### Exercise
+### Exercise 2
 
 Have a look at the FastQC-generated HTML file for each FASTQ file by opening them in a web browser.
 
@@ -371,6 +372,218 @@ The first and third of these issues can be resolved using software developed to 
 Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
 </p></details>
 
+If you are working with many FASTQ files, [MultiQC](https://multiqc.info/) can be used to aggregate FastQC-generated results and compile one HTML report that's easier to digest than individual reports for each sample. 
 
-## Removing adapter sequences and low-quality bases using Cutadapt
+## Removing technical sequences and low-quality bases using Cutadapt
+
+There are several tools available for filtering and trimming reads to remove technical sequences (e.g., sequencing adapters) and low-quality bases, including [Cutadapt](https://cutadapt.readthedocs.io/en/stable/) and [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic).
+Removing these sequences is important because it means that downstream analyses won't be compromised by base calls in which we have low confidence, or by the presence of technical sequences that do not reflect the biology of the sample we have sequenced.
+In the case of aligning reads to a reference genome assembly, for example, read cleaning tends to increase the alignment rate.
+For this step in the pipeline, we're going to use Cutadapt so let's have a look at the options.
+
+```
+cutadapt --help
+```
+
+### Output:
+```
+cutadapt version 2.10
+
+Copyright (C) 2010-2020 Marcel Martin <marcel.martin@scilifelab.se>
+
+cutadapt removes adapter sequences from high-throughput sequencing reads.
+
+Usage:
+    cutadapt -a ADAPTER [options] [-o output.fastq] input.fastq
+
+For paired-end reads:
+    cutadapt -a ADAPT1 -A ADAPT2 [options] -o out1.fastq -p out2.fastq in1.fastq in2.fastq
+
+Replace "ADAPTER" with the actual sequence of your 3' adapter. IUPAC wildcard
+characters are supported. All reads from input.fastq will be written to
+output.fastq with the adapter sequence removed. Adapter matching is
+error-tolerant. Multiple adapter sequences can be given (use further -a
+options), but only the best-matching adapter will be removed.
+
+Input may also be in FASTA format. Compressed input and output is supported and
+auto-detected from the file name (.gz, .xz, .bz2). Use the file name '-' for
+standard input/output. Without the -o option, output is sent to standard output.
+
+Citation:
+
+Marcel Martin. Cutadapt removes adapter sequences from high-throughput
+sequencing reads. EMBnet.Journal, 17(1):10-12, May 2011.
+http://dx.doi.org/10.14806/ej.17.1.200
+
+Run "cutadapt --help" to see all command-line options.
+See https://cutadapt.readthedocs.io/ for full documentation.
+
+Options:
+  -h, --help            Show this help message and exit
+  --version             Show version number and exit
+  --debug [{trace}]     Print debug log. 'trace' prints also DP matrices
+  -j CORES, --cores CORES
+                        Number of CPU cores to use. Use 0 to auto-detect. Default: 1
+
+Finding adapters:
+  Parameters -a, -g, -b specify adapters to be removed from each read (or from the first read in a pair if data is paired).
+  If specified multiple times, only the best matching adapter is trimmed (but see the --times option). When the special
+  notation 'file:FILE' is used, adapter sequences are read from the given FASTA file.
+
+  -a ADAPTER, --adapter ADAPTER
+                        Sequence of an adapter ligated to the 3' end (paired data: of the first read). The adapter and
+                        subsequent bases are trimmed. If a '$' character is appended ('anchoring'), the adapter is only found
+                        if it is a suffix of the read.
+  -g ADAPTER, --front ADAPTER
+                        Sequence of an adapter ligated to the 5' end (paired data: of the first read). The adapter and any
+                        preceding bases are trimmed. Partial matches at the 5' end are allowed. If a '^' character is prepended
+                        ('anchoring'), the adapter is only found if it is a prefix of the read.
+  -b ADAPTER, --anywhere ADAPTER
+                        Sequence of an adapter that may be ligated to the 5' or 3' end (paired data: of the first read). Both
+                        types of matches as described under -a und -g are allowed. If the first base of the read is part of the
+                        match, the behavior is as with -g, otherwise as with -a. This option is mostly for rescuing failed
+                        library preparations - do not use if you know which end your adapter was ligated to!
+  -e RATE, --error-rate RATE
+                        Maximum allowed error rate as value between 0 and 1 (no. of errors divided by length of matching
+                        region). Default: 0.1 (=10%)
+  --no-indels           Allow only mismatches in alignments. Default: allow both mismatches and indels
+  -n COUNT, --times COUNT
+                        Remove up to COUNT adapters from each read. Default: 1
+  -O MINLENGTH, --overlap MINLENGTH
+                        Require MINLENGTH overlap between read and adapter for an adapter to be found. Default: 3
+  --match-read-wildcards
+                        Interpret IUPAC wildcards in reads. Default: False
+  -N, --no-match-adapter-wildcards
+                        Do not interpret IUPAC wildcards in adapters.
+  --action {trim,mask,lowercase,none}
+                        What to do with found adapters. mask: replace with 'N' characters; lowercase: convert to lowercase;
+                        none: leave unchanged (useful with --discard-untrimmed). Default: trim
+  --rc, --revcomp       Check both the read and its reverse complement for adapter matches. If match is on reverse-complemented
+                        version, output that one. Default: check only read
+
+Additional read modifications:
+  -u LENGTH, --cut LENGTH
+                        Remove bases from each read (first read only if paired). If LENGTH is positive, remove bases from the
+                        beginning. If LENGTH is negative, remove bases from the end. Can be used twice if LENGTHs have
+                        different signs. This is applied *before* adapter trimming.
+  --nextseq-trim 3'CUTOFF
+                        NextSeq-specific quality trimming (each read). Trims also dark cycles appearing as high-quality G
+                        bases.
+  -q [5'CUTOFF,]3'CUTOFF, --quality-cutoff [5'CUTOFF,]3'CUTOFF
+                        Trim low-quality bases from 5' and/or 3' ends of each read before adapter removal. Applied to both
+                        reads if data is paired. If one value is given, only the 3' end is trimmed. If two comma-separated
+                        cutoffs are given, the 5' end is trimmed with the first cutoff, the 3' end with the second.
+  --quality-base N      Assume that quality values in FASTQ are encoded as ascii(quality + N). This needs to be set to 64 for
+                        some old Illumina FASTQ files. Default: 33
+  --length LENGTH, -l LENGTH
+                        Shorten reads to LENGTH. Positive values remove bases at the end while negative ones remove bases at
+                        the beginning. This and the following modifications are applied after adapter trimming.
+  --trim-n              Trim N's on ends of reads.
+  --length-tag TAG      Search for TAG followed by a decimal number in the description field of the read. Replace the decimal
+                        number with the correct length of the trimmed read. For example, use --length-tag 'length=' to correct
+                        fields like 'length=123'.
+  --strip-suffix STRIP_SUFFIX
+                        Remove this suffix from read names if present. Can be given multiple times.
+  -x PREFIX, --prefix PREFIX
+                        Add this prefix to read names. Use {name} to insert the name of the matching adapter.
+  -y SUFFIX, --suffix SUFFIX
+                        Add this suffix to read names; can also include {name}
+  --zero-cap, -z        Change negative quality values to zero.
+
+Filtering of processed reads:
+  Filters are applied after above read modifications. Paired-end reads are always discarded pairwise (see also --pair-
+  filter).
+
+  -m LEN[:LEN2], --minimum-length LEN[:LEN2]
+                        Discard reads shorter than LEN. Default: 0
+  -M LEN[:LEN2], --maximum-length LEN[:LEN2]
+                        Discard reads longer than LEN. Default: no limit
+  --max-n COUNT         Discard reads with more than COUNT 'N' bases. If COUNT is a number between 0 and 1, it is interpreted
+                        as a fraction of the read length.
+  --max-expected-errors ERRORS, --max-ee ERRORS
+                        Discard reads whose expected number of errors (computed from quality values) exceeds ERRORS.
+  --discard-trimmed, --discard
+                        Discard reads that contain an adapter. Use also -O to avoid discarding too many randomly matching
+                        reads.
+  --discard-untrimmed, --trimmed-only
+                        Discard reads that do not contain an adapter.
+  --discard-casava      Discard reads that did not pass CASAVA filtering (header has :Y:).
+
+Output:
+  --quiet               Print only error messages.
+  --report {full,minimal}
+                        Which type of report to print: 'full' or 'minimal'. Default: full
+  -o FILE, --output FILE
+                        Write trimmed reads to FILE. FASTQ or FASTA format is chosen depending on input. Summary report is sent
+                        to standard output. Use '{name}' for demultiplexing (see docs). Default: write to standard output
+  --fasta               Output FASTA to standard output even on FASTQ input.
+  -Z                    Use compression level 1 for gzipped output files (faster, but uses more space)
+  --info-file FILE      Write information about each read and its adapter matches into FILE. See the documentation for the file
+                        format.
+  -r FILE, --rest-file FILE
+                        When the adapter matches in the middle of a read, write the rest (after the adapter) to FILE.
+  --wildcard-file FILE  When the adapter has N wildcard bases, write adapter bases matching wildcard positions to FILE.
+                        (Inaccurate with indels.)
+  --too-short-output FILE
+                        Write reads that are too short (according to length specified by -m) to FILE. Default: discard reads
+  --too-long-output FILE
+                        Write reads that are too long (according to length specified by -M) to FILE. Default: discard reads
+  --untrimmed-output FILE
+                        Write reads that do not contain any adapter to FILE. Default: output to same file as trimmed reads
+
+Paired-end options:
+  The -A/-G/-B/-U options work like their -a/-b/-g/-u counterparts, but are applied to the second read in each pair.
+
+  -A ADAPTER            3' adapter to be removed from second read in a pair.
+  -G ADAPTER            5' adapter to be removed from second read in a pair.
+  -B ADAPTER            5'/3 adapter to be removed from second read in a pair.
+  -U LENGTH             Remove LENGTH bases from second read in a pair.
+  -p FILE, --paired-output FILE
+                        Write second read in a pair to FILE.
+  --pair-adapters       Treat adapters given with -a/-A etc. as pairs. Either both or none are removed from each read pair.
+  --pair-filter (any|both|first)
+                        Which of the reads in a paired-end read have to match the filtering criterion in order for the pair to
+                        be filtered. Default: any
+  --interleaved         Read and/or write interleaved paired-end reads.
+  --untrimmed-paired-output FILE
+                        Write second read in a pair to this FILE when no adapter was found. Use with --untrimmed-output.
+                        Default: output to same file as trimmed reads
+  --too-short-paired-output FILE
+                        Write second read in a pair to this file if pair is too short. Use also --too-short-output.
+  --too-long-paired-output FILE
+                        Write second read in a pair to this file if pair is too long. Use also --too-long-output.
+```
+
+In the Cutadapt usage example and options above for paired-end reads, we can see that the `-a` and `-A` options are used to specify the adapter sequences to be trimmed from the 3’ ends of Read 1 and Read 2 sequences, respectively.
+We happen to know that an Illumina TruSeq DNA library preparation kit was used to generate the paired-end sequencing reads we are working with.
+Therefore, we need to consult the [Illumina Adapter Sequences Document](https://emea.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html?langsel=/gb/) to locate the correct adapter information for our Cutadapt command.
+For most Illumina read types, including those derived from TruSeq libraries, [adapter trimming is required only at read 3’ ends](https://emea.support.illumina.com/bulletins/2016/04/adapter-trimming-why-are-adapter-sequences-trimmed-from-only-the--ends-of-reads.html).
+
+### Exercise 3
+
+Based on the options listed above and the [Cutadapt user guide](https://cutadapt.readthedocs.io/en/stable/guide.html#), write a Cutadapt command that will remove:
+1. bases with Phred quality scores (ASCII_BASE 33) < 20 at the 3’ end of each read, as we have observed in the FastQC reports that base quality tends to degrade towards the 3’ ends of these reads, which is a general feature of Illumina reads
+2. sequences that match a minimum of 4 consecutive bases in Illumina TruSeq adapters (Cutadapt will also remove any bases following [3’ of] a read–adapter match)
+3. reads shorted than 30 bases, which will improve alignment performance as the shorter the sequence, the greater the chance that it will align to multiple locations in a reference genome
+
+<details>
+  <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
+
+  ```
+  cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA \
+           -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
+           --quality-cutoff 20 \
+           --overlap 4 \
+           --minimum-length 30 \
+           --output SRR3156163_1_trimmed.fastq.gz \
+           --paired-output SRR3156163_2_trimmed.fastq.gz \
+           SRR3156163_1.fastq.gz \
+           SRR3156163_2.fastq.gz 
+  ```
+
+  #### Output:
+  ```
+
+  ```
+</p></details>
 
