@@ -17,7 +17,7 @@ If you have any questions, please email Andy Tock at <ajt200@cam.ac.uk>.
 
 The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) ecotype of the model plant species *Arabidopsis thaliana*, and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
 The data are paired-end reads and so there are two files (`SRR3156163_top5M_1.fastq.gz` contains the first read in each pair and `SRR3156163_top5M_2.fastq.gz` the second).
-Each read in a pair was sequenced with 100 chemistry cycles (resulting in 100 consecutive base calls per read) on an Illumina HiSeq 2000 instrument.
+Each read in a pair was sequenced with 100 chemistry cycle on an Illumina HiSeq 2000 instrument, generating 100 consecutive base calls per read (2×100 bp).
 The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3156163), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
 
 ## The pipeline/workflow
