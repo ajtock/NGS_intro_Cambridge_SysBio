@@ -555,15 +555,15 @@ Paired-end options:
                         Write second read in a pair to this file if pair is too long. Use also --too-long-output.
 ```
 
-In the Cutadapt usage example and options for paired-end reads, we can see that the `-a` and `-A` options are used to specify the adapter sequences to be trimmed from the 3’ ends of Read 1 and Read 2 sequences, respectively.
-We happen to know that an Illumina TruSeq DNA library preparation kit was used to generate the paired-end sequencing reads we are working with.
+In the Cutadapt `--help` output above, we can see that the `-a` and `-A` options are used to specify the adapter sequences to be trimmed from the 3’ ends of Read 1 and Read 2 sequences, respectively.
+An Illumina TruSeq DNA library preparation kit was used to generate the paired-end sequencing reads we are analysing.
 Therefore, we need to consult the [Illumina Adapter Sequences Document](https://emea.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html?langsel=/gb/) to locate the correct adapter information for our Cutadapt command.
 For most Illumina read types, including those derived from TruSeq libraries, [adapter trimming is required only at read 3’ ends](https://emea.support.illumina.com/bulletins/2016/04/adapter-trimming-why-are-adapter-sequences-trimmed-from-only-the--ends-of-reads.html).
 
 ### Exercise 3
 
 Based on the options listed above and the [Cutadapt user guide](https://cutadapt.readthedocs.io/en/stable/guide.html#), write a Cutadapt command that will remove:
-1. bases with Phred quality scores (ASCII_BASE 33) < 20 at the 3’ end of each read, as we have observed in the FastQC reports that base quality tends to degrade towards the 3’ ends of these reads, which is a general feature of Illumina reads
+1. bases with Phred quality scores < 20 (ASCII_BASE 33) at the 3’ end of each read, as we have observed in the FastQC reports that base quality tends to degrade towards the 3’ ends of these reads, which is a general feature of Illumina reads
 2. sequences that match a minimum of 4 consecutive bases in Illumina TruSeq adapters (Cutadapt will also remove any bases following [3’ of] a read–adapter match)
 3. reads shorted than 30 bases, which will improve alignment performance as the shorter the sequence, the greater the chance that it will align to multiple locations in a reference genome
 
