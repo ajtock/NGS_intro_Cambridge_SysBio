@@ -379,6 +379,7 @@ If you are working with many FASTQ files, [MultiQC](https://multiqc.info/) can b
 There are several tools available for filtering and trimming reads to remove technical sequences (e.g., sequencing adapters) and low-quality bases, including [Cutadapt](https://cutadapt.readthedocs.io/en/stable/) and [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic).
 Removing these sequences is important because it means that downstream analyses won't be compromised by base calls in which we have low confidence, or by the presence of technical sequences that do not reflect the biology of the sample we have sequenced.
 In the case of aligning reads to a reference genome assembly, for example, read cleaning tends to increase the alignment rate.
+
 For this step in the pipeline, we're going to use Cutadapt so let's have a look at the options.
 
 ```
