@@ -16,7 +16,7 @@ If you have any questions, please email Andy Tock at <ajt200@cam.ac.uk>.
 ## The data
 
 The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) ecotype of the model plant species *Arabidopsis thaliana*, and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
-The data are paired-end reads and so there are two files (`SRR3156163_1.fastq.gz` contains the first read in each pair and `SRR3156163_2.fastq.gz` the second).
+The data are paired-end reads and so there are two files (`SRR3156163_top5M_1.fastq.gz` contains the first read in each pair and `SRR3156163_top5M_2.fastq.gz` the second).
 Each read in a pair was sequenced with 100 chemistry cycles (resulting in 100 consecutive base calls per read) on an Illumina HiSeq 2000 instrument.
 The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3156163), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
 
@@ -50,12 +50,12 @@ Line | Description
 4 | A character string of the same length as the sequence, encoding quality scores for each base
 
 Let's first have a look at one of the files to inspect its format.
-In a Unix command-line shell, use `zcat` and `head` to print to screen the first eight lines of `SRR3156163_1.fastq.gz`.
+In a Unix command-line shell, use `zcat` and `head` to print to screen the first eight lines of `SRR3156163_top5M_1.fastq.gz`.
 We need to use `zcat` here to uncompress the gzip-compressed file.
 The `|` part pipes the output of the `zcat` command to the `head` command.
 
 ```
-zcat fastq/SRR3156163_1.fastq.gz | head -n 8
+zcat fastq/SRR3156163_top5M_1.fastq.gz | head -n 8
 ```
 
 ### Output:
@@ -71,7 +71,7 @@ TGATTCGCTTNGNNNNNNNNNGTCGCCACAGCANNNNNNNNNNNNNNNNCGTATAGCATACNNNNNNNNNNNNNNTACGA
 ```
 
 The first four lines show data for one read and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads.
-The second read in each pair is contained in `SRR3156163_2.fastq.gz`.
+The second read in each pair is contained in `SRR3156163_top5M_2.fastq.gz`.
 The first line for each read contains a unique identifier and, as these are paired-end reads, `/1` indicates that this is the first read in the pair.
 
 The quality score of each base identified in a sequencing read is encoded as a single character on the fourth line.
@@ -88,13 +88,13 @@ Is the first read composed of mostly high-quality or low-quality base calls?
 
 ### Exercise 1
 
-Construct a command that will print to screen the 500th read in `SRR3156163_1.fastq.gz` in order to inspect its quality.
+Construct a command that will print to screen the 500th read in `SRR3156163_top5M_1.fastq.gz` in order to inspect its quality.
 
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
   ```
-  zcat fastq/SRR3156163_1.fastq.gz | head -n 2000 | tail -n 4
+  zcat fastq/SRR3156163_top5M_1.fastq.gz | head -n 2000 | tail -n 4
   ```
 
   #### Output:
@@ -275,48 +275,48 @@ Progress made by FastQC on analysing each file will be printed to screen.
 
 ### Output:
 ```
-Started analysis of SRR3156163_1.fastq.gz
-Approx 5% complete for SRR3156163_1.fastq.gz
-Approx 10% complete for SRR3156163_1.fastq.gz
-Approx 15% complete for SRR3156163_1.fastq.gz
-Approx 20% complete for SRR3156163_1.fastq.gz
-Approx 25% complete for SRR3156163_1.fastq.gz
-Approx 30% complete for SRR3156163_1.fastq.gz
-Approx 35% complete for SRR3156163_1.fastq.gz
-Approx 40% complete for SRR3156163_1.fastq.gz
-Approx 45% complete for SRR3156163_1.fastq.gz
-Approx 50% complete for SRR3156163_1.fastq.gz
-Approx 55% complete for SRR3156163_1.fastq.gz
-Approx 60% complete for SRR3156163_1.fastq.gz
-Approx 65% complete for SRR3156163_1.fastq.gz
-Approx 70% complete for SRR3156163_1.fastq.gz
-Approx 75% complete for SRR3156163_1.fastq.gz
-Approx 80% complete for SRR3156163_1.fastq.gz
-Approx 85% complete for SRR3156163_1.fastq.gz
-Approx 90% complete for SRR3156163_1.fastq.gz
-Approx 95% complete for SRR3156163_1.fastq.gz
-Analysis complete for SRR3156163_1.fastq.gz
-Started analysis of SRR3156163_2.fastq.gz
-Approx 5% complete for SRR3156163_2.fastq.gz
-Approx 10% complete for SRR3156163_2.fastq.gz
-Approx 15% complete for SRR3156163_2.fastq.gz
-Approx 20% complete for SRR3156163_2.fastq.gz
-Approx 25% complete for SRR3156163_2.fastq.gz
-Approx 30% complete for SRR3156163_2.fastq.gz
-Approx 35% complete for SRR3156163_2.fastq.gz
-Approx 40% complete for SRR3156163_2.fastq.gz
-Approx 45% complete for SRR3156163_2.fastq.gz
-Approx 50% complete for SRR3156163_2.fastq.gz
-Approx 55% complete for SRR3156163_2.fastq.gz
-Approx 60% complete for SRR3156163_2.fastq.gz
-Approx 65% complete for SRR3156163_2.fastq.gz
-Approx 70% complete for SRR3156163_2.fastq.gz
-Approx 75% complete for SRR3156163_2.fastq.gz
-Approx 80% complete for SRR3156163_2.fastq.gz
-Approx 85% complete for SRR3156163_2.fastq.gz
-Approx 90% complete for SRR3156163_2.fastq.gz
-Approx 95% complete for SRR3156163_2.fastq.gz
-Analysis complete for SRR3156163_2.fastq.gz
+Started analysis of SRR3156163_top5M_1.fastq.gz
+Approx 5% complete for SRR3156163_top5M_1.fastq.gz
+Approx 10% complete for SRR3156163_top5M_1.fastq.gz
+Approx 15% complete for SRR3156163_top5M_1.fastq.gz
+Approx 20% complete for SRR3156163_top5M_1.fastq.gz
+Approx 25% complete for SRR3156163_top5M_1.fastq.gz
+Approx 30% complete for SRR3156163_top5M_1.fastq.gz
+Approx 35% complete for SRR3156163_top5M_1.fastq.gz
+Approx 40% complete for SRR3156163_top5M_1.fastq.gz
+Approx 45% complete for SRR3156163_top5M_1.fastq.gz
+Approx 50% complete for SRR3156163_top5M_1.fastq.gz
+Approx 55% complete for SRR3156163_top5M_1.fastq.gz
+Approx 60% complete for SRR3156163_top5M_1.fastq.gz
+Approx 65% complete for SRR3156163_top5M_1.fastq.gz
+Approx 70% complete for SRR3156163_top5M_1.fastq.gz
+Approx 75% complete for SRR3156163_top5M_1.fastq.gz
+Approx 80% complete for SRR3156163_top5M_1.fastq.gz
+Approx 85% complete for SRR3156163_top5M_1.fastq.gz
+Approx 90% complete for SRR3156163_top5M_1.fastq.gz
+Approx 95% complete for SRR3156163_top5M_1.fastq.gz
+Analysis complete for SRR3156163_top5M_1.fastq.gz
+Started analysis of SRR3156163_top5M_2.fastq.gz
+Approx 5% complete for SRR3156163_top5M_2.fastq.gz
+Approx 10% complete for SRR3156163_top5M_2.fastq.gz
+Approx 15% complete for SRR3156163_top5M_2.fastq.gz
+Approx 20% complete for SRR3156163_top5M_2.fastq.gz
+Approx 25% complete for SRR3156163_top5M_2.fastq.gz
+Approx 30% complete for SRR3156163_top5M_2.fastq.gz
+Approx 35% complete for SRR3156163_top5M_2.fastq.gz
+Approx 40% complete for SRR3156163_top5M_2.fastq.gz
+Approx 45% complete for SRR3156163_top5M_2.fastq.gz
+Approx 50% complete for SRR3156163_top5M_2.fastq.gz
+Approx 55% complete for SRR3156163_top5M_2.fastq.gz
+Approx 60% complete for SRR3156163_top5M_2.fastq.gz
+Approx 65% complete for SRR3156163_top5M_2.fastq.gz
+Approx 70% complete for SRR3156163_top5M_2.fastq.gz
+Approx 75% complete for SRR3156163_top5M_2.fastq.gz
+Approx 80% complete for SRR3156163_top5M_2.fastq.gz
+Approx 85% complete for SRR3156163_top5M_2.fastq.gz
+Approx 90% complete for SRR3156163_top5M_2.fastq.gz
+Approx 95% complete for SRR3156163_top5M_2.fastq.gz
+Analysis complete for SRR3156163_top5M_2.fastq.gz
 ```
 
 Navigate to the output directory and list its contents.
@@ -328,10 +328,10 @@ ls -1
 
 ### Output:
 ```
-SRR3156163_1_fastqc.html
-SRR3156163_1_fastqc.zip
-SRR3156163_2_fastqc.html
-SRR3156163_2_fastqc.zip
+SRR3156163_top5M_1_fastqc.html
+SRR3156163_top5M_1_fastqc.zip
+SRR3156163_top5M_2_fastqc.html
+SRR3156163_top5M_2_fastqc.zip
 ```
 
 
@@ -355,7 +355,7 @@ Each HTML file contains statistics and graphs summarising the FastQC results:
 Have a look at the FastQC-generated HTML file for each FASTQ file by opening them in a web browser.
 
 ```
-firefox SRR3156163_1_fastqc.html SRR3156163_2_fastqc.html
+firefox SRR3156163_top5M_1_fastqc.html SRR3156163_top5M_2_fastqc.html
 ```
 
 What quality issues can you see in these reports, and how could they be fixed?
@@ -366,7 +366,7 @@ What quality issues can you see in these reports, and how could they be fixed?
   They are generally high-quality sequencing reads. However, there are some issues that should be addressed:
   1. Per-base sequence quality decreases towards the ends of the reads (particularly towards their 3′ ends)
   2. There are many duplicated reads, which may have resulted from PCR amplification biases
-  3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_1.fastq.gz`
+  3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_top5M_1.fastq.gz`
 
 The first and third of these issues can be resolved using software developed to trim off sequencing adapters and low-quality bases.
 Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
@@ -380,7 +380,7 @@ There are several tools available for filtering and trimming reads to remove tec
 Removing these sequences is important because it means that downstream analyses won't be compromised by base calls in which we have low confidence, or by the presence of technical sequences that do not reflect the biology of the sample we have sequenced.
 In the case of aligning reads to a reference genome assembly, for example, read cleaning tends to increase the alignment rate.
 
-For this step in the pipeline, we're going to use Cutadapt so let's have a look at the options.
+We're going to use Cutadapt for this step in the pipeline, so let's have a look at a usage example and the available options.
 
 ```
 cutadapt --help
@@ -577,15 +577,15 @@ Based on the options listed above and the [Cutadapt user guide](https://cutadapt
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
   ```
-  cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA \
-           -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
-           --quality-cutoff 20 \
-           --overlap 4 \
-           --minimum-length 30 \
-           --output results/cutadapt/SRR3156163_1_trimmed.fastq.gz \
-           --paired-output results/cutadapt/SRR3156163_2_trimmed.fastq.gz \
-           fastq/SRR3156163_1.fastq.gz \
-           fastq/SRR3156163_2.fastq.gz 
+  (cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA \
+            -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
+            --quality-cutoff 20 \
+            --overlap 4 \
+            --minimum-length 30 \
+            --output results/cutadapt/SRR3156163_top5M_1_trimmed.fastq.gz \
+            --paired-output results/cutadapt/SRR3156163_top5M_2_trimmed.fastq.gz \
+            fastq/SRR3156163_top5M_1.fastq.gz \
+            fastq/SRR3156163_top5M_2.fastq.gz) 2> SRR3156163_top5M_cutadapt_report.txt
   ```
 
   #### Output:
