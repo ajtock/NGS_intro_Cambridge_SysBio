@@ -555,7 +555,7 @@ Paired-end options:
                         Write second read in a pair to this file if pair is too long. Use also --too-long-output.
 ```
 
-In the Cutadapt usage example and options above for paired-end reads, we can see that the `-a` and `-A` options are used to specify the adapter sequences to be trimmed from the 3’ ends of Read 1 and Read 2 sequences, respectively.
+In the Cutadapt usage example and options for paired-end reads, we can see that the `-a` and `-A` options are used to specify the adapter sequences to be trimmed from the 3’ ends of Read 1 and Read 2 sequences, respectively.
 We happen to know that an Illumina TruSeq DNA library preparation kit was used to generate the paired-end sequencing reads we are working with.
 Therefore, we need to consult the [Illumina Adapter Sequences Document](https://emea.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html?langsel=/gb/) to locate the correct adapter information for our Cutadapt command.
 For most Illumina read types, including those derived from TruSeq libraries, [adapter trimming is required only at read 3’ ends](https://emea.support.illumina.com/bulletins/2016/04/adapter-trimming-why-are-adapter-sequences-trimmed-from-only-the--ends-of-reads.html).
