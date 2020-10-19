@@ -560,6 +560,12 @@ An Illumina TruSeq DNA library preparation kit was used to generate the paired-e
 Therefore, we need to consult the [Illumina Adapter Sequences Document](https://emea.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html?langsel=/gb/) to locate the correct adapter information for inclusion in our Cutadapt command.
 For most Illumina read types, including those derived from TruSeq libraries, [adapter trimming is required only at read 3’ ends](https://emea.support.illumina.com/bulletins/2016/04/adapter-trimming-why-are-adapter-sequences-trimmed-from-only-the--ends-of-reads.html).
 
+We should first make a subdirectory that will contain the Cutadapt-cleaned reads.
+
+```
+mkdir results/cutadapt/
+```
+
 ### Exercise 3
 
 Based on the options listed above and the [Cutadapt user guide](https://cutadapt.readthedocs.io/en/stable/guide.html#), write a Cutadapt command that will remove:
@@ -576,10 +582,10 @@ Based on the options listed above and the [Cutadapt user guide](https://cutadapt
            --quality-cutoff 20 \
            --overlap 4 \
            --minimum-length 30 \
-           --output SRR3156163_1_trimmed.fastq.gz \
-           --paired-output SRR3156163_2_trimmed.fastq.gz \
-           SRR3156163_1.fastq.gz \
-           SRR3156163_2.fastq.gz 
+           --output results/cutadapt/SRR3156163_1_trimmed.fastq.gz \
+           --paired-output results/cutadapt/SRR3156163_2_trimmed.fastq.gz \
+           fastq/SRR3156163_1.fastq.gz \
+           fastq/SRR3156163_2.fastq.gz 
   ```
 
   #### Output:
