@@ -75,14 +75,14 @@ The second read in each pair is contained in `SRR3156163_2.fastq.gz`.
 The first line for each read contains a unique identifier and, as these are paired-end reads, `/1` indicates that this is the first read in the pair.
 
 The quality score of each base identified in a sequencing read is encoded as a single character on the fourth line.
-These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII\_BASE 33 characters](https://drive5.com/usearch/manual/quality_score.html) such that each character encodes a quality score for the corresponding base in the read.
+These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII\_BASE=33 characters](https://drive5.com/usearch/manual/quality_score.html) such that each character encodes a quality score for the corresponding base in the read.
 A Phred quality score is logarithmically related to the probability of an incorrect base call *P*, expressed as 1 error in 10<sup>*Q*/10</sup> base calls of *Q* quality, or
 
 > *Q* = -10log<sub>10</sub>*P*  
 > *P* = 10<sup>-*Q*/10</sup>  
 
 Accordingly, the ASCII\_BASE 33 character `@` encodes a *Q*-score of 31 and a base-calling error probability of 0.00079.
-In the past, Illumina sequencing instruments used the [ASCII\_BASE 64 quality encoding](https://drive5.com/usearch/manual/quality_score.html).
+In the past, Illumina sequencing instruments used the [ASCII\_BASE=64 quality encoding](https://drive5.com/usearch/manual/quality_score.html).
 
 Is the first read composed of mostly high-quality or low-quality base calls?
 
@@ -563,7 +563,7 @@ For most Illumina read types, including those derived from TruSeq libraries, [ad
 ### Exercise 3
 
 Based on the options listed above and the [Cutadapt user guide](https://cutadapt.readthedocs.io/en/stable/guide.html#), write a Cutadapt command that will remove:
-1. bases with Phred quality scores < 20 (ASCII_BASE 33) at the 3’ end of each read, as we have observed in the FastQC reports that base quality tends to degrade towards the 3’ ends of these reads, which is a general feature of Illumina reads
+1. bases with Phred quality scores < 20 ([ASCII_BASE=33](https://drive5.com/usearch/manual/quality_score.html)) at the 3’ end of each read, as we have observed in the FastQC reports that base quality tends to degrade towards the 3’ ends of these reads, which is a general feature of Illumina reads
 2. sequences that match a minimum of 4 consecutive bases in Illumina TruSeq adapters (Cutadapt will also remove any bases following [3’ of] a read–adapter match)
 3. reads shorted than 30 bases, which will improve alignment performance as the shorter the sequence, the greater the chance that it will align to multiple locations in a reference genome
 
