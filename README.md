@@ -633,14 +633,13 @@ We will use the latter approach.
 
 ## Aligning the cleaned reads to a reference genome assembly
 
-The reference genome assembly for *Arabidopsis thaliana* (`TAIR10_chr_all.fa`) is in [FASTA format]() and is located in the `genome/` directory.
+The reference genome assembly for *Arabidopsis thaliana* (`TAIR10_chr_all.fa`) is in [FASTA format](https://en.wikipedia.org/wiki/FASTA_format) and is located in the `genome/` directory.
 
-Alignment to reference genome requires index files specific to the alignment software being used.
+Alignment to a reference genome requires index files specific to the alignment software being used.
 **You don't need to generate these index files in this case, as they have already been created in the `genome/` directory to save time.**
 For future reference, the `bowtie2-build` command that was run to create these index files is:
 
 ```
 bowtie2-build TAIR10_chr_all.fa TAIR10_chr_all
 ```
-
 
