@@ -335,7 +335,6 @@ SRR3156163_top5M_2_fastqc.html
 SRR3156163_top5M_2_fastqc.zip
 ```
 
-
 ### FastQC summary statistics and graphs
 
 Each HTML file contains statistics and graphs summarising the FastQC results:
@@ -350,6 +349,7 @@ Each HTML file contains statistics and graphs summarising the FastQC results:
 * [Sequence duplication levels](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/8%20Duplicate%20Sequences.html)
 * [Overrepresented sequences](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/9%20Overrepresented%20Sequences.html)
 * [Adapter content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/10%20Adapter%20Content.html)
+* [Per tile sequence quality](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/12%20Per%20Tile%20Sequence%20Quality.html)
 
 ### Exercise 2
 
@@ -364,10 +364,10 @@ What quality issues can you see in these reports, and how could they be fixed?
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
-  They are generally high-quality sequencing reads. However, there are some issues that should be addressed:
-  1. Per-base sequence quality decreases towards the ends of the reads (particularly towards their 3′ ends)
-  2. There are many duplicated reads, which may have resulted from PCR amplification biases
-  3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_top5M_1.fastq.gz`
+They are generally high-quality sequencing reads. However, there are some issues that should be addressed:
+1. Per-base sequence quality decreases towards the ends of the reads (particularly towards their 3′ ends)
+2. There are many duplicated reads, which may have resulted from [PCR](https://en.wikipedia.org/wiki/Polymerase_chain_reaction) amplification biases
+3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_top5M_1.fastq.gz`
 
 The first and third of these issues can be resolved using software developed to trim off sequencing adapters and low-quality bases.
 Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
@@ -592,7 +592,55 @@ What proportion of read pairs and base calls passed the filters?
             --paired-output results/cutadapt/SRR3156163_top5M_2_trimmed.fastq.gz \
             fastq/SRR3156163_top5M_1.fastq.gz \
             fastq/SRR3156163_top5M_2.fastq.gz) &> results/cutadapt/SRR3156163_top5M_cutadapt_report.txt
+  ```
 
   91% of read pairs and 88.4% of base calls remain after cleaning.
-  ```
 </p></details>
+
+We can now use FastQC to evaluate the quality of the Cutadapt-trimmed reads, so let's make an output directory to contain the FastQC results.
+
+```
+mkdir results/fastqc/trimmed_reads
+```
+
+### Exercise 4
+
+Write and run a `fastqc` command to evaluate the cleaned reads, specifying the newly created output directory for the FastQC results.
+Once this has run to completion, inspect the FastQC-generated HTML reports to see if the cleaning step improved the reads.
+Is any further cleaning required?
+
+<details>
+  <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
+
+```
+fastqc --outdir results/fastqc/trimmed_reads \
+       results/cutadapt/*.fastq.gz
+```
+
+The quality of the reads has improved after cleaning with Cutadapt, but some warnings and so-called "failures" remain.
+
+The warning for the [Per base sequence content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/4%20Per%20Base%20Sequence%20Content.html) module can be safely ignored, as:
+> "some types of library will always produce biased sequence composition, normally at the start of the read. Libraries produced by priming using random hexamers (including nearly all RNA-Seq libraries) and those which were fragmented using transposases inherit an intrinsic bias in the positions at which reads start. This bias does not concern an absolute sequence, but instead provides enrichement of a number of different K-mers at the 5’ end of the reads. Whilst this is a true technical bias, it isn't something which can be corrected by trimming and in most cases doesn't seem to adversely affect the downstream analysis."
+
+The [Per sequence GC content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/5%20Per%20Sequence%20GC%20Content.html) may also reflect this technical bias.
+
+The [Sequence length distribution](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html) warning can also be ignored as we expect variable-length sequences after trimming.
+
+"Failure" with regard to [Sequence duplication levels](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/8%20Duplicate%20Sequences.html), however, will need attention.
+Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
+We will use the latter approach.
+</p></details>
+
+## Aligning the cleaned reads to a reference genome assembly
+
+The reference genome assembly for *Arabidopsis thaliana* (`TAIR10_chr_all.fa`) is in [FASTA format]() and is located in the `genome/` directory.
+
+Alignment to reference genome requires index files specific to the alignment software being used.
+**You don't need to generate these index files in this case, as they have already been created in the `genome/` directory to save time.**
+For future reference, the `bowtie2-build` command that was run to create these index files is:
+
+```
+bowtie2-build TAIR10_chr_all.fa TAIR10_chr_all
+```
+
+
