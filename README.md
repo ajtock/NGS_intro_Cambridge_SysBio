@@ -44,6 +44,7 @@ The files are located in the `fastq/` directory.
 Data in FASTQ format conform to these standards:
 
 | Line | Description                                                                                  |
+
 |:-----|:---------------------------------------------------------------------------------------------|
 | 1    | Begins with '@', followed by information about the read                                      |
 | 2    | The DNA sequence                                                                             |
