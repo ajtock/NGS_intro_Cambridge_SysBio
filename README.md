@@ -36,7 +36,7 @@ This practical aims to familiarise you with Illumina next-generation sequencing 
 ## The data
 
 The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) [ecotype](https://en.wikipedia.org/wiki/Ecotype) of the [diploid](https://www.genome.gov/genetics-glossary/Diploid) model plant species [*Arabidopsis thaliana*](https://en.wikipedia.org/wiki/Arabidopsis_thaliana), and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
-The data are paired-end reads and so there are two files (`SRR3156163_top5M_1.fastq.gz` contains the first read in each pair and `SRR3156163_top5M_2.fastq.gz` the second).
+The data are [paired-end reads](https://emea.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) and so there are two files (`SRR3156163_top5M_1.fastq.gz` contains the first read in each pair and `SRR3156163_top5M_2.fastq.gz` the second).
 Each read in a pair was sequenced with 100 chemistry cycles on an [Illumina HiSeq 2000](https://www.illumina.com/documents/products/datasheets/datasheet_hiseq2000.pdf), generating 100 consecutive base calls per read (2×100 bp).
 The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3156163), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
 The top 5 million reads (`top5M`) in each of the two files were extracted in order to reduce time spent on data processing in this practical.
