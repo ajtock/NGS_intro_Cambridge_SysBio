@@ -384,13 +384,13 @@ What quality issues can you see in these reports, and how could they be fixed?
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
-They are generally high-quality sequencing reads. However, there are some issues that should be addressed:
-1. Per-base sequence quality decreases towards the ends of the reads (particularly towards their 3′ ends)
-2. There are many duplicated reads, which may have resulted from [PCR](https://en.wikipedia.org/wiki/Polymerase_chain_reaction) amplification biases
-3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_top5M_1.fastq.gz`
-
-The first and third of these issues can be resolved using software developed to trim off sequencing adapters and low-quality bases.
-Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
+  They are generally high-quality sequencing reads. However, there are some issues that should be addressed:
+  1. Per-base sequence quality decreases towards the ends of the reads (particularly towards their 3′ ends)
+  2. There are many duplicated reads, which may have resulted from [PCR](https://en.wikipedia.org/wiki/Polymerase_chain_reaction) amplification biases
+  3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_top5M_1.fastq.gz`
+  
+  The first and third of these issues can be resolved using software developed to trim off sequencing adapters and low-quality bases.
+  Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
 </p></details>
 
 If you are working with many FASTQ files, [MultiQC](https://multiqc.info/) can be used to aggregate FastQC-generated results and compile one HTML report that's easier to digest than individual reports for each sample. 
@@ -404,6 +404,9 @@ In the case of aligning reads to a reference genome assembly, for example, read 
 We're going to use Cutadapt for this step in the pipeline, so let's have a look at a usage example and the available options.
 
 ```
+pwd
+cd ../../../
+pwd
 cutadapt --help
 ```
 
@@ -611,7 +614,7 @@ What proportion of read pairs and base calls passed the filters?
             --output results/cutadapt/SRR3156163_top5M_1_trimmed.fastq.gz \
             --paired-output results/cutadapt/SRR3156163_top5M_2_trimmed.fastq.gz \
             fastq/SRR3156163_top5M_1.fastq.gz \
-            fastq/SRR3156163_top5M_2.fastq.gz) &> results/cutadapt/SRR3156163_top5M_cutadapt_report.txt
+            fastq/SRR3156163_top5M_2.fastq.gz) &> results/cutadapt/SRR3156163_top5M_cutadapt_report.log
   ```
 
   91% of read pairs and 88.4% of base calls remain after cleaning.
@@ -632,23 +635,23 @@ Is any further cleaning required?
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
-```
-fastqc --outdir results/fastqc/trimmed_reads \
-       results/cutadapt/*.fastq.gz
-```
-
-The quality of the reads has improved after cleaning with Cutadapt, but some warnings and so-called "failures" remain.
-
-The warning for the [Per base sequence content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/4%20Per%20Base%20Sequence%20Content.html) module can be safely ignored, as:
-> "some types of library will always produce biased sequence composition, normally at the start of the read. Libraries produced by priming using random hexamers (including nearly all RNA-Seq libraries) and those which were fragmented using transposases inherit an intrinsic bias in the positions at which reads start. This bias does not concern an absolute sequence, but instead provides enrichement of a number of different K-mers at the 5’ end of the reads. Whilst this is a true technical bias, it isn't something which can be corrected by trimming and in most cases doesn't seem to adversely affect the downstream analysis."
-
-The [Per sequence GC content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/5%20Per%20Sequence%20GC%20Content.html) may also reflect this technical bias.
-
-The [Sequence length distribution](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html) warning can also be ignored as we expect variable-length sequences after trimming.
-
-"Failure" with regard to [Sequence duplication levels](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/8%20Duplicate%20Sequences.html), however, will need attention.
-Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
-We will use the latter approach.
+  ```
+  fastqc --outdir results/fastqc/trimmed_reads \
+         results/cutadapt/*.fastq.gz
+  ```
+  
+  The quality of the reads has improved after cleaning with Cutadapt, but some warnings and so-called "failures" remain.
+  
+  The warning for the [Per base sequence content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/4%20Per%20Base%20Sequence%20Content.html) module can be safely ignored, as:
+  > "some types of library will always produce biased sequence composition, normally at the start of the read. Libraries produced by priming using random hexamers (including nearly all RNA-Seq libraries) and those which were fragmented using transposases inherit an intrinsic bias in the positions at which reads start. This bias does not concern an absolute sequence, but instead provides enrichement of a number of different K-mers at the 5’ end of the reads. Whilst this is a true technical bias, it isn't something which can be corrected by trimming and in most cases doesn't seem to adversely affect the downstream analysis."
+  
+  The [Per sequence GC content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/5%20Per%20Sequence%20GC%20Content.html) may also reflect this technical bias.
+  
+  The [Sequence length distribution](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html) warning can also be ignored as we expect variable-length sequences after trimming.
+  
+  "Failure" with regard to [Sequence duplication levels](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/8%20Duplicate%20Sequences.html), however, will need attention.
+  Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
+  We will use the latter approach.
 </p></details>
 
 ## Step 3. Aligning the cleaned reads to a reference genome assembly
@@ -679,22 +682,22 @@ A command-line tool that could be used for this is an acronym for <ins>g</ins>lo
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
-```
-grep '>' genome/TAIR10_chr_all.fa
-```
-
-#### Output:
-```
->1 CHROMOSOME dumped from ADB: Feb/3/09 16:9; last updated: 2009-02-02
->2 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
->3 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
->4 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
->5 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
->mitochondria CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2005-06-03
->chloroplast CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2005-06-03
-```
-
-There are 5 nuclear chromosomes and 2 sequences corresponding to mitochondria and chloroplast organelles.
+  ```
+  grep '>' genome/TAIR10_chr_all.fa
+  ```
+  
+  #### Output:
+  ```
+  >1 CHROMOSOME dumped from ADB: Feb/3/09 16:9; last updated: 2009-02-02
+  >2 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
+  >3 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
+  >4 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
+  >5 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
+  >mitochondria CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2005-06-03
+  >chloroplast CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2005-06-03
+  ```
+  
+  There are 5 nuclear chromosomes and 2 sequences corresponding to mitochondria and chloroplast organelles.
 </p></details>
 
 
@@ -711,3 +714,214 @@ For future reference, the `bowtie2-build` command that was run to create these i
 bowtie2-build TAIR10_chr_all.fa TAIR10_chr_all
 ```
 
+Make a directory to contain the file that Bowtie 2 will generate in [Sequence Alignment/Map (SAM) format](https://samtools.github.io/hts-specs/SAMv1.pdf).
+
+```
+mkdir results/bowtie2
+```
+
+As we already have the genome index files, have a look at the Bowtie 2 `--help` output for information about example usage and options.
+
+```
+bowtie2 --help
+```
+
+### Output:
+```
+Bowtie 2 version 2.4.2 by Ben Langmead (langmea@cs.jhu.edu, www.cs.jhu.edu/~langmea)
+Usage: 
+  bowtie2 [options]* -x <bt2-idx> {-1 <m1> -2 <m2> | -U <r> | --interleaved <i> | -b <bam>} [-S <sam>]
+
+  <bt2-idx>  Index filename prefix (minus trailing .X.bt2).
+             NOTE: Bowtie 1 and Bowtie 2 indexes are not compatible.
+  <m1>       Files with #1 mates, paired with files in <m2>.
+             Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+  <m2>       Files with #2 mates, paired with files in <m1>.
+             Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+  <r>        Files with unpaired reads.
+             Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+  <i>        Files with interleaved paired-end FASTQ/FASTA reads
+             Could be gzip'ed (extension: .gz) or bzip2'ed (extension: .bz2).
+  <bam>      Files are unaligned BAM sorted by read name.
+  <sam>      File for SAM output (default: stdout)
+
+  <m1>, <m2>, <r> can be comma-separated lists (no whitespace) and can be
+  specified many times.  E.g. '-U file1.fq,file2.fq -U file3.fq'.
+
+Options (defaults in parentheses):
+
+ Input:
+  -q                 query input files are FASTQ .fq/.fastq (default)
+  --tab5             query input files are TAB5 .tab5
+  --tab6             query input files are TAB6 .tab6
+  --qseq             query input files are in Illumina's qseq format
+  -f                 query input files are (multi-)FASTA .fa/.mfa
+  -r                 query input files are raw one-sequence-per-line
+  -F k:<int>,i:<int> query input files are continuous FASTA where reads
+                     are substrings (k-mers) extracted from a FASTA file <s>
+                     and aligned at offsets 1, 1+i, 1+2i ... end of reference
+  -c                 <m1>, <m2>, <r> are sequences themselves, not files
+  -s/--skip <int>    skip the first <int> reads/pairs in the input (none)
+  -u/--upto <int>    stop after first <int> reads/pairs (no limit)
+  -5/--trim5 <int>   trim <int> bases from 5'/left end of reads (0)
+  -3/--trim3 <int>   trim <int> bases from 3'/right end of reads (0)
+  --trim-to [3:|5:]<int> trim reads exceeding <int> bases from either 3' or 5' end
+                     If the read end is not specified then it defaults to 3 (0)
+  --phred33          qualities are Phred+33 (default)
+  --phred64          qualities are Phred+64
+  --int-quals        qualities encoded as space-delimited integers
+
+ Presets:                 Same as:
+  For --end-to-end:
+   --very-fast            -D 5 -R 1 -N 0 -L 22 -i S,0,2.50
+   --fast                 -D 10 -R 2 -N 0 -L 22 -i S,0,2.50
+   --sensitive            -D 15 -R 2 -N 0 -L 22 -i S,1,1.15 (default)
+   --very-sensitive       -D 20 -R 3 -N 0 -L 20 -i S,1,0.50
+
+  For --local:
+   --very-fast-local      -D 5 -R 1 -N 0 -L 25 -i S,1,2.00
+   --fast-local           -D 10 -R 2 -N 0 -L 22 -i S,1,1.75
+   --sensitive-local      -D 15 -R 2 -N 0 -L 20 -i S,1,0.75 (default)
+   --very-sensitive-local -D 20 -R 3 -N 0 -L 20 -i S,1,0.50
+
+ Alignment:
+  -N <int>           max # mismatches in seed alignment; can be 0 or 1 (0)
+  -L <int>           length of seed substrings; must be >3, <32 (22)
+  -i <func>          interval between seed substrings w/r/t read len (S,1,1.15)
+  --n-ceil <func>    func for max # non-A/C/G/Ts permitted in aln (L,0,0.15)
+  --dpad <int>       include <int> extra ref chars on sides of DP table (15)
+  --gbar <int>       disallow gaps within <int> nucs of read extremes (4)
+  --ignore-quals     treat all quality values as 30 on Phred scale (off)
+  --nofw             do not align forward (original) version of read (off)
+  --norc             do not align reverse-complement version of read (off)
+  --no-1mm-upfront   do not allow 1 mismatch alignments before attempting to
+                     scan for the optimal seeded alignments
+  --end-to-end       entire read must align; no clipping (on)
+   OR
+  --local            local alignment; ends might be soft clipped (off)
+
+ Scoring:
+  --ma <int>         match bonus (0 for --end-to-end, 2 for --local) 
+  --mp <int>         max penalty for mismatch; lower qual = lower penalty (6)
+  --np <int>         penalty for non-A/C/G/Ts in read/ref (1)
+  --rdg <int>,<int>  read gap open, extend penalties (5,3)
+  --rfg <int>,<int>  reference gap open, extend penalties (5,3)
+  --score-min <func> min acceptable alignment score w/r/t read length
+                     (G,20,8 for local, L,-0.6,-0.6 for end-to-end)
+
+ Reporting:
+  (default)          look for multiple alignments, report best, with MAPQ
+   OR
+  -k <int>           report up to <int> alns per read; MAPQ not meaningful
+   OR
+  -a/--all           report all alignments; very slow, MAPQ not meaningful
+
+ Effort:
+  -D <int>           give up extending after <int> failed extends in a row (15)
+  -R <int>           for reads w/ repetitive seeds, try <int> sets of seeds (2)
+
+ Paired-end:
+  -I/--minins <int>  minimum fragment length (0)
+  -X/--maxins <int>  maximum fragment length (500)
+  --fr/--rf/--ff     -1, -2 mates align fw/rev, rev/fw, fw/fw (--fr)
+  --no-mixed         suppress unpaired alignments for paired reads
+  --no-discordant    suppress discordant alignments for paired reads
+  --dovetail         concordant when mates extend past each other
+  --no-contain       not concordant when one mate alignment contains other
+  --no-overlap       not concordant when mates overlap at all
+
+ BAM:
+  --align-paired-reads
+                     Bowtie2 will, by default, attempt to align unpaired BAM reads.
+                     Use this option to align paired-end reads instead.
+  --preserve-tags    Preserve tags from the original BAM record by
+                     appending them to the end of the corresponding SAM output.
+
+ Output:
+  -t/--time          print wall-clock time taken by search phases
+  --un <path>        write unpaired reads that didn't align to <path>
+  --al <path>        write unpaired reads that aligned at least once to <path>
+  --un-conc <path>   write pairs that didn't align concordantly to <path>
+  --al-conc <path>   write pairs that aligned concordantly at least once to <path>
+    (Note: for --un, --al, --un-conc, or --al-conc, add '-gz' to the option name, e.g.
+    --un-gz <path>, to gzip compress output, or add '-bz2' to bzip2 compress output.)
+  --quiet            print nothing to stderr except serious errors
+  --met-file <path>  send metrics to file at <path> (off)
+  --met-stderr       send metrics to stderr (off)
+  --met <int>        report internal counters & metrics every <int> secs (1)
+  --no-unal          suppress SAM records for unaligned reads
+  --no-head          suppress header lines, i.e. lines starting with @
+  --no-sq            suppress @SQ header lines
+  --rg-id <text>     set read group id, reflected in @RG line and RG:Z: opt field
+  --rg <text>        add <text> ("lab:value") to @RG line of SAM header.
+                     Note: @RG line only printed when --rg-id is set.
+  --omit-sec-seq     put '*' in SEQ and QUAL fields for secondary alignments.
+  --sam-no-qname-trunc
+                     Suppress standard behavior of truncating readname at first whitespace 
+                     at the expense of generating non-standard SAM.
+  --xeq              Use '='/'X', instead of 'M,' to specify matches/mismatches in SAM record.
+  --soft-clipped-unmapped-tlen
+                     Exclude soft-clipped bases when reporting TLEN
+  --sam-append-comment
+                     Append FASTA/FASTQ comment to SAM record
+
+ Performance:
+  -p/--threads <int> number of alignment threads to launch (1)
+  --reorder          force SAM output order to match order of input reads
+  --mm               use memory-mapped I/O for index; many 'bowtie's can share
+
+ Other:
+  --qc-filter        filter out reads that are bad according to QSEQ filter
+  --seed <int>       seed for random number generator (0)
+  --non-deterministic
+                     seed rand. gen. arbitrarily instead of using read attributes
+  --version          print version information and quit
+  -h/--help          print this usage message
+```
+
+### Exercise 6
+
+Using the usage example printed above and the [Bowtie 2 manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml), write and run a `bowtie2` command that specifies the reference genome and the trimmed read pairs.
+Include in your command an option that will prevent Bowtie 2 from attempting to find alignments for the individual mates in a read pair, along with a separate option that will prevent Bowtie 2 from attempting to find alignments that do not satisfy the paired-end constraints.
+Redirect the stdout and stderr generated by your `bowtie2` command to an appropriately named log file, which will be useful for future reference.
+
+<details>
+  <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
+
+  ```
+  (bowtie2 --no-mixed \
+           --no-discordant \
+           -x genome/TAIR10_chr_all \
+           -1 results/cutadapt/SRR3156163_top5M_1_trimmed.fastq.gz \
+           -2 results/cutadapt/SRR3156163_top5M_2_trimmed.fastq.gz \
+           -S results/bowtie2/SRR3156163_top5M_MappedOn_TAIR10_chr_all.sam) \
+  &> results/bowtie2/SRR3156163_top5M_MappedOn_TAIR10_chr_all_report.log 
+  ```
+</p></details>
+
+
+
+        "(bowtie2 --very-sensitive --no-mixed --no-discordant"
+        " --threads {threads} -k {params.alignments}"
+        " -x {reference} -1 {input.fastq1} -2 {input.fastq2} "
+        "| samtools view -bh -@ {threads} -f 3 -F 2316 -q {params.MAPQmaxi} -o {output} - ) 2> {log}"
+
+
+## Step 4. Filtering alignments using SAMtools
+
+
+```
+mkdir results/samtools
+```
+
+
+<details>
+  <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
+
+  ```
+  (samtools view -bh -f 3 -F 2316 -q 42 \
+                 -o results/samtools/SRR3156163_top5M_MappedOn_TAIR10_chr_all_unique.bam \
+                 results/bowtie2/SRR3156163_top5M_MappedOn_TAIR10_chr_all.sam) \
+  &> results/bowtie2/SRR3156163_top5M_MappedOn_TAIR10_chr_all_report.log
+  ```
+</p></details>
