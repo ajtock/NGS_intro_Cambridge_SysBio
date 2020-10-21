@@ -674,7 +674,7 @@ How many distinct sequences corresponding to nuclear chromosomes and non-nuclear
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
 ```
-grep '>' genome/TAIR10_chr_all.fa > genome/TAIR10_chr_all_headers.txt
+grep '>' genome/TAIR10_chr_all.fa
 ```
 
 #### Output:
