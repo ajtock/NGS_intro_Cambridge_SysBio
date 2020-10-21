@@ -10,7 +10,7 @@ If you have any questions or comments about the practical, please email Andy Toc
 This was the point at which sequencing efforts increasingly moved away from the [Sanger dye-terminator method](https://en.wikipedia.org/wiki/Sanger_sequencing), to a "next" generation of sequencing technologies, which are faster, cheaper and produce many more reads in parallel.
 Despite their higher throughput, the reads are shorter and of lower quality than those produced by Sanger sequencing.
 
-One next-generation sequencing (NGS) technology has come to dominate: Illumina [sequencing by synthesis](https://www.illumina.com/documents/products/techspotlights/techspotlight_sequencing.pdf) on Genome Analyzer, HiSeq, MiSeq, NextSeq and NovaSeq instruments.
+One next-generation sequencing (NGS) technology has come to dominate: [Illumina sequencing by synthesis](https://www.illumina.com/documents/products/techspotlights/techspotlight_sequencing.pdf) on Genome Analyzer, HiSeq, MiSeq, NextSeq and NovaSeq instruments.
 This technology was developed by Cambridge scientists Shankar Balasubramanian and David Klenerman in the Department of Chemistry, who formed a company called Solexa in 1998.
 Illumina acquired Solexa in 2007.
 The technology uses flow cells containing clusters of clonally amplified DNA fragments.
