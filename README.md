@@ -633,7 +633,7 @@ We will use the latter approach.
 
 ## Step 3. Aligning the cleaned reads to a reference genome assembly
 
-Now we have removed adapters and low-quality bases from the sequencing reads, we can proceed with the next step in the pipeline: alignment of these cleaned read pairs from the Landsberg *erecta* (L*er*) ecotype to a reference genome assembly for the Columia (Col-0) ecotype, each  the diploid plant species *Arabidopsis thaliana*.
+Now we have removed adapters and low-quality bases from the sequencing reads, we can proceed with the next step in the pipeline: alignment of these cleaned read pairs from the Landsberg *erecta* (L*er*) ecotype to a reference genome assembly for the Columia (Col-0) ecotype.
 These two [ecotypes](https://en.wikipedia.org/wiki/Ecotype) are genetically distinct true-breeding lines within the diploid plant species *Arabidopsis thaliana*.
 Therefore, while they are genetically different from one another, they are each homozygous at every locus (position) on each chromosome.
 
