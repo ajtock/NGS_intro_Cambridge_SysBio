@@ -15,7 +15,7 @@ If you have any questions, please email Andy Tock at <ajt200@cam.ac.uk>.
 
 ## The data
 
-The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) ecotype of the model plant species *Arabidopsis thaliana*, and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
+The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) [ecotype](https://en.wikipedia.org/wiki/Ecotype) of the [diploid](https://www.genome.gov/genetics-glossary/Diploid) model plant species [*Arabidopsis thaliana*](https://en.wikipedia.org/wiki/Arabidopsis_thaliana), and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
 The data are paired-end reads and so there are two files (`SRR3156163_top5M_1.fastq.gz` contains the first read in each pair and `SRR3156163_top5M_2.fastq.gz` the second).
 Each read in a pair was sequenced with 100 chemistry cycle on an Illumina HiSeq 2000 instrument, generating 100 consecutive base calls per read (2×100 bp).
 The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3156163), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
@@ -109,7 +109,7 @@ Construct a command that will print to screen the 500th read in `SRR3156163_top5
 
 Is the 500th read generally better or worse than the first read?
 
-## Evaluating read quality using FastQC
+## Step 1. Evaluating read quality using FastQC
 
 Read quality can be evaluated in a more systematic way using dedicated software, such as [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
 Let's make sure FastQC is installed by invoking the executable file `fastqc` with an option that will report the version.
@@ -375,7 +375,7 @@ Duplication can be addressed by discarding either duplicate reads or duplicate a
 
 If you are working with many FASTQ files, [MultiQC](https://multiqc.info/) can be used to aggregate FastQC-generated results and compile one HTML report that's easier to digest than individual reports for each sample. 
 
-## Removing technical sequences and low-quality bases using Cutadapt
+## Step 2. Removing technical sequences and low-quality bases using Cutadapt
 
 There are several tools available for filtering and trimming reads to remove technical sequences (e.g., sequencing adapters) and low-quality bases, including [Cutadapt](https://cutadapt.readthedocs.io/en/stable/) and [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic).
 Removing these sequences is important because it means that downstream analyses won't be compromised by base calls in which we have low confidence, or by the presence of technical sequences that do not reflect the biology of the sample we have sequenced.
@@ -631,9 +631,45 @@ Duplication can be addressed by discarding either duplicate reads or duplicate a
 We will use the latter approach.
 </p></details>
 
-## Aligning the cleaned reads to a reference genome assembly
+## Step 3. Aligning the cleaned reads to a reference genome assembly
 
-The reference genome assembly for *Arabidopsis thaliana* (`TAIR10_chr_all.fa`) is in [FASTA format](https://en.wikipedia.org/wiki/FASTA_format) and is located in the `genome/` directory.
+Now we have removed adapters and low-quality bases from the sequencing reads, we can proceed with the next step in the pipeline: alignment of these cleaned read pairs from the Landsberg *erecta* (L*er*) ecotpye to a reference genome assembly for the Columia (Col-0) ecotype, each  the diploid plant species *Arabidopsis thaliana*.
+These two [ecotypes](https://en.wikipedia.org/wiki/Ecotype) are genetically distinct true-breeding lines within the diploid plant species *Arabidopsis thaliana*.
+Therefore, while they are genetically different from one another, they are each homozygous at every locus (position) on each chromosome.
+
+Reference genome assemblies are stored in [FASTA format](https://en.wikipedia.org/wiki/FASTA_format), with one of the following file extensions: `.fa`, `.fas` or `.fasta`.
+For species with chromosome-level assemblies, each chromosome is represented as a separate nucleotide sequence in the FASTA file.
+The first line of each separate sequence in the FASTA file is a description line, beginning with a greater-than symbol followed by a description of the sequence (e.g., `>Chr1`).
+The nucleotide sequence is wrapped over the subsequent lines up until the next distinct sequence description line.
+
+The reference genome assembly for *Arabidopsis thaliana* (`TAIR10_chr_all.fa`) is located in the `genome/` directory.
+This was previously downloaded from [The Arabidopsis Information Resource (TAIR)](https://www.arabidopsis.org/download/index-auto.jsp?dir=%2Fdownload_files%2FGenes%2FTAIR10_genome_release%2FTAIR10_chromosome_files), so there's no need to download it for this practical.
+
+### Exercise 5
+
+Run a command that will output the description line of each separate sequence in `genome/TAIR10_chr_all.fa`.
+How many distinct sequences corresponding to nuclear chromosomes and organelles does it contain?
+
+<details>
+  <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
+
+```
+grep '>' genome/TAIR10_chr_all.fa > genome/TAIR10_chr_all_headers.txt
+```
+
+#### Output:
+```
+>1 CHROMOSOME dumped from ADB: Feb/3/09 16:9; last updated: 2009-02-02
+>2 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
+>3 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
+>4 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
+>5 CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2009-02-02
+>mitochondria CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2005-06-03
+>chloroplast CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2005-06-03
+```
+
+There are 5 nuclear chromosomes and 2 sequences corresponding to mitochondria and chloroplast organelles (7 in total)
+</p></details>
 
 Alignment to a reference genome requires index files specific to the alignment software being used.
 **You don't need to generate these index files in this case, as they have already been created in the `genome/` directory to save time.**
@@ -642,4 +678,3 @@ For future reference, the `bowtie2-build` command that was run to create these i
 ```
 bowtie2-build TAIR10_chr_all.fa TAIR10_chr_all
 ```
-
