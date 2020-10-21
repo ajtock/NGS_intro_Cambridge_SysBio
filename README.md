@@ -668,8 +668,11 @@ grep '>' genome/TAIR10_chr_all.fa > genome/TAIR10_chr_all_headers.txt
 >chloroplast CHROMOSOME dumped from ADB: Feb/3/09 16:10; last updated: 2005-06-03
 ```
 
-There are 5 nuclear chromosomes and 2 sequences corresponding to mitochondria and chloroplast organelles (7 in total)
+There are 5 nuclear chromosomes and 2 sequences corresponding to mitochondria and chloroplast organelles.
 </p></details>
+
+
+## Alignment using Bowtie 2
 
 Alignment to a reference genome requires index files specific to the alignment software being used.
 **You don't need to generate these index files in this case, as they have already been created in the `genome/` directory to save time.**
@@ -678,3 +681,4 @@ For future reference, the `bowtie2-build` command that was run to create these i
 ```
 bowtie2-build TAIR10_chr_all.fa TAIR10_chr_all
 ```
+
