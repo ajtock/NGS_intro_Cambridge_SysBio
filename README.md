@@ -647,8 +647,8 @@ This was previously downloaded from [The Arabidopsis Information Resource (TAIR)
 
 ### Exercise 5
 
-Run a command that will output the description line of each separate sequence in `genome/TAIR10_chr_all.fa`.
-How many distinct sequences corresponding to nuclear chromosomes and organelles does it contain?
+Run a command that will output the description line of each separate DNA sequence in `genome/TAIR10_chr_all.fa`.
+How many distinct sequences corresponding to nuclear chromosomes and non-nuclear DNA-containing organelles are there?
 
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
