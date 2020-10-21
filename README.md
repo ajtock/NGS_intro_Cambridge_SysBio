@@ -43,12 +43,12 @@ The files are located in the `fastq/` directory.
 
 Data in FASTQ format conform to these standards:
 
-Line | Description
----- | -----------
-1 | Begins with '@', followed by information about the read
-2 | The DNA sequence
-3 | Begins with '+'
-4 | A character string of the same length as the sequence, encoding quality scores for each base
+| Line | Description                                                                                  |
+|:-----|:---------------------------------------------------------------------------------------------|
+| 1    | Begins with '@', followed by information about the read                                      |
+| 2    | The DNA sequence                                                                             |
+| 3    | Begins with '+'                                                                              |
+| 4    | A character string of the same length as the sequence, encoding quality scores for each base |
 
 Let's first have a look at one of the files to inspect its format.
 In a Unix command-line shell, use `zcat` and `head` to print to screen the first eight lines of `SRR3156163_top5M_1.fastq.gz`.
