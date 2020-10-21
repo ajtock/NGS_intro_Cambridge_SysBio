@@ -28,7 +28,7 @@ A number of considerations come into play when deciding on what kind of sequenci
 Cost and time requirements differ between technologies.
 For example, the costs associated with using newer technology to generate long sequencing reads might not be justifiable or efficient for the intended application.
 Some applications require high sequencing depth of coverage of specific parts of the genome (i.e., large numbers of reads overlapping those genomic positions; e.g., identification of protein binding sites using [ChIP-seq](https://en.wikipedia.org/wiki/ChIP_sequencing), or gene expression profiling via [RNA-seq](https://en.wikipedia.org/wiki/RNA-Seq)).
-Others require greater breadth of coverage of the genome, such as projects aimed at assembling genomes or genomic regions from scratch, termed *de novo* assembly.
+Others require greater breadth of coverage of the genome, such as projects aimed at assembling genomes or genomic regions from scratch, termed [*de novo* assembly](https://en.wikipedia.org/wiki/De_novo_sequence_assemblers).
 Therefore, the different sequencing read lengths, qualities, abundances and error rates that are associated with different technologies need to be taken into account in order to make the right choice.
 
 This practical aims to familiarise you with Illumina next-generation sequencing data and some of the software available for their analysis.
