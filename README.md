@@ -2,22 +2,47 @@
 
 This [link](https://ajtock.github.io/NGS_intro_Cambridge_SysBio/) will take you to the GitHub Pages rendering of this repository.
 
-Following the success of dye-terminator (Sanger) sequencing in the Human Genome Project, a "next" generation of sequencing technologies became available, which were faster, cheaper and produced many more reads in parallel.
-Despite their higher throughput, the reads were shorter and of lower quality than those produced by Sanger sequencing.
-One high-throughput sequencing technology became ubiquitous, Illumina sequencing by synthesis (on GAI/GAII/HiSeq/ MiSeq/NextSeq instruments).
+If you have any questions or comments about the practical, please email Andy Tock at <ajt200@cam.ac.uk>.
+
+## Background
+
+[The cost of DNA sequencing has decreased dramatically since the end of 2007](https://www.genome.gov/about-genomics/fact-sheets/DNA-Sequencing-Costs-Data).
+This was the point at which sequencing efforts increasingly moved away from the [Sanger dye-terminator method](https://en.wikipedia.org/wiki/Sanger_sequencing), to a "next" generation of sequencing technologies, which are faster, cheaper and produce many more reads in parallel.
+Despite their higher throughput, the reads are shorter and of lower quality than those produced by Sanger sequencing.
+
+One next-generation sequencing (NGS) technology has come to dominate: Illumina [sequencing by synthesis](https://www.illumina.com/documents/products/techspotlights/techspotlight_sequencing.pdf) on Genome Analyzer, HiSeq, MiSeq, NextSeq and NovaSeq instruments.
 This technology was developed by Cambridge scientists Shankar Balasubramanian and David Klenerman in the Department of Chemistry, who formed a company called Solexa in 1998.
 Illumina acquired Solexa in 2007.
-A third generation of sequencing machines from Pacific Biosciences (PacBio), Oxford Nanopore Technologies (ONT) and Ion Torrent have become available more recently, with PacBio and ONT providing average read lengths of 10–18 kilobases.
+The technology uses flow cells containing clusters of clonally amplified DNA fragments.
+The underlying nucleotide sequence of each fragment is determined based on signal emitted by each cluster under laser excitation of a fluorescently labelled nucleotide that has been added to an extending sequence complementary to the fragment.
+Billions of clusters per flow cell are sequenced simultaneously, and an image is captured for each successive base along the DNA fragment, with read length dependent on the method employed. 
+This [animation](https://www.youtube.com/watch?v=fCd6B5HRaZ8) shows in detail how Illumina sequencing by synthesis works.
 
-This practical aims to familiarise you with Illumina next-generation sequencing (NGS) data and some of the software available for their analysis.
+Due in large part to this breakthrough technology, we have seen the cost of sequencing a single person’s genome drop from a prohibitive US$10 million in 2007 to ~US$1,000 by mid-2015!
+There have been various refinements to Illumina’s technology, including the use of [patterned flow cells](https://emea.illumina.com/science/technology/next-generation-sequencing/sequencing-technology/patterned-flow-cells.html) that have billions of ordered nanowells.
+These patterned flow cells provide optimal "fixed" rather than random spacing between clusters of clonally amplified DNA fragments, for increased cluster density and simplified imaging.
 
-If you have any questions, please email Andy Tock at <ajt200@cam.ac.uk>.
+A third generation of sequencing machines from [Pacific Biosciences (PacBio)](https://www.pacb.com/smrt-science/smrt-sequencing/) and [Oxford Nanopore Technologies (ONT)](https://nanoporetech.com/how-it-works) have become available more recently, providing average read lengths of 10–18 kilobases.
+
+This practical aims to familiarise you with Illumina next-generation sequencing data and some of the software available for their analysis.
+
+## Technological parameters
+
+A number of considerations come into play when deciding on what kind of sequencing technology to use for a project.
+
+Cost and time requirements differ between technologies.
+For example, the costs associated with using newer technology to generate long sequencing reads might not be justifiable or efficient for the intended application.
+
+Some applications require high sequencing depth of coverage of specific parts of the genome (i.e., large numbers of reads overlapping those genomic positions).
+Others require greater breadth of coverage of the genome, such as projects aimed at assembling genomes or genomic regions from scratch, termed *de novo* assembly.
+
+Therefore, the different sequencing read lengths, qualities, abundances and error rates that are associated with different technologies need to be taken into account in order to make the right choice.
 
 ## The data
 
 The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) [ecotype](https://en.wikipedia.org/wiki/Ecotype) of the [diploid](https://www.genome.gov/genetics-glossary/Diploid) model plant species [*Arabidopsis thaliana*](https://en.wikipedia.org/wiki/Arabidopsis_thaliana), and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
 The data are paired-end reads and so there are two files (`SRR3156163_top5M_1.fastq.gz` contains the first read in each pair and `SRR3156163_top5M_2.fastq.gz` the second).
-Each read in a pair was sequenced with 100 chemistry cycle on an Illumina HiSeq 2000 instrument, generating 100 consecutive base calls per read (2×100 bp).
+Each read in a pair was sequenced with 100 chemistry cycles on an [Illumina HiSeq 2000](https://www.illumina.com/documents/products/datasheets/datasheet_hiseq2000.pdf), generating 100 consecutive base calls per read (2×100 bp).
 The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3156163), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
 The top 5 million reads (`top5M`) in each of the two files were extracted in order to reduce time spent on data processing in this practical.
 
@@ -673,6 +698,7 @@ There are 5 nuclear chromosomes and 2 sequences corresponding to mitochondria an
 
 
 ## Alignment using Bowtie 2
+
 
 Alignment to a reference genome requires index files specific to the alignment software being used.
 **You don't need to generate these index files in this case, as they have already been created in the `genome/` directory to save time.**
