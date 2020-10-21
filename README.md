@@ -24,19 +24,14 @@ These patterned flow cells provide optimal "fixed" rather than random spacing be
 
 A third generation of sequencing machines from [Pacific Biosciences (PacBio)](https://www.pacb.com/smrt-science/smrt-sequencing/) and [Oxford Nanopore Technologies (ONT)](https://nanoporetech.com/how-it-works) have become available more recently, providing average read lengths of 10–18 kilobases.
 
-This practical aims to familiarise you with Illumina next-generation sequencing data and some of the software available for their analysis.
-
-## Technological parameters
-
 A number of considerations come into play when deciding on what kind of sequencing technology to use for a project.
-
 Cost and time requirements differ between technologies.
 For example, the costs associated with using newer technology to generate long sequencing reads might not be justifiable or efficient for the intended application.
-
-Some applications require high sequencing depth of coverage of specific parts of the genome (i.e., large numbers of reads overlapping those genomic positions).
+Some applications require high sequencing depth of coverage of specific parts of the genome (i.e., large numbers of reads overlapping those genomic positions; e.g., identification of protein binding sites using [ChIP-seq](https://en.wikipedia.org/wiki/ChIP_sequencing), or gene expression profiling via [RNA-seq](https://en.wikipedia.org/wiki/RNA-Seq)).
 Others require greater breadth of coverage of the genome, such as projects aimed at assembling genomes or genomic regions from scratch, termed *de novo* assembly.
-
 Therefore, the different sequencing read lengths, qualities, abundances and error rates that are associated with different technologies need to be taken into account in order to make the right choice.
+
+This practical aims to familiarise you with Illumina next-generation sequencing data and some of the software available for their analysis.
 
 ## The data
 
