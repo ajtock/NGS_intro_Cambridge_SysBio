@@ -701,7 +701,7 @@ There are 5 nuclear chromosomes and 2 sequences corresponding to mitochondria an
 ## Alignment using Bowtie 2
 
 To align the cleaned read pairs (`SRR3156163_top5M_1_trimmed.fastq.gz` and `SRR3156163_top5M_2_trimmed.fastq.gz`) to the reference genome, we're going to use [Bowtie 2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml), a fast and memory-efficient tool that indexes the reference genome with an [FM-index](https://en.wikipedia.org/wiki/FM-index) based on the [Burrows–Wheeler Transform (BWT)](https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform). From [Li and Durbin (2009) *Bioinformatics* **25**. DOI: 10.1093/bioinformatics/btp324](https://doi.org/10.1093/bioinformatics/btp324):
-> "Essentially, using backward search [...] with BWT, we are able to effectively mimic the top-down traversal on the prefix trie of the genome with relatively small memory footprint [...] and to count the number of exact hits of a string of length m in *O*(*m*) time independent of the size of the genome."
+> "Essentially, using backward search [...] with BWT, we are able to effectively mimic the top-down traversal on the prefix trie of the genome with relatively small memory footprint [...] and to count the number of exact hits of a string of length *m* in *O*(*m*) time independent of the size of the genome."
 
 Alignment to a reference genome requires index files specific to the alignment software being used.
 **You don't need to generate these index files in this case, as they have already been created in the `genome/` directory to save time.**
