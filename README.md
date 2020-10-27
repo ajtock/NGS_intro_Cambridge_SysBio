@@ -921,7 +921,8 @@ SRR3166543.42	163	1	2684668	42	67M	=	2684801	168	TCTGTTACTTTTTGATATAATAAAGTTCCAC
 ```
 
 The SAM output has one line per read and, where applicable, alignments for paired reads are output on consecutive lines.
-Each line is a collection of at least 12 tab-separated fields; from left to right, the fields are:
+Each line is a collection of at least 11 tab-separated fields.
+From left to right, the fields are:
 
 1. Name of read that aligned
 
