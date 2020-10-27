@@ -981,7 +981,7 @@ For further details on SAM mandatory and optional fields, see the [Sequence Alig
 
 ## Step 4. Filtering alignments using SAMtools
 
-Now that we have obtained read alignments in SAM format, it's necessary to use [SAMtools](http://www.htslib.org/doc/samtools.html) to filter out ambiguous alignments which could leave us with unreliable genotype information for Landsberg *erecta* (L*er*) at given genomic coordinates.
+Now that we have obtained read alignments in SAM format, it's necessary to use [SAMtools](http://www.htslib.org/doc/samtools.html) to filter out ambiguous alignments, which could leave us with unreliable genotype information for Landsberg *erecta* (L*er*) at given genomic coordinates.
 
 ### Exercise 7
 
