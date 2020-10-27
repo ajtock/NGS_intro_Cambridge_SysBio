@@ -36,10 +36,10 @@ This practical aims to familiarise you with Illumina next-generation sequencing 
 ## The data
 
 The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) [ecotype](https://en.wikipedia.org/wiki/Ecotype) of the [diploid](https://www.genome.gov/genetics-glossary/Diploid) model plant species [*Arabidopsis thaliana*](https://en.wikipedia.org/wiki/Arabidopsis_thaliana), and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
-The data are [paired-end reads](https://emea.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) and so there are two files (`SRR3156163_top5M_1.fastq.gz` contains the first read in each pair and `SRR3156163_top5M_2.fastq.gz` the second).
+The data are [paired-end reads](https://emea.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) and so there are two files (`SRR3166543_top1M_1.fastq.gz` contains the first read in each pair and `SRR3166543_top1M_2.fastq.gz` the second).
 Each read in a pair was sequenced with 100 chemistry cycles on an [Illumina HiSeq 2000](https://www.illumina.com/documents/products/datasheets/datasheet_hiseq2000.pdf), generating 100 consecutive base calls per read (2×100 bp).
-The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3156163), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
-The top 5 million reads (`top5M`) in each of the two files were extracted in order to reduce time spent on data processing in today's practical.
+The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3166543), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
+The top 5 million reads (`top1M`) in each of the two files were extracted in order to reduce time spent on data processing in today's practical.
 
 ## The pipeline/workflow
 
@@ -71,28 +71,28 @@ Data in FASTQ format conform to these standards:
 | 4    | A character string of the same length as the sequence, encoding quality scores for each base
 
 Let's first have a look at one of the files to inspect its format.
-In a Unix command-line shell, use `zcat` and `head` to print to screen the first eight lines of `SRR3156163_top5M_1.fastq.gz`.
+In a Unix command-line shell, use `zcat` and `head` to print to screen the first eight lines of `SRR3166543_top1M_1.fastq.gz`.
 We need to use `zcat` here to uncompress the gzip-compressed file.
 The `|` part pipes the output of the `zcat` command to the `head` command.
 
 ```
-zcat fastq/SRR3156163_top5M_1.fastq.gz | head -n 8
+zcat fastq/SRR3166543_top1M_1.fastq.gz | head -n 8
 ```
 
 ### Output:
 ```
-@SRR3156163.1 1/1
-TTTGCTTGTNNNNNNNNNNNNNTCATCATGAANNNNNNNNNNNNNNNNNNGTCAGATACAANNNNNNNNNNNNNNTTGTGGAAGCAGGAGATGTGGNNGT
+@SRR3166543.1 1/1
+NTATNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNTGTTNNNNNNNNNNNNNNNNNNNNTTCATACGGACTTNNNNNNNNNNN
 +
-<<<@@????###########################################################################################
-@SRR3156163.2 2/1
-TGATTCGCTTNGNNNNNNNNNGTCGCCACAGCANNNNNNNNNNNNNNNNCGTATAGCATACNNNNNNNNNNNNNNTACGAGCTGCATTAAAGTAGCGCAG
+####################################################################################################
+@SRR3166543.2 2/1
+NATANNNNNNNNNNNNNNNNNNNNNNNTNNNNNNNNNNNNNNNNNNNNNNNNTTTTGNNNNNNNNNNNNNNNNNNNAGACATTAAAGAANNNNNNNNNNN
 +
-<<<?@@????#3#########21@=????????###################################################################
+#0;@################################################################################################
 ```
 
 The first four lines show data for one read and the next four lines show data for the subsequent read, each corresponding to the first read in a pair of reads.
-The second read in each pair is contained in `SRR3156163_top5M_2.fastq.gz`.
+The second read in each pair is contained in `SRR3166543_top1M_2.fastq.gz`.
 The first line for each read contains a unique identifier and, as these are paired-end reads, `/1` indicates that this is the first read in the pair.
 
 The quality score of each base identified in a sequencing read is encoded as a single character on the fourth line.
@@ -109,25 +109,26 @@ Is the first read composed of mostly high-quality or low-quality base calls?
 
 ### Exercise 1
 
-Construct a command that will print to screen the 500th read in `SRR3156163_top5M_1.fastq.gz` in order to inspect its quality.
+Construct a command that will print to screen the 1000th read in `SRR3166543_top1M_1.fastq.gz` in order to inspect its quality.
+Is the 500th read generally better or worse than the first read?
 
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
   ```
-  zcat fastq/SRR3156163_top5M_1.fastq.gz | head -n 2000 | tail -n 4
+  zcat fastq/SRR3166543_top1M_1.fastq.gz | head -n 4000 | tail -n 4
   ```
 
   #### Output:
   ```
-  @SRR3156163.500 500/1
-  GAGGAAGCTTGACGCAGCGGAGGAATCTTTGCTGACCCCATCGGTCGTATAACTTCGTATAATGTATGCTATACGAAGTTATTACGGTCGTGGAGCAAGG
+  @SRR3166543.1000 1000/1
+  TTGCCTATTGGTCAGTTTTTTCTTTTAAGTTTGACCCNNANCNNNNNATAAATTGTGATAAAACTTANNNNNNNAAATATATTTTATATTTTATATGTCT
   +
-  CCCFFFFFHHGHHIJJJJJJGIIFIJIJJJJJJJIJIJJJJJJJCGHFFFFFFDEDD;@CDDCCBCACDDCDEDDBBB8ADEDDD<>?BDDD>BDCBCC?
+  @B@DFFDFHHHDDFHGGGJIIIIJJJJIJIIJFAGGH##0#0#####007;;FHIIJIIIGHGEIG@#######,,;?BDEEDFEDDEEEFECDCFDCDC
   ```
-</p></details>
 
-Is the 500th read generally better or worse than the first read?
+  It's better than the first read, although there are some low-quality "N"s. 
+</p></details>
 
 ## Step 1. Evaluating read quality using FastQC
 
@@ -145,9 +146,11 @@ FastQC v0.11.9
 
 The `--version` and `--help` options are usually, but not always, available for most tools.
 The latter generally shows an example of typical usage of the executable file with arguments, along with a list of options for the program.
+"Piping" the output into the `less` command using `|` allows you to scroll through the output with the `up` and `down` keys.
+Type `q` to exit the `less` program when you've finished inspecting the output.
 
 ```
-fastqc --help
+fastqc --help | less
 ```
 
 ### Output:
@@ -296,48 +299,48 @@ Progress made by FastQC on analysing each file will be printed to screen.
 
 ### Output:
 ```
-Started analysis of SRR3156163_top5M_1.fastq.gz
-Approx 5% complete for SRR3156163_top5M_1.fastq.gz
-Approx 10% complete for SRR3156163_top5M_1.fastq.gz
-Approx 15% complete for SRR3156163_top5M_1.fastq.gz
-Approx 20% complete for SRR3156163_top5M_1.fastq.gz
-Approx 25% complete for SRR3156163_top5M_1.fastq.gz
-Approx 30% complete for SRR3156163_top5M_1.fastq.gz
-Approx 35% complete for SRR3156163_top5M_1.fastq.gz
-Approx 40% complete for SRR3156163_top5M_1.fastq.gz
-Approx 45% complete for SRR3156163_top5M_1.fastq.gz
-Approx 50% complete for SRR3156163_top5M_1.fastq.gz
-Approx 55% complete for SRR3156163_top5M_1.fastq.gz
-Approx 60% complete for SRR3156163_top5M_1.fastq.gz
-Approx 65% complete for SRR3156163_top5M_1.fastq.gz
-Approx 70% complete for SRR3156163_top5M_1.fastq.gz
-Approx 75% complete for SRR3156163_top5M_1.fastq.gz
-Approx 80% complete for SRR3156163_top5M_1.fastq.gz
-Approx 85% complete for SRR3156163_top5M_1.fastq.gz
-Approx 90% complete for SRR3156163_top5M_1.fastq.gz
-Approx 95% complete for SRR3156163_top5M_1.fastq.gz
-Analysis complete for SRR3156163_top5M_1.fastq.gz
-Started analysis of SRR3156163_top5M_2.fastq.gz
-Approx 5% complete for SRR3156163_top5M_2.fastq.gz
-Approx 10% complete for SRR3156163_top5M_2.fastq.gz
-Approx 15% complete for SRR3156163_top5M_2.fastq.gz
-Approx 20% complete for SRR3156163_top5M_2.fastq.gz
-Approx 25% complete for SRR3156163_top5M_2.fastq.gz
-Approx 30% complete for SRR3156163_top5M_2.fastq.gz
-Approx 35% complete for SRR3156163_top5M_2.fastq.gz
-Approx 40% complete for SRR3156163_top5M_2.fastq.gz
-Approx 45% complete for SRR3156163_top5M_2.fastq.gz
-Approx 50% complete for SRR3156163_top5M_2.fastq.gz
-Approx 55% complete for SRR3156163_top5M_2.fastq.gz
-Approx 60% complete for SRR3156163_top5M_2.fastq.gz
-Approx 65% complete for SRR3156163_top5M_2.fastq.gz
-Approx 70% complete for SRR3156163_top5M_2.fastq.gz
-Approx 75% complete for SRR3156163_top5M_2.fastq.gz
-Approx 80% complete for SRR3156163_top5M_2.fastq.gz
-Approx 85% complete for SRR3156163_top5M_2.fastq.gz
-Approx 90% complete for SRR3156163_top5M_2.fastq.gz
-Approx 95% complete for SRR3156163_top5M_2.fastq.gz
-Analysis complete for SRR3156163_top5M_2.fastq.gz
+Started analysis of SRR3166543_top1M_1.fastq.gz
+Approx 5% complete for SRR3166543_top1M_1.fastq.gz
+Approx 10% complete for SRR3166543_top1M_1.fastq.gz
+Approx 15% complete for SRR3166543_top1M_1.fastq.gz
+Approx 20% complete for SRR3166543_top1M_1.fastq.gz
+Approx 25% complete for SRR3166543_top1M_1.fastq.gz
+Approx 30% complete for SRR3166543_top1M_1.fastq.gz
+Approx 35% complete for SRR3166543_top1M_1.fastq.gz
+Approx 40% complete for SRR3166543_top1M_1.fastq.gz
+Approx 45% complete for SRR3166543_top1M_1.fastq.gz
+Approx 50% complete for SRR3166543_top1M_1.fastq.gz
+Approx 55% complete for SRR3166543_top1M_1.fastq.gz
+Approx 60% complete for SRR3166543_top1M_1.fastq.gz
+Approx 65% complete for SRR3166543_top1M_1.fastq.gz
+Approx 70% complete for SRR3166543_top1M_1.fastq.gz
+Approx 75% complete for SRR3166543_top1M_1.fastq.gz
+Approx 80% complete for SRR3166543_top1M_1.fastq.gz
+Approx 85% complete for SRR3166543_top1M_1.fastq.gz
+Approx 90% complete for SRR3166543_top1M_1.fastq.gz
+Approx 95% complete for SRR3166543_top1M_1.fastq.gz
+Analysis complete for SRR3166543_top1M_1.fastq.gz
+Started analysis of SRR3166543_top1M_2.fastq.gz
+Approx 5% complete for SRR3166543_top1M_2.fastq.gz
+Approx 10% complete for SRR3166543_top1M_2.fastq.gz
+Approx 15% complete for SRR3166543_top1M_2.fastq.gz
+Approx 20% complete for SRR3166543_top1M_2.fastq.gz
+Approx 25% complete for SRR3166543_top1M_2.fastq.gz
+Approx 30% complete for SRR3166543_top1M_2.fastq.gz
+Approx 35% complete for SRR3166543_top1M_2.fastq.gz
+Approx 40% complete for SRR3166543_top1M_2.fastq.gz
+Approx 45% complete for SRR3166543_top1M_2.fastq.gz
+Approx 50% complete for SRR3166543_top1M_2.fastq.gz
+Approx 55% complete for SRR3166543_top1M_2.fastq.gz
+Approx 60% complete for SRR3166543_top1M_2.fastq.gz
+Approx 65% complete for SRR3166543_top1M_2.fastq.gz
+Approx 70% complete for SRR3166543_top1M_2.fastq.gz
+Approx 75% complete for SRR3166543_top1M_2.fastq.gz
+Approx 80% complete for SRR3166543_top1M_2.fastq.gz
+Approx 85% complete for SRR3166543_top1M_2.fastq.gz
+Approx 90% complete for SRR3166543_top1M_2.fastq.gz
+Approx 95% complete for SRR3166543_top1M_2.fastq.gz
+Analysis complete for SRR3166543_top1M_2.fastq.gz
 ```
 
 Navigate to the output directory and list its contents.
@@ -349,10 +352,10 @@ ls -1
 
 ### Output:
 ```
-SRR3156163_top5M_1_fastqc.html
-SRR3156163_top5M_1_fastqc.zip
-SRR3156163_top5M_2_fastqc.html
-SRR3156163_top5M_2_fastqc.zip
+SRR3166543_top1M_1_fastqc.html
+SRR3166543_top1M_1_fastqc.zip
+SRR3166543_top1M_2_fastqc.html
+SRR3166543_top1M_2_fastqc.zip
 ```
 
 ### FastQC summary statistics and graphs
@@ -376,7 +379,7 @@ Each HTML file contains statistics and graphs summarising the FastQC results:
 Have a look at the FastQC-generated HTML file for each FASTQ file by opening them in a web browser.
 
 ```
-firefox SRR3156163_top5M_1_fastqc.html SRR3156163_top5M_2_fastqc.html
+firefox SRR3166543_top1M_1_fastqc.html SRR3166543_top1M_2_fastqc.html
 ```
 
 What quality issues can you see in these reports, and how could they be fixed?
@@ -386,14 +389,13 @@ What quality issues can you see in these reports, and how could they be fixed?
 
   They are generally high-quality sequencing reads. However, there are some issues that should be addressed:
   1. Per-base sequence quality decreases towards the ends of the reads (particularly towards their 3′ ends)
-  2. There are many duplicated reads, which may have resulted from [PCR](https://en.wikipedia.org/wiki/Polymerase_chain_reaction) amplification biases
-  3. Illumina TruSeq adapter sequences are over-represented among reads in `SRR3156163_top5M_1.fastq.gz`
+  2. There are some duplicated reads, which may have resulted from [PCR](https://en.wikipedia.org/wiki/Polymerase_chain_reaction) amplification biases
   
-  The first and third of these issues can be resolved using software developed to trim off sequencing adapters and low-quality bases.
+  The first issue can be resolved using software developed to trim off low-quality bases and sequencing adapters.
   Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
 </p></details>
 
-If you are working with many FASTQ files, [MultiQC](https://multiqc.info/) can be used to aggregate FastQC-generated results and compile one HTML report that's easier to digest than individual reports for each sample. 
+If in future you are working with many FASTQ files, [MultiQC](https://multiqc.info/) can be used to aggregate FastQC-generated results and compile one HTML report that's easier to digest than individual reports for each sample. 
 
 ## Step 2. Removing technical sequences and low-quality bases using Cutadapt
 
@@ -405,9 +407,11 @@ We're going to use Cutadapt for this step in the pipeline, so let's have a look 
 
 ```
 pwd
+ls
 cd ../../../
 pwd
-cutadapt --help
+ls
+cutadapt --help | less
 ```
 
 ### Output:
@@ -611,13 +615,13 @@ What proportion of read pairs and base calls passed the filters?
             --quality-cutoff 20 \
             --overlap 4 \
             --minimum-length 30 \
-            --output results/cutadapt/SRR3156163_top5M_1_trimmed.fastq.gz \
-            --paired-output results/cutadapt/SRR3156163_top5M_2_trimmed.fastq.gz \
-            fastq/SRR3156163_top5M_1.fastq.gz \
-            fastq/SRR3156163_top5M_2.fastq.gz) &> results/cutadapt/SRR3156163_top5M_cutadapt_report.log
+            --output results/cutadapt/SRR3166543_top1M_1_trimmed.fastq.gz \
+            --paired-output results/cutadapt/SRR3166543_top1M_2_trimmed.fastq.gz \
+            fastq/SRR3166543_top1M_1.fastq.gz \
+            fastq/SRR3166543_top1M_2.fastq.gz) &> results/cutadapt/SRR3166543_top1M_cutadapt_report.log
   ```
 
-  91% of read pairs and 88.4% of base calls remain after cleaning.
+  97% of read pairs and 95.9% of base calls remain after cleaning.
 </p></details>
 
 We can now use FastQC to evaluate the quality of the Cutadapt-trimmed reads, so let's make an output directory to contain the FastQC results.
@@ -640,17 +644,11 @@ Is any further cleaning required?
          results/cutadapt/*.fastq.gz
   ```
   
-  The quality of the reads has improved after cleaning with Cutadapt, but some warnings and so-called "failures" remain.
-  
-  The warning for the [Per base sequence content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/4%20Per%20Base%20Sequence%20Content.html) module can be safely ignored, as:
-  > "some types of library will always produce biased sequence composition, normally at the start of the read. Libraries produced by priming using random hexamers (including nearly all RNA-Seq libraries) and those which were fragmented using transposases inherit an intrinsic bias in the positions at which reads start. This bias does not concern an absolute sequence, but instead provides enrichement of a number of different K-mers at the 5’ end of the reads. Whilst this is a true technical bias, it isn't something which can be corrected by trimming and in most cases doesn't seem to adversely affect the downstream analysis."
-  
-  The [Per sequence GC content](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/5%20Per%20Sequence%20GC%20Content.html) may also reflect this technical bias.
+  The quality of the reads has improved after cleaning with Cutadapt, but there are some issues.
   
   The [Sequence length distribution](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/7%20Sequence%20Length%20Distribution.html) warning can also be ignored as we expect variable-length sequences after trimming.
   
-  "Failure" with regard to [Sequence duplication levels](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/Help/3%20Analysis%20Modules/8%20Duplicate%20Sequences.html), however, will need attention.
-  Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
+  Sequence duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
   We will use the latter approach.
 </p></details>
 
@@ -676,7 +674,7 @@ How many distinct sequences corresponding to nuclear chromosomes and non-nuclear
 <details>
   <summary><em><strong>Hint</strong> (click to reveal/hide)</em></summary><p>
 
-A command-line tool that could be used for this is an acronym for <ins>g</ins>lobal <ins>r</ins>egular <ins>e</ins>xpression <ins>p</ins>rint, combined with a character in speech marks that you know to be present in all sequence description lines of the FASTA file.
+  A command-line tool that could be used for this is an acronym for <ins>g</ins>lobal <ins>r</ins>egular <ins>e</ins>xpression <ins>p</ins>rint, combined with a character in speech marks that you know to be present in all sequence description lines of the FASTA file.
 </p></details>
 
 <details>
@@ -703,7 +701,8 @@ A command-line tool that could be used for this is an acronym for <ins>g</ins>lo
 
 ## Alignment using Bowtie 2
 
-To align the cleaned read pairs (`SRR3156163_top5M_1_trimmed.fastq.gz` and `SRR3156163_top5M_2_trimmed.fastq.gz`) to the reference genome, we're going to use [Bowtie 2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml), a fast and memory-efficient tool that indexes the reference genome with an [FM-index](https://en.wikipedia.org/wiki/FM-index) based on the [Burrows–Wheeler Transform (BWT)](https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform). From [Li and Durbin (2009) *Bioinformatics* **25**](https://doi.org/10.1093/bioinformatics/btp324):
+To align the cleaned read pairs (`SRR3166543_top1M_1_trimmed.fastq.gz` and `SRR3166543_top1M_2_trimmed.fastq.gz`) to the reference genome, we're going to use [Bowtie 2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml), a fast and memory-efficient tool that indexes the reference genome with an [FM-index](https://en.wikipedia.org/wiki/FM-index) based on the [Burrows–Wheeler Transform (BWT)](https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform).
+From [Li and Durbin (2009) *Bioinformatics* **25**](https://doi.org/10.1093/bioinformatics/btp324):
 > "Essentially, using backward search [...] with BWT, we are able to effectively mimic the top-down traversal on the prefix trie of the genome with relatively small memory footprint [...] and to count the number of exact hits of a string of length *m* in *O*(*m*) time independent of the size of the genome."
 
 Alignment to a reference genome requires index files specific to the alignment software being used.
@@ -717,7 +716,7 @@ bowtie2-build TAIR10_chr_all.fa TAIR10_chr_all
 As we already have the genome index files, have a look at the Bowtie 2 `--help` output for information about example usage and options.
 
 ```
-bowtie2 --help
+bowtie2 --help | less
 ```
 
 ### Output:
@@ -884,96 +883,99 @@ mkdir results/bowtie2
 Using the usage example printed above and the [Bowtie 2 manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml), write and run a `bowtie2` command that specifies the reference genome and the trimmed read pairs.
 Include in your command an option that will prevent Bowtie 2 from attempting to find alignments for the individual mates in a read pair, along with a separate option that will prevent Bowtie 2 from attempting to find alignments that do not satisfy the paired-end constraints.
 Redirect the stdout and stderr generated by your `bowtie2` command to an appropriately named log file, which will be useful for future reference.
+What proportion of read pairs aligned "concordantly" (i.e., in a manner that satisfies their paired-end constraints) to only one location in the genome (so-called "unique" alignments)?
+What proportion aligned to multiple genomic locations ("multiple" alignments)?
 
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
   ```
   (bowtie2 --very-fast \
+           --no-mixed \
+           --no-discordant \
            -x genome/TAIR10_chr_all \
-           -1 results/cutadapt/SRR3156163_top5M_1_trimmed.fastq.gz \
-           -2 results/cutadapt/SRR3156163_top5M_2_trimmed.fastq.gz \
-           -S results/bowtie2/SRR3156163_top5M_MappedOn_TAIR10_chr_all.sam) \
-  &> results/bowtie2/SRR3156163_top5M_MappedOn_TAIR10_chr_all_report.log 
+           -1 results/cutadapt/SRR3166543_top1M_1_trimmed.fastq.gz \
+           -2 results/cutadapt/SRR3166543_top1M_2_trimmed.fastq.gz \
+           -S results/bowtie2/SRR3166543_top1M_MappedOn_TAIR10_chr_all.sam) \
+  &> results/bowtie2/SRR3166543_top1M_MappedOn_TAIR10_chr_all_report.log 
   ```
+
+  61.03% of read pairs aligned concordantly to only one genomic location.
+  25.86% aligned concordantly to multiple genomic locations.
 </p></details>
 
-
-We can look at the first 6 alignments with:
+Have a look at the first 6 alignments using [SAMtools](http://www.htslib.org/doc/samtools.html):
 
 ```
-samtools view results/bowtie2/SRR3156163_top5M_MappedOn_TAIR10_chr_all.sam | head -n 6
+samtools view results/bowtie2/SRR3166543_top1M_MappedOn_TAIR10_chr_all.sam | head -n 6
 ```
 
-Take a look at the output. Unlike the \textsf{Bowtie} ".aln" output file, the \textsf{SAM} output has one line per read. Each line is a collection of at least 12 fields separated by tabs; from left to right, the fields are:
+### Output:
+```
+SRR3166543.26	77	*	0	0	*	*	0	0	TAGCGTACCGCATTGAGAAAAAAGGTGAAGATGAGATTGCGTCTTTNACTGAGAATATTAATAATATGNNNNNNGAGCTTATGAATAATATAGAAAAGGA	CCCFFFFFHHHHHJJHIHJJJIJIJ?FHGIIJJIJIJJJJJJJJJJ#-;DHFHHHHHFFFFFFFFEFE######,,58<CACCDEDCDDDA@C@CDD<BA	YT:Z:UP
+SRR3166543.26	141	*	0	0	*	*	0	0	AACCCNNNNNNNAAGTAAGTGGNNNNNNNNNNNCATGAGATNNNNNNNNNNTAAGCTCATTTTTCTGCTTTNNNNNNNNACGTTCCTTTTCTATA	@CCFF#######22ACGIIHHI###########00?FGHHH##########--;CEHHHHHFFFFFFEEEE########,,8<?BDDDDCDDEEE	YT:Z:UP	YF:Z:NS
+SRR3166543.28	77	*	0	0	*	*	0	0	TTAGAACATGTATTCTAAGATTTCCTTCATATTCTAAGTTATGTGTGAAATTGTATTCTAAGAATTTTTTATTGTTATGTGTCATGAAAGACAGCACAAG	@@@FDDFDHHHDHJIJHIIEEHHIJJJJFIEIIIIIIIIIEGIIIHIFCHIIIDDHIJIJJIGFGEJJJIGHIGG@FHJJJIIJHHC:CHFFFFE@EEB?	YT:Z:UP
+SRR3166543.28	141	*	0	0	*	*	0	0	TTGTCNNNNNNNNGAGCATNNNNNNNNNNNNNNNAAANTNNNNNNNNNNNNGATCCATCTCGTTTGTCCCAAANANNNATTCCATACGACAAGCCT	CCCFF########22AEGG###############008#0############--;AEFFFFFEDDDDACDDDDD#,###,,2<@DEDDDBDDBDBDC	YT:Z:UP	YF:Z:NS
+SRR3166543.42	83	1	2684801	42	35M	=	2684668	-168	ACTGTTGGTTTGGTNNNTGGTATTCTTACTGAAGA	??????;@5?==33###>=8@?<>?>@@@>?@<<<	AS:i:-3	XN:i:0	XM:i:3	XO:i:0	XG:i:0	NM:i:3	MD:Z:14A0T0T18	YS:i:-1	YT:Z:CP
+SRR3166543.42	163	1	2684668	42	67M	=	2684801	168	TCTGTTACTTTTTGATATAATAAAGTTCCACTAGGCTAGGTTTTTCTGGCTNTAGTCCTTGGAAGCA	@@CFDFDDFHDBFHHIIBDBFJIJGCEHAFAHGEE)??8CDC?CGD>?DG?#0?BDFHIJIIIIGG;	AS:i:-1	XN:i:0	XM:i:1	XO:i:0	XG:i:0	NM:i:1	MD:Z:51T15	YS:i:-3	YT:Z:CP
+```
 
-1.  \>Name of read that aligned \\
+The SAM output has one line per read and, where applicable, alignments for paired reads are output on consecutive lines.
+Each line is a collection of at least 12 tab-separated fields; from left to right, the fields are:
 
-2.  \>Sum of all applicable flags. Flags relevant to Bowtie 2 are: \\
+1. Name of read that aligned
 
-      \>1   \>The read is one of a pair \\
+2. Sum of all applicable flags. Flags relevant to Bowtie 2 are:
 
-      \>2   \>The alignment is one end of a proper paired-end alignment \\
+     1   The read is one of a pair
 
-      \>4   \>The read has no reported alignments \\
+     2   The alignment is one end of a proper paired-end alignment
 
-      \>8   \>The read is one of a pair and has no reported alignments \\
+     4   The read has no reported alignments
 
-      \>16  \>The alignment is to the reverse reference strand \\
+     8   The read is one of a pair and has no reported alignments
 
-      \>32  \>The other mate in the paired-end alignment is aligned to the reverse reference strand \\
+     16  The alignment is to the reverse reference strand
 
-      \>64  \>The read is the first (\#1) mate in a pair \\
+     32  The other mate in the paired-end alignment is aligned to the reverse reference strand
 
-      \>128 \>The read is the second (\#2) mate in a pair \\
-\\
-      Thus, an unpaired read that aligns to the reverse reference strand will have flag 16. \\
-      A paired-end read that aligns and is the first mate in the pair will have flag 83 (= 64 + 16 + 2 + 1). \\
-\\
-3.  \>Name of reference sequence where alignment occurs, or ordinal ID if no name was provided \\
+     64  The read is the first (\#1) mate in a pair
 
-4.  \>1-based offset into the forward reference strand where leftmost character of the alignment occurs \\
+     128 The read is the second (\#2) mate in a pair
 
-5.  \>Mapping quality \\
+     Thus, an unpaired read that aligns to the reverse reference strand will have flag 16.
+     A paired-end read that aligns and is the first mate in the pair will have flag 83 (= 64 + 16 + 2 + 1).
 
-6.  \>CIGAR string representation of alignment \\
+3. Name of reference sequence where alignment occurs, or ordinal ID if no name was provided
 
-7.  \>Name of reference sequence where mate's alignment occurs. Set to = if the mate's reference \\
-    \>sequence is the same as this alignment's, or * if there is no mate. \\
+4. 1-based offset into the forward reference strand where leftmost character of the alignment occurs
 
-8.  \>1-based offset into the forward reference strand where leftmost character of the mate's \\
-    \>alignment occurs. Offset is 0 if there is no mate. \\
+5. Mapping quality
 
-9.  \>Inferred insert size. Size is negative if the mate's alignment occurs upstream of this alignment. \\
-    \>Size is 0 if there is no mate. \\
+6. CIGAR string representation of alignment
 
-10.  \>Read sequence (reverse-complemented if aligned to the reverse strand) \\
+7. Name of reference sequence where mate's alignment occurs. Set to = if the mate's reference sequence is the same as this alignment's, or * if there is no mate.
 
-11.  \>ASCII-encoded read qualities (reverse-complemented if the read aligned to the reverse strand).\\
-     \>The encoded quality values are on the Phred quality scale and the encoding is ASCII-offset \\
-     \>by 33 (ASCII char !), similarly to a FASTQ file. \\
+8. 1-based offset into the forward reference strand where leftmost character of the mate's alignment occurs. Offset is 0 if there is no mate.
 
-12.  \>Optional fields. Fields are tab-separated. For descriptions of all possible optional fields, \\
-     \>see the SAM format specification. bowtie outputs some of these optional fields for each alignment, \\
-     \>depending on the type of the alignment:\\
+9. Inferred insert size. Size is negative if the mate's alignment occurs upstream of this alignment.  Size is 0 if there is no mate.
 
-      \>NM:i:\textless N \textgreater  \>Aligned read has an edit distance of \textless N \textgreater. \\
+10. Read sequence (reverse-complemented if aligned to the reverse strand)
 
-      \>CM:i:\textless N \textgreater  \>Aligned read has an edit distance of \textless N \textgreater in colorspace. This field is present \\
-      \>          \>in addition to the NM field in -C/--color mode, but is omitted otherwise.\\
+11. ASCII-encoded read qualities (reverse-complemented if the read aligned to the reverse strand). The encoded quality values are on the Phred quality scale and the encoding is ASCII-offset by 33 (ASCII char !), similarly to a FASTQ file.
 
-      \>MD:Z:\textless S \textgreater  \>For aligned reads, \textless S \textgreater is a string representation of the mismatched reference \\
-      \>          \>bases in the alignment. See SAM format specification for details. \\
+12. Optional fields. Fields are tab-separated. For descriptions of all possible optional fields, see the SAM format specification. bowtie outputs some of these optional fields for each alignment, depending on the type of the alignment:
 
-      \>XA:i:\textless N \textgreater  \>Aligned read belongs to stratum \textless N \textgreater. See Strata for definition. \\
+     NM:i:\textless N \textgreater  Aligned read has an edit distance of \textless N \textgreater.
 
-      \>XM:i:\textless N \textgreater  \>For a read with no reported alignments, \textless N \textgreater is 0 if the read had no alignments. \\
-      \>          \>If -m was specified and the read's alignments were supressed because the -m \\
-      \>          \>ceiling was exceeded, \textless N \textgreater equals the -m ceiling + 1, to indicate that there were \\
-      \>          \>at least that many valid alignments (but all were suppressed). In -M mode, if \\
-      \>          \>the alignment was randomly selected because the -M ceiling was exceeded, \textless N \textgreater equals \\
-      \>          \>the -M ceiling + 1, to indicate that there were at least that many valid alignments \\
-      \>          \>(of which one was reported at random).
+     CM:i:\textless N \textgreater  Aligned read has an edit distance of \textless N \textgreater in colorspace. This field is present in addition to the NM field in -C/--color mode, but is omitted otherwise.
+
+     MD:Z:\textless S \textgreater  For aligned reads, \textless S \textgreater is a string representation of the mismatched reference bases in the alignment. See SAM format specification for details.
+
+     XA:i:\textless N \textgreater  Aligned read belongs to stratum \textless N \textgreater. See Strata for definition.
+
+     XM:i:\textless N \textgreater  For a read with no reported alignments, \textless N \textgreater is 0 if the read had no alignments.
+               If -m was specified and the read's alignments were supressed because the -m ceiling was exceeded, \textless N \textgreater equals the -m ceiling + 1, to indicate that there were at least that many valid alignments (but all were suppressed). In -M mode, if the alignment was randomly selected because the -M ceiling was exceeded, \textless N \textgreater equals the -M ceiling + 1, to indicate that there were at least that many valid alignments (of which one was reported at random).
 
 
 
@@ -984,14 +986,13 @@ Take a look at the output. Unlike the \textsf{Bowtie} ".aln" output file, the \t
 mkdir results/samtools
 ```
 
-
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
   ```
   (samtools view -bh -f 3 -F 2316 -q 42 \
-                 -o results/samtools/SRR3156163_top5M_MappedOn_TAIR10_chr_all_unique.bam \
-                 results/bowtie2/SRR3156163_top5M_MappedOn_TAIR10_chr_all.sam) \
-  &> results/samtools/SRR3156163_top5M_MappedOn_TAIR10_chr_all_report_unique.log
+                 -o results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_unique.bam \
+                 results/bowtie2/SRR3166543_top1M_MappedOn_TAIR10_chr_all.sam) \
+  &> results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_report_unique.log
   ```
 </p></details>
