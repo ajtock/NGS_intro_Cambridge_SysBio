@@ -935,10 +935,10 @@ The alignment section of the SAM output file has one line per read and, where ap
 Each alignment line has a minimum of 11 tab-separated fields, with a variable number of optional fields.
 From left to right, the 11 mandatory fields are:
 
-1. Name of the read that aligned
+1. Name of read that aligned.
 
 2. Sum of all applicable [bitwise flags](https://biowize.wordpress.com/2012/11/16/decoding-sam-flags/). There are 11 possible flags with decimal encodings:
-
+    
   | Flag | Description |
   |--:|:--|
   | 1    | The read is one of a pair
@@ -953,28 +953,28 @@ From left to right, the 11 mandatory fields are:
   | 512  | The read failed filters (e.g., sequencing platform quality controls)
   | 1024 | PCR or optical duplicate
   | 2048 | Supplementary alignment
+    
+    For example, a read that is the first mate in a pair, and aligns to the reverse strand of the reference sequence, as part of a proper paired-end alignment will have flag 83 (= 64 + 16 + 2 + 1).
+    
+    This is a useful [tool for decoding SAM flags](https://broadinstitute.github.io/picard/explain-flags.html), and can be used to inform downstream filtering of the alignments.
+    
+3. Name of reference sequence where alignment occurs, or ordinal ID if no name was provided.
 
-  For example, a read that is the first mate in a pair, and aligns to the reverse strand of the reference sequence, as part of a proper paired-end alignment will have flag 83 (= 64 + 16 + 2 + 1)
+4. 1-based offset into the forward strand of the reference sequence where the leftmost character of the alignment occurs.
 
-  This is a useful [tool for decoding SAM flags](https://broadinstitute.github.io/picard/explain-flags.html), and can be used to inform downstream filtering of the alignments
+5. Mapping quality (MAPQ). A Bowtie 2-assigned MAPQ of 42 is reserved for reads that align to only one genomic location.
 
-3. Name of reference sequence where alignment occurs, or ordinal ID if no name was provided
+6. CIGAR string representation of alignment.
 
-4. 1-based offset into the forward strand of the reference sequence where the leftmost character of the alignment occurs
-
-5. Mapping quality (MAPQ). A Bowtie 2-assigned MAPQ of 42 is reserved for reads that align to only one genomic location
-
-6. CIGAR string representation of alignment
-
-7. Name of reference sequence where mate's primary alignment occurs. Set to = if the mate's reference sequence is the same as this alignment's, or * if there is no mate
+7. Name of reference sequence where mate's primary alignment occurs. Set to = if the mate's reference sequence is the same as this alignment's, or * if there is no mate.
 
 8. 1-based offset into the forward strand of the reference sequence where the leftmost character of the mate's alignment occurs. Offset is 0 if there is no mate.
 
 9. Inferred insert size. Size is negative if the mate's alignment occurs upstream of this alignment.  Size is 0 if there is no mate.
 
-10. Read sequence (reverse-complemented if aligned to the reverse strand)
+10. Read sequence (reverse-complemented if aligned to the reverse strand).
 
-11. ASCII character encoding of Phred-scaled base qualities+33 (reverse-complemented if the read aligned to the reverse strand), similar to those in FASTQ format
+11. ASCII character encoding of Phred-scaled base qualities+33 (reverse-complemented if the read aligned to the reverse strand), similar to those in FASTQ format.
 
 For further details on SAM mandatory and optional fields, see the [Sequence Alignment/Map (SAM) format specification](https://samtools.github.io/hts-specs/SAMv1.pdf).
 
