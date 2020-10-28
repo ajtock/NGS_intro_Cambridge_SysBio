@@ -65,10 +65,10 @@ Data in FASTQ format conform to these standards:
 
 | Line | Description |
 |--:|:--|
-| 1    | Begins with '@', followed by information about the read
-| 2    | The DNA sequence
-| 3    | Begins with '+'
-| 4    | A character string of the same length as the sequence, encoding quality scores for each base
+| 1 | Begins with '@', followed by information about the read
+| 2 | The DNA sequence
+| 3 | Begins with '+'
+| 4 | A character string of the same length as the sequence, encoding quality scores for each base
 
 First let's have a look at one of the files to inspect its format.
 In a Unix command-line shell, use `zcat` and `head` to print the first eight lines of `SRR3166543_top1M_1.fastq.gz` to the console.
@@ -912,6 +912,7 @@ What proportion aligned to multiple genomic locations ("multiple" alignments)?
 
   61.03% of read pairs aligned concordantly to only one genomic location.
   25.86% aligned concordantly to multiple genomic locations.
+  86.88% overall alignment rate.
 </p></details>
 
 We should now have an ouput file containing alignments in [Sequence Alignment/Map (SAM) format](https://samtools.github.io/hts-specs/SAMv1.pdf).
@@ -978,7 +979,7 @@ From left to right, the 11 mandatory fields are:
 
 For further details on SAM mandatory and optional fields, see the [Sequence Alignment/Map (SAM) format specification](https://samtools.github.io/hts-specs/SAMv1.pdf).
 
-## Step 4. Filtering alignments using SAMtools
+## Step 4. Filtering and sorting alignments using SAMtools
 
 Now that we have obtained read alignments in SAM format, it's necessary to use [SAMtools](http://www.htslib.org/doc/samtools.html) to filter out ambiguous alignments, which could leave us with unreliable genotype information for Landsberg *erecta* (L*er*) at given genomic coordinates.
 
@@ -992,7 +993,7 @@ ls
 mkdir results/samtools
 ```
 
-Consulting the [SAMtools manual](http://www.htslib.org/doc/samtools.html), run a `samtools view` command that will:
+Consulting the [SAMtools manual](http://www.htslib.org/doc/samtools-view.html), run a `samtools view` command that will:
 1. include the SAM header section
 2. retain reads that each align as part of a proper ("concordant") paired-end alignment
 3. remove any unmapped reads
@@ -1012,4 +1013,33 @@ The log file should be empty in this case.
   &> results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_unique_report.log
   ```
 </p></details>
+
+How many paired-end alignments remain after filtering?
+
+```
+samtools view results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_unique.bam \
+              | cut -f1 | sort | uniq | wc -l
+```
+
+### Output:
+```
+538945
+```
+
+Next we'll apply the `[samtools sort](http://www.htslib.org/doc/samtools-sort.html)` command to sort the BAM file by the coordinates of the alignments to the reference genome.
+Sorting alignments by coordinates is the default behaviour of this command, but other options can be specified to order alignments in different ways (e.g., by read name, with `-n`).
+As is the case for `samtools view`, the `-o` part of this command is used to specify the output file.
+
+```
+(samtools sort -o results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_unique_sort.bam \
+                  results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_unique.bam) \
+&> results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_unique_sort_report.log
+```
+
+The log file should be empty in this case as we are working with a small input BAM file.
+With a larger input BAM file, the stdout from the `samtools sort` command would look something like:
+ 
+```
+[bam_sort_core] merging from 2 files...
+```
 
