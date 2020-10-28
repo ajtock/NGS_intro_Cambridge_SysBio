@@ -1026,8 +1026,11 @@ samtools view results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_unique.b
 538945
 ```
 
-Next we'll apply the `[samtools sort](http://www.htslib.org/doc/samtools-sort.html)` command to sort the BAM file by the coordinates of the alignments to the reference genome.
-Sorting alignments by coordinates is the default behaviour of this command, but other options can be specified to order alignments in different ways (e.g., by read name, with `-n`).
+Next we'll apply the [`samtools sort`](http://www.htslib.org/doc/samtools-sort.html) command to sort alignments in the BAM file by their coordinates in the reference genome, such that alignments to the beginning of chromosome 1 will precede alignments to the end of chromosome 5.
+Sorting alignments by their location in the reference genome is the default behaviour of this command, but other options can be specified to order alignments in different ways (e.g., by read name, with `-n`).
+Different downstream analyses require differently sorted alignment files.
+We are sorting by coordinates as this is necessary for downstream identification of genetic variants between the genomes of two *A. thaliana* ecotypes.
+
 As is the case for `samtools view`, the `-o` part of this command is used to specify the output file.
 
 ```
@@ -1041,5 +1044,34 @@ With a larger input BAM file, the stdout from the `samtools sort` command would 
  
 ```
 [bam_sort_core] merging from 2 files...
+```
+
+## Step 5. Variant calling
+
+Variant calling is the identification of genetic differences between a query sample and a reference genome, with genomic coordinates and allele information reported.
+This process usually involves esimating variant frequency and removal of low-confidence potential variants.
+The most abundant type of genetic variant is the single-nucleotide polymorphism (SNP).
+We will use [BCFtools](http://www.htslib.org/doc/bcftools.html) to identify sites in the reference genome that differ between L*er* and Col-0, based on the BAM file containing coordinate-sorted alignments of L*er* reads to the Col-0 reference genome.
+
+For this, we need to index the FASTA-format reference genome using `samtools faidx`, which will generate `genome/TAIR10_chr_all.fa.fai` (although this file isn't explicitly included in the next command), and to create an output directory.
+
+```
+samtools faidx genome/TAIR10_chr_all.fa
+mkdir results/bcftools/
+```
+
+```
+(bcftools mpileup -O b \
+                  -o results/bcftools/SRR3166543_top1M_raw.bcf \
+                  -f genome/TAIR10_chr_all.fa \
+                  results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_unique_sort.bam) \
+&> results/bcftools/SRR3166543_top1M_raw_report.log
+```
+
+
+```
+    bcftools mpileup -Ou -f ref.fa aln.bam | \
+    bcftools call -Ou -mv | \
+    bcftools filter -s LowQual -e '%QUAL<20 || DP>100' > var.flt.vcf
 ```
 
