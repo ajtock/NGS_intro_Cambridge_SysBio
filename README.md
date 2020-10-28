@@ -937,7 +937,7 @@ From left to right, the 11 mandatory fields are:
 
 1. Name of the read that aligned
 
-2. Sum of all applicable bitwise flags. There are 11 possible flags with decimal encodings:
+2. Sum of all applicable [bitwise flags](https://biowize.wordpress.com/2012/11/16/decoding-sam-flags/). There are 11 possible flags with decimal encodings:
 
   | Flag | Description |
   |--:|:--|
