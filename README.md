@@ -36,7 +36,7 @@ This practical aims to familiarise you with Illumina next-generation sequencing 
 ## The data
 
 The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) [ecotype](https://en.wikipedia.org/wiki/Ecotype) of the [diploid](https://www.genome.gov/genetics-glossary/Diploid) model plant species [*Arabidopsis thaliana*](https://en.wikipedia.org/wiki/Arabidopsis_thaliana), and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
-The data are [paired-end reads](https://emea.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) and so there are two files (`SRR3166543_top1M_1.fastq.gz` contains the first read in each pair and `SRR3166543_top1M_2.fastq.gz` the second).
+The data are [paired-end reads](https://emea.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) and so there are two files: `SRR3166543_top1M_1.fastq.gz` contains the first read in each pair and `SRR3166543_top1M_2.fastq.gz` the second.
 Each read in a pair was sequenced with 100 chemistry cycles on an [Illumina HiSeq 2000](https://www.illumina.com/documents/products/datasheets/datasheet_hiseq2000.pdf), generating 100 consecutive base calls per read (2×100 bp).
 The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3166543), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
 The top 1 million reads (`top1M`) in each of the two files were extracted in order to reduce time spent on data processing in today's practical.
@@ -51,7 +51,7 @@ To this end, these are the steps in the pipeline that we will work through seque
 
 1. Evaluation of sequencing read quality, including at the level of individual bases
 2. Removal of technical sequences (e.g., sequencing adapters) and low-quality bases
-3. Alignment of reads (L*er*) to a reference genome (Col-0)
+3. Alignment of reads (from L*er*) to a reference genome (for Col-0)
 4. Filtering of alignments based on the quality of these mappings to the reference genome
 5. Detection of DNA sequence differences between the L*er* and Col-0 genomes (variant calling)
 
@@ -70,7 +70,7 @@ Data in FASTQ format conform to these standards:
 | 3    | Begins with '+'
 | 4    | A character string of the same length as the sequence, encoding quality scores for each base
 
-Let's first have a look at one of the files to inspect its format.
+First let's have a look at one of the files to inspect its format.
 In a Unix command-line shell, use `zcat` and `head` to print the first eight lines of `SRR3166543_top1M_1.fastq.gz` to the console.
 This printed output is called standard output (stdout), and can be redirected to a file by appending ` > filename.txt` to the command.
 We need to use `zcat` here to uncompress the gzip-compressed file.
@@ -97,14 +97,15 @@ The second read in each pair is contained in `SRR3166543_top1M_2.fastq.gz`.
 The first line for each read contains a unique identifier and, as these are paired-end reads, `/1` indicates that this is the first read in the pair.
 
 The quality score of each base identified in a sequencing read is encoded as a single character on the fourth line.
-These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII\_BASE=33 characters](https://drive5.com/usearch/manual/quality_score.html) such that each character encodes a quality score for the corresponding base in the read.
+These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII\_BASE=33 characters](https://drive5.com/usearch/manual/quality_score.html), such that each character encodes a quality score for the corresponding base in the read.
 That is, each character in the string is the ASCII encoding of the Phred-scaled base quality score+33.
+
 A Phred quality score is logarithmically related to the probability of an incorrect base call *P*, expressed as 1 error in 10<sup>*Q*/10</sup> base calls of *Q* quality, or
 
-> *Q* = -10log<sub>10</sub>*P*  
-> *P* = 10<sup>-*Q*/10</sup>  
+> *Q* = \-10×log<sub>10</sub>(*P*) 
+> *P* = 10<sup>\-*Q*/10</sup>  
 
-Accordingly, the ASCII\_BASE 33 character `@` (decimal representation = 64) encodes a *Q*-score of 31 (31 + 33 = 64) and a base-calling error probability of 0.00079 (= 10<sup>-31/10</sup>).
+Accordingly, the ASCII\_BASE=33 character `@` (decimal representation = 64) encodes a *Q*-score of 31 (31 + 33 = 64) and a base-calling error probability of 0.00079 (= 10<sup>\-31/10</sup>).
 In the past, Illumina sequencing instruments used the [ASCII\_BASE=64 quality encoding](https://drive5.com/usearch/manual/quality_score.html).
 
 Is the first read composed of mostly high-quality or low-quality base calls?
