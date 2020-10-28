@@ -64,7 +64,7 @@ The files are located in the `fastq/` directory.
 Data in FASTQ format conform to these standards:
 
 | Line | Description |
-|:-----|:------------|
+|--:|:--|
 | 1    | Begins with '@', followed by information about the read
 | 2    | The DNA sequence
 | 3    | Begins with '+'
@@ -940,17 +940,17 @@ From left to right, the 11 mandatory fields are:
 2. Sum of all applicable bitwise flags. There are 11 possible flags with decimal encodings:
 
   | Flag | Description |
-  |:-----|:------------|
-  |    1 | The read is one of a pair
-  |    2 | The alignment is one end of a proper ("concordant") paired-end alignment
-  |    4 | The read has no reported alignments
-  |    8 | The read is one of a pair of reads in which the other read has no reported alignments
-  |   16 | The alignment is to the reverse strand of the reference sequence
-  |   32 | The other read in the paired-end alignment is aligned to the reverse strand of the reference sequence
-  |   64 | The read is the first mate in a pair
-  |  128 | The read is the second mate in a pair
-  |  256 | Secondary alignment
-  |  512 | The read failed filters (e.g., sequencing platform quality controls)
+  |--:|:--|
+  | 1    | The read is one of a pair
+  | 2    | The alignment is one end of a proper ("concordant") paired-end alignment
+  | 4    | The read has no reported alignments
+  | 8    | The read is one of a pair of reads in which the other read has no reported alignments
+  | 16   | The alignment is to the reverse strand of the reference sequence
+  | 32   | The other read in the paired-end alignment is aligned to the reverse strand of the reference sequence
+  | 64   | The read is the first mate in a pair
+  | 128  | The read is the second mate in a pair
+  | 256  | Secondary alignment
+  | 512  | The read failed filters (e.g., sequencing platform quality controls)
   | 1024 | PCR or optical duplicate
   | 2048 | Supplementary alignment
 
