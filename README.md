@@ -993,7 +993,7 @@ ls
 mkdir results/samtools
 ```
 
-Consulting the [SAMtools manual](http://www.htslib.org/doc/samtools-view.html), run a `samtools view` command that will:
+Consulting the SAMtools manual, run a [`samtools view`](http://www.htslib.org/doc/samtools-view.html) command that will:
 1. include the SAM header section
 2. retain reads that each align as part of a proper ("concordant") paired-end alignment
 3. remove any unmapped reads
@@ -1060,10 +1060,13 @@ samtools faidx genome/TAIR10_chr_all.fa
 mkdir results/bcftools/
 ```
 
-To enable variant calling, we also need to calculate read coverage throughout the reference genome using the `bcftools mpileup` command.
-The `-O` option specifies the output file format, with `b` indicating a compressed BCF file, the binary counterpart of the [Variant Call Format (VCF)](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
-The `-o` option specifies the output file itself, with a `.bcf` extension.
-The `-f` option is followed by the reference genome in FASTA format (including the `.fa` extension), which must be indexed with `samtools faidx`.
+### Step 5.1. Calculating read coverage
+
+To enable variant calling, we also need to calculate read coverage throughout the reference genome using the [`bcftools mpileup`](http://www.htslib.org/doc/bcftools.html#mpileup) command.
+The `-O` option dictates the output file format, with `b` specifying a compressed BCF file, the binary counterpart to the [Variant Call Format (VCF)](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
+The `-o` option is used to specify the output file itself, which should include `.bcf` extension in this case.
+Without this option specified, the output is written to stdout by default, rather than to a file. 
+The `-f` option should be followed by the path to the reference genome in FASTA format (including the `.fa` extension), which must be indexed with `samtools faidx` before running `bcftools mpileup`.
 
 ```
 (bcftools mpileup -O b \
@@ -1073,10 +1076,32 @@ The `-f` option is followed by the reference genome in FASTA format (including t
 &> results/bcftools/SRR3166543_top1M_raw_report.log
 ```
 
+### Step 5.2. Identifying potential variant sites
+
+Now we can use [`bcftools call`](http://www.htslib.org/doc/bcftools.html#call) to call SNPs and small insertions/deletions of sequence (indels) in the L*er* alignments relative to the Col-0 reference genome.
+In the command below, `-O v` specifies that the output file type will be an uncompressed [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf), and the path to the output file with a `.vcf` extension follows the `-o` option.
+With `-m` specified, `bcftools call` uses a model for multiallelic and rare-variant calling. 
+Inclusion of the `-v` option tells `bcftools call` to output variant sites only, rather than every genomic coordinate.
 
 ```
-    bcftools mpileup -Ou -f ref.fa aln.bam | \
-    bcftools call -Ou -mv | \
-    bcftools filter -s LowQual -e '%QUAL<20 || DP>100' > var.flt.vcf
+(bcftools call -O v -m -v \
+               -o results/bcftools/SRR3166543_top1M_variants.vcf \
+               results/bcftools/SRR3166543_top1M_raw.bcf) \
+&> results/bcftools/SRR3166543_top1M_variants_report.log
+```
+
+### Step 5.3. Filtering variants
+
+To obtain a final set of high-confidence variant sites, we can use [`bcftools filter`](http://www.htslib.org/doc/bcftools.html#filter) to remove those that do not meet certain criteria.
+For this, we'll use the `-e` (short for `--exclude`) option to remove low-quality sites and sites where read depth is too low or too high.
+Another option would be to use the `-e` option in conjunction with `-s` (short for `--soft-filter`) to **annotate** (with the string "LowQual") low-quality sites and sites where read depth is too low or too high.
+The thresholds set in this example are unrealistically low because we have been working with a very small sample ofthe reads in the original FASTQ files.
+More appropriate filtering thresholds for a real analysis would be a minimum quality score (QUAL) of 20 and a minimum read depth (DP) of 10.
+
+```
+(bcftools filter -O v -e '%QUAL<5 || DP<2 || DP>100' \
+                 -o results/bcftools/SRR3166543_top1M_variants_filtered.vcf \
+                 results/bcftools/SRR3166543_top1M_variants.vcf) \
+&> results/bcftools/SRR3166543_top1M_variants_filtered_report.log
 ```
 
