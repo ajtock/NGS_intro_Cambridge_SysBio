@@ -39,7 +39,7 @@ The NGS data we are going to analyse are derived from whole-genome sequencing of
 The data are [paired-end reads](https://emea.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) and so there are two files (`SRR3166543_top1M_1.fastq.gz` contains the first read in each pair and `SRR3166543_top1M_2.fastq.gz` the second).
 Each read in a pair was sequenced with 100 chemistry cycles on an [Illumina HiSeq 2000](https://www.illumina.com/documents/products/datasheets/datasheet_hiseq2000.pdf), generating 100 consecutive base calls per read (2×100 bp).
 The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3166543), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
-The top 5 million reads (`top1M`) in each of the two files were extracted in order to reduce time spent on data processing in today's practical.
+The top 1 million reads (`top1M`) in each of the two files were extracted in order to reduce time spent on data processing in today's practical.
 
 ## The pipeline/workflow
 
@@ -71,7 +71,8 @@ Data in FASTQ format conform to these standards:
 | 4    | A character string of the same length as the sequence, encoding quality scores for each base
 
 Let's first have a look at one of the files to inspect its format.
-In a Unix command-line shell, use `zcat` and `head` to print to screen the first eight lines of `SRR3166543_top1M_1.fastq.gz`.
+In a Unix command-line shell, use `zcat` and `head` to print the first eight lines of `SRR3166543_top1M_1.fastq.gz` to the console.
+This printed output is called standard output (stdout), and can be redirected to a file by appending ` > filename.txt` to the command.
 We need to use `zcat` here to uncompress the gzip-compressed file.
 The `|` part pipes the output of the `zcat` command to the `head` command.
 
@@ -97,20 +98,21 @@ The first line for each read contains a unique identifier and, as these are pair
 
 The quality score of each base identified in a sequencing read is encoded as a single character on the fourth line.
 These represent [Phred quality scores](https://en.wikipedia.org/wiki/Phred_quality_score) that have been [converted into ASCII\_BASE=33 characters](https://drive5.com/usearch/manual/quality_score.html) such that each character encodes a quality score for the corresponding base in the read.
+That is, each character in the string is the ASCII encoding of the Phred-scaled base quality score+33.
 A Phred quality score is logarithmically related to the probability of an incorrect base call *P*, expressed as 1 error in 10<sup>*Q*/10</sup> base calls of *Q* quality, or
 
 > *Q* = -10log<sub>10</sub>*P*  
 > *P* = 10<sup>-*Q*/10</sup>  
 
-Accordingly, the ASCII\_BASE 33 character `@` encodes a *Q*-score of 31 and a base-calling error probability of 0.00079.
+Accordingly, the ASCII\_BASE 33 character `@` (decimal representation = 64) encodes a *Q*-score of 31 (31 + 33 = 64) and a base-calling error probability of 0.00079 (= 10<sup>-31/10</sup>).
 In the past, Illumina sequencing instruments used the [ASCII\_BASE=64 quality encoding](https://drive5.com/usearch/manual/quality_score.html).
 
 Is the first read composed of mostly high-quality or low-quality base calls?
 
 ### Exercise 1
 
-Construct a command that will print to screen the 1000th read in `SRR3166543_top1M_1.fastq.gz` in order to inspect its quality.
-Is the 500th read generally better or worse than the first read?
+Construct a command that will print the 1000th read in `SRR3166543_top1M_1.fastq.gz` in order to inspect its quality.
+Is the 1000th read generally better or worse than the first read?
 
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
@@ -295,7 +297,7 @@ fastqc --outdir results/fastqc/raw_reads \
        fastq/*.fastq.gz
 ```
 
-Progress made by FastQC on analysing each file will be printed to screen.
+Progress made by FastQC on analysing each file will be sent to stdout and therefore printed to the console.
 
 ### Output:
 ```
@@ -601,7 +603,7 @@ Based on the options listed above and the [Cutadapt user guide](https://cutadapt
 2. sequences that match a minimum of 4 consecutive bases in Illumina TruSeq adapters (Cutadapt will also remove any bases following [3’ of] a read–adapter match)
 3. reads shorted than 30 bases, which will improve alignment performance, as the shorter the sequence, the greater the chance that it will align to multiple locations in a reference genome
 
-Cutadapt will print a report of progress and trimming statistics to standard output (stdout), which will be visible on your screen, in the same way FastQC printed its progress to screen.
+Cutadapt will send a report of progress and trimming statistics to standard output (stdout), which will be visible on your console, in the same way FastQC printed its progress to the console.
 Try to find a way to redirect the stdout and stderr (error messages, if any) generated by your `cutadapt` command to an appropriately named log file, which will be useful for future reference.
 
 What proportion of read pairs and base calls passed the filters?
@@ -880,8 +882,13 @@ First make a directory to contain the output file of read alignments that Bowtie
 mkdir results/bowtie2
 ```
 
-Using the usage example printed above and the [Bowtie 2 manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml), write and run a `bowtie2` command that specifies the reference genome and the trimmed read pairs.
-Include in your command an option that will prevent Bowtie 2 from attempting to find alignments for the individual mates in a read pair, along with a separate option that will prevent Bowtie 2 from attempting to find alignments that do not satisfy the paired-end constraints.
+Using the usage example printed above and the [Bowtie 2 manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml), write and run a `bowtie2` command that:
+1. uses the least sensitive and fastest preset option for end-to-end read alignment
+2. prevents Bowtie 2 from attempting to find alignments for the individual mates in a read pair
+3. prevents Bowtie 2 from attempting to find alignments that do not satisfy the paired-end constraints
+4. specifies the reference genome
+5. specifies two files containing trimmed read pairs
+6. writes alignments to a file in SAM (<ins>S</ins>equence <ins>A</ins>lignment/<ins>M</ins>ap) format, with a `.sam` file extension, in the output directory
 
 Redirect the stdout and stderr generated by your `bowtie2` command to an appropriately named log file, which will be useful for future reference.
 
@@ -906,7 +913,7 @@ What proportion aligned to multiple genomic locations ("multiple" alignments)?
   25.86% aligned concordantly to multiple genomic locations.
 </p></details>
 
-The ouput file generated by Bowtie 2 is in [Sequence Alignment/Map (SAM) format](https://samtools.github.io/hts-specs/SAMv1.pdf).
+The ouput file generated by Bowtie 2 should be in [Sequence Alignment/Map (SAM) format](https://samtools.github.io/hts-specs/SAMv1.pdf).
 Have a look at the first 6 alignments using [SAMtools](http://www.htslib.org/doc/samtools.html).
 
 ```
@@ -975,7 +982,7 @@ From left to right, the 11 mandatory fields are:
 
 10. Read sequence (reverse-complemented if aligned to the reverse strand)
 
-11. ASCII\_BASE 33-encoded base qualities (reverse-complemented if the read aligned to the reverse strand), similar to those in FASTQ format
+11. ASCII character encoding of Phred-scaled base qualities+33 (reverse-complemented if the read aligned to the reverse strand), similar to those in FASTQ format
 
 For further details on SAM mandatory and optional fields, see the [Sequence Alignment/Map (SAM) format specification](https://samtools.github.io/hts-specs/SAMv1.pdf).
 
@@ -996,7 +1003,7 @@ Then run a `samtools` command that will:
 2. retain reads that each align as part of a proper ("concordant") paired-end alignment
 3. remove any unmapped reads
 4. retain only unique alignments, which have mapping quality (MAPQ) scores of 42
-5. output the retained alignments to a file in Binary Alignment/Map (BAM) format (a compressed version of SAM format), in the output directory 
+5. output the retained alignments to a file in Binary Alignment/Map (BAM) format (a compressed version of SAM format), with a `.bam` file extension, in the output directory 
 
 Redirect the stdout and stderr generated by your `samtools` command to an appropriately named log file.
 
