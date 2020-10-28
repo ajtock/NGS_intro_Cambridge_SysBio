@@ -102,8 +102,8 @@ That is, each character in the string is the ASCII encoding of the Phred-scaled 
 
 A Phred quality score is logarithmically related to the probability of an incorrect base call *P*, expressed as 1 error in 10<sup>*Q*/10</sup> base calls of *Q* quality, or
 
-> *Q* = -10×log<sub>10</sub>(*P*) 
-> *P* = 10<sup>-*Q*/10</sup> 
+> *Q* = -10 × log<sub>10</sub>(*P*)  
+> *P* = 10<sup>-*Q*/10</sup>  
 
 Accordingly, the ASCII\_BASE=33 character `@` (decimal representation = 64) encodes a *Q*-score of 31 (31 + 33 = 64) and a base-calling error probability of 0.00079 (= 10<sup>\-31/10</sup>).
 In the past, Illumina sequencing instruments used the [ASCII\_BASE=64 quality encoding](https://drive5.com/usearch/manual/quality_score.html).
