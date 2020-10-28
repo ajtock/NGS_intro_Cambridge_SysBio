@@ -938,8 +938,9 @@ From left to right, the 11 mandatory fields are:
 1. Name of read that aligned
 
 2. Sum of all applicable bitwise flags. There are 11 possible flags with decimal encodings:
+
   | Flag | Description |
-  |------|-------------|
+  |:-----|:------------|
   |    1 | The read is one of a pair
   |    2 | The alignment is one end of a proper ("concordant") paired-end alignment
   |    4 | The read has no reported alignments
