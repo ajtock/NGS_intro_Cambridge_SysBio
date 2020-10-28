@@ -935,7 +935,7 @@ The alignment section of the SAM output file has one line per read and, where ap
 Each alignment line has a minimum of 11 tab-separated fields, with a variable number of optional fields.
 From left to right, the 11 mandatory fields are:
 
-1. Name of read that aligned
+1. Name of the read that aligned
 
 2. Sum of all applicable bitwise flags. There are 11 possible flags with decimal encodings:
 
