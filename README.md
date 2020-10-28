@@ -954,7 +954,7 @@ From left to right, the 11 mandatory fields are:
   | 1024 | PCR or optical duplicate
   | 2048 | Supplementary alignment
 
-  For example, a read that is the first mate in a pair, and aligns to the reverse strand of the reference sequence, as part of a paired-end alignment will have flag 83 (= 64 + 16 + 2 + 1)
+  For example, a read that is the first mate in a pair, and aligns to the reverse strand of the reference sequence, as part of a proper paired-end alignment will have flag 83 (= 64 + 16 + 2 + 1)
 
   This is a useful [tool for decoding SAM flags](https://broadinstitute.github.io/picard/explain-flags.html), and can be used to inform downstream filtering of the alignments
 
