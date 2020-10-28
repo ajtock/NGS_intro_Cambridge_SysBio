@@ -1060,6 +1060,11 @@ samtools faidx genome/TAIR10_chr_all.fa
 mkdir results/bcftools/
 ```
 
+To enable variant calling, we also need to calculate read coverage throughout the reference genome using the `bcftools mpileup` command.
+The `-O` option specifies the output file format, with `b` indicating a compressed BCF file, the binary counterpart of the [Variant Call Format (VCF)](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
+The `-o` option specifies the output file itself, with a `.bcf` extension.
+The `-f` option is followed by the reference genome in FASTA format (including the `.fa` extension), which must be indexed with `samtools faidx`.
+
 ```
 (bcftools mpileup -O b \
                   -o results/bcftools/SRR3166543_top1M_raw.bcf \
