@@ -915,7 +915,7 @@ What proportion aligned to multiple genomic locations ("multiple" alignments)?
 </p></details>
 
 We should now have an ouput file containing alignments in [Sequence Alignment/Map (SAM) format](https://samtools.github.io/hts-specs/SAMv1.pdf).
-Have a look at the first 6 alignments using [SAMtools](http://www.htslib.org/doc/samtools.html).
+Print to stdout the first 6 lines of the "alignment section" of the SAM file using [SAMtools](http://www.htslib.org/doc/samtools.html) (by default, `samtools view` doesn't output the SAM "header section").
 
 ```
 samtools view results/bowtie2/SRR3166543_top1M_MappedOn_TAIR10_chr_all.sam | head -n 6
@@ -931,7 +931,7 @@ SRR3166543.42	83	1	2684801	42	35M	=	2684668	-168	ACTGTTGGTTTGGTNNNTGGTATTCTTACTG
 SRR3166543.42	163	1	2684668	42	67M	=	2684801	168	TCTGTTACTTTTTGATATAATAAAGTTCCACTAGGCTAGGTTTTTCTGGCTNTAGTCCTTGGAAGCA	@@CFDFDDFHDBFHHIIBDBFJIJGCEHAFAHGEE)??8CDC?CGD>?DG?#0?BDFHIJIIIIGG;	AS:i:-1	XN:i:0	XM:i:1	XO:i:0	XG:i:0	NM:i:1	MD:Z:51T15	YS:i:-3	YT:Z:CP
 ```
 
-The alignment section of the SAM output file has one line per read and, where applicable, alignments for paired reads are output on consecutive lines.
+The alignment section of the SAM output file has one line per read and, where applicable, unsorted alignments for paired reads are output on consecutive lines.
 Each alignment line has a minimum of 11 tab-separated fields, with a variable number of optional fields.
 From left to right, the 11 mandatory fields are:
 
