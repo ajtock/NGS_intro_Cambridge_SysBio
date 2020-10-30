@@ -1,8 +1,18 @@
 # Introduction to next-generation sequencing data: tools and resources
 
-This [link](https://ajtock.github.io/NGS_intro_Cambridge_SysBio/) will take you to the GitHub Pages rendering of this repository.
+This [link](https://ajtock.github.io/NGS_intro_Cambridge_SysBio/) will take you to the GitHub Pages rendering of this practical..
 
 If you have any questions or comments about the practical, please email Andy Tock at <ajt200@cam.ac.uk>.
+
+* * *
+
+## Setup
+
+- The practical session will run via Zoom ([link]())
+- We will use a shared Google Doc for you to post questions ([link](https://docs.google.com/document/d/1PnQm8TVogYI_lnIS6_QUwoQwafH8CTmW5DuG9oKjmhY/))
+- We will use a virtual environment that you can access from your internet browser. You will receive details for login by email
+
+* * * 
 
 ## Background
 
@@ -33,6 +43,8 @@ Therefore, the different sequencing read lengths, qualities, abundances and erro
 
 This practical aims to familiarise you with Illumina next-generation sequencing data and some of the software available for their analysis.
 
+* * *
+
 ## The data
 
 The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) [ecotype](https://en.wikipedia.org/wiki/Ecotype) of the [diploid](https://www.genome.gov/genetics-glossary/Diploid) model plant species [*Arabidopsis thaliana*](https://en.wikipedia.org/wiki/Arabidopsis_thaliana), and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
@@ -40,6 +52,8 @@ The data are [paired-end reads](https://emea.illumina.com/science/technology/nex
 Each read in a pair was sequenced with 100 chemistry cycles on an [Illumina HiSeq 2000](https://www.illumina.com/documents/products/datasheets/datasheet_hiseq2000.pdf), generating 100 consecutive base calls per read (2×100 bp).
 The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3166543), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
 The top 1 million reads (`top1M`) in each of the two files were extracted in order to reduce time spent on data processing in today's practical.
+
+* * *
 
 ## The pipeline/workflow
 
@@ -54,6 +68,8 @@ To this end, these are the steps in the pipeline that we will work through seque
 3. Alignment of reads (from L*er*) to a reference genome (for Col-0)
 4. Filtering of alignments based on the quality of these mappings to the reference genome
 5. Detection of DNA sequence differences between the L*er* and Col-0 genomes (variant calling)
+
+* * *
 
 ## Inspecting the reads in FASTQ format
 
@@ -132,6 +148,8 @@ Is the 1000th read generally better or worse than the first read?
 
   It's better than the first read, although there are some low-quality "N"s. 
 </p></details>
+
+* * *
 
 ## Step 1. Evaluating read quality using FastQC
 
@@ -400,6 +418,8 @@ What quality issues can you see in these reports, and how could they be fixed?
 
 If in future you are working with many FASTQ files, [MultiQC](https://multiqc.info/) can be used to aggregate FastQC-generated results and compile one HTML report that's easier to digest than individual reports for each sample. 
 
+* * *
+
 ## Step 2. Removing technical sequences and low-quality bases using Cutadapt
 
 There are several tools available for filtering and trimming reads to remove technical sequences (e.g., sequencing adapters) and low-quality bases, including [Cutadapt](https://cutadapt.readthedocs.io/en/stable/) and [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic).
@@ -654,6 +674,8 @@ Is any further cleaning required?
   Sequence duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
   We will use the latter approach.
 </p></details>
+
+* * *
 
 ## Step 3. Aligning the cleaned reads to a reference genome assembly
 
@@ -979,6 +1001,8 @@ From left to right, the 11 mandatory fields are:
 
 For further details on SAM mandatory and optional fields, see the [Sequence Alignment/Map (SAM) format specification](https://samtools.github.io/hts-specs/SAMv1.pdf).
 
+* * *
+
 ## Step 4. Filtering and sorting alignments using SAMtools
 
 Now that we have obtained read alignments in SAM format, it's necessary to use [SAMtools](http://www.htslib.org/doc/samtools.html) to filter out ambiguous alignments, which could leave us with unreliable genotype information for Landsberg *erecta* (L*er*) at given genomic coordinates.
@@ -1045,6 +1069,8 @@ With a larger input BAM file, the stdout from the `samtools sort` command would 
 ```
 [bam_sort_core] merging from 2 files...
 ```
+
+* * *
 
 ## Step 5. Variant calling
 
