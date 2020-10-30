@@ -1,6 +1,6 @@
 # Introduction to next-generation sequencing data: tools and resources
 
-This [link](https://ajtock.github.io/NGS_intro_Cambridge_SysBio/) will take you to the GitHub Pages rendering of this practical..
+This [link](https://ajtock.github.io/NGS_intro_Cambridge_SysBio/) will take you to the GitHub Pages rendering of this practical. If nothing changes, you're already there!
 
 If you have any questions or comments about the practical, please email Andy Tock at <ajt200@cam.ac.uk>.
 
@@ -74,7 +74,7 @@ To this end, these are the steps in the pipeline that we will work through seque
 ## Inspecting the reads in FASTQ format
 
 The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardised format that NGS data analysis tools have been developed to handle.
-These files have been downloaded on the computers in the Craik-Marshall Building that you are accessing remotely, so there's no need to download them unless you are working on your own computer.
+These files are available in the online virtual environment that you're accessing remotely, so there's no need to download them.
 The files are located in the `fastq/` directory.
 
 Data in FASTQ format conform to these standards:
@@ -730,6 +730,9 @@ To align the cleaned read pairs (`SRR3166543_top1M_1_trimmed.fastq.gz` and `SRR3
 From [Li and Durbin (2009) *Bioinformatics* **25**](https://doi.org/10.1093/bioinformatics/btp324):
 > "Essentially, using backward search [...] with BWT, we are able to effectively mimic the top-down traversal on the prefix trie of the genome with relatively small memory footprint [...] and to count the number of exact hits of a string of length *m* in *O*(*m*) time independent of the size of the genome."
 
+Other programs for aligning short (NGS) reads to large reference sequences include [BWA](https://github.com/lh3/bwa), [HISAT2](http://daehwankimlab.github.io/hisat2/) and [STAR](https://github.com/alexdobin/STAR).
+[minimap2](https://github.com/lh3/minimap2) was developed primarily for aligning long-read data (e.g., PacBio or Oxford Nanopore reads) to large reference sequences. 
+
 Alignment to a reference genome requires index files specific to the alignment software being used.
 **You don't need to generate these index files in this case, as they have already been created in the `genome/` directory to save time.**
 For future reference, the `bowtie2-build` command that was run to create these index files is:
@@ -935,6 +938,8 @@ What proportion aligned to multiple genomic locations ("multiple" alignments)?
   61.03% of read pairs aligned concordantly to only one genomic location.
   25.86% aligned concordantly to multiple genomic locations.
   86.88% overall alignment rate.
+
+  Note that for a real analysis where time isn't limiting, it's advisable to use the most sensitive (slowest) preset option for end-to-end read alignment (`--very-sensitive`).
 </p></details>
 
 We should now have an ouput file containing alignments in [Sequence Alignment/Map (SAM) format](https://samtools.github.io/hts-specs/SAMv1.pdf).
@@ -1120,9 +1125,9 @@ Inclusion of the `-v` option tells `bcftools call` to output variant sites only,
 
 To obtain a final set of high-confidence variant sites, we can use [`bcftools filter`](http://www.htslib.org/doc/bcftools.html#filter) to remove those that do not meet certain criteria.
 For this, we'll use the `-e` (short for `--exclude`) option to remove low-quality sites and sites where read depth is too low or too high.
-Another option would be to use the `-e` option in conjunction with `-s` (short for `--soft-filter`) to **annotate** (with the string "LowQual") low-quality sites and sites where read depth is too low or too high.
-The thresholds set in this example are unrealistically low because we have been working with a very small sample ofthe reads in the original FASTQ files.
-More appropriate filtering thresholds for a real analysis would be a minimum quality score (QUAL) of 20 and a minimum read depth (DP) of 10.
+Another option would be to use the `-e` option in conjunction with `-s LowQual` (short for `--soft-filter LowQual`) to *annotate* (with the string "LowQual"), rather than exclude, low-quality sites and sites where read depth is too low or too high (very high read depths can indicate PCR amplification or other artefacts, some of which can also be removed by deduplicating reads or alignments).
+The first two thresholds set in this example are unrealistically low because we have been working with a very small sample of the reads in the original FASTQ files.
+More appropriate filtering thresholds for a real analysis would be a minimum quality score (`QUAL`) of 20 and a minimum read depth (`DP`) of 10.
 
 ```
 (bcftools filter -O v -e '%QUAL<5 || DP<2 || DP>100' \
@@ -1131,3 +1136,15 @@ More appropriate filtering thresholds for a real analysis would be a minimum qua
 &> results/bcftools/SRR3166543_top1M_variants_filtered_report.log
 ```
 
+The inclusion of `%QUAL` in the filtering expression instructs `bcftools filter` to evaluate variant sites based on values in the QUAL column of the VCF.
+The use of "||" to separate [filtering](http://samtools.github.io/bcftools/howtos/filtering.html) criteria results in exclusion of variant sites where any one of those conditions is met in any of the samples analysed (although in this case we are analysing just one sample, from L*er* versus the Col-0 reference genome).
+
+Now have a look at the output [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) file containing filtered variant sites.
+
+```
+less -S results/bcftools/SRR3166543_top1M_variants_filtered.vcf
+```
+
+All of the lines beginning with "##" contain meta-information, including a description of the file format, the version of BCFtools used, and the `bcftools` commands that you ran to generate this and intermediate files, along with information on abbreviations used in the VCF.
+
+The line beginning with "#CHROM" is the header, which contains column names. 
