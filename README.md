@@ -1,6 +1,6 @@
 # Introduction to next-generation sequencing data: tools and resources
 
-This [link](https://ajtock.github.io/NGS_intro_Cambridge_SysBio/) will take you to the GitHub Pages rendering of this practical. If nothing changes, you're already there!
+This [link](https://ajtock.github.io/NGS_intro_Cambridge_SysBio/) will take you to the GitHub Pages rendering of this practical. If nothing changes when you click on it, you're already there!
 
 If you have any questions or comments about the practical, please email Andy Tock at <ajt200@cam.ac.uk>.
 
