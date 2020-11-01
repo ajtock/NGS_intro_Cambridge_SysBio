@@ -433,6 +433,7 @@ Removing these sequences is important because it means that downstream analyses 
 In the case of aligning reads to a reference genome assembly, for example, read cleaning tends to increase the alignment rate.
 
 We're going to use Cutadapt for this step in the pipeline, so let's have a look at a usage example and the available options.
+Type `q` to quit the `less` program when you've finished inspecting the output.
 
 ```
 cutadapt --help | less
@@ -755,6 +756,7 @@ bowtie2-build TAIR10_chr_all.fa TAIR10_chr_all
 ```
 
 As we already have the genome index files, have a look at the Bowtie 2 `--help` output for information about example usage and options.
+Type `q` to quit the `less` program when you've finished inspecting the output.
 
 ```
 bowtie2 --help | less
@@ -1254,7 +1256,7 @@ The line beginning with "#CHROM" is the header line, which contains column names
 The columns contain information about the the location and nature of the variant site:
 
 | Column | Description |
-|:--|:--] 
+|:--|:--| 
 | CHROM | Name of reference sequence in which the variant site was called
 | POS | 1-based position of the variant site in the reference sequence
 | ID | `.` in the absence of unique identifiers
