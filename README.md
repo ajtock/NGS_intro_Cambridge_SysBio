@@ -1286,6 +1286,7 @@ grep -v '#' results/bcftools/SRR3166543_top1M_variants_filtered.vcf | wc -l
 
 ## Step 6. Visualising the alignments and variants
 
+* * *
 
 ## Summary
 
