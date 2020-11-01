@@ -10,7 +10,7 @@ If you have any questions or comments about the practical, please email Andy Toc
 
 - The practical session will run via Zoom ([link]())
 - We will use a shared Google Doc for you to post questions ([link]()
-- We will use a virtual environment that you can access from your internet browser. You will receive details for login by email
+- We will use a virtual environment that you can access from your internet browser; you will receive details for login by email. All of the software we'll be using today has been pre-installed in this virtual environment, as software installation can be a time-consuming task. Nonetheless, links to the software installation pages are provided throughout, which you can refer back to later if you want to run subsequent analyses on your own computer.
 
 * * * 
 
@@ -58,7 +58,7 @@ The top 1 million reads (`top1M`) in each of the two files were extracted in ord
 ## The pipeline/workflow
 
 Bioinformatics pipelines or workflows consist of sequential data processing and analysis steps that utilise different software tools, with the output file(s) from one step often serving as the input file(s) for the subsequent step(s).
-These pipelines require input files that conform to standardised data formats.
+These pipelines require input files that conform to standardised formats for storing different types of genomics data.
 
 The goal of our pipeline is to identify DNA sequence differences (variants) in the genome of the L*er* ecotype of *A. thaliana* relative to the reference genome assembly for the Columbia (Col-0) ecotype.
 To this end, these are the steps in the pipeline that we will work through sequentially:
@@ -1265,8 +1265,8 @@ The columns contain information about the the location and nature of the variant
 | QUAL | `.` when quality filters were not applied, `PASS` where filters were passed, or named filters the variant site failed
 | INFO | Additional information, including read depth across all samples (DP) and alternate allele count (AC)
 
-In this case, the final column ("results/[...]") provides the genotype (GT) inferred based on the likelihoods of the given genotypes (PL).
-The format of these metrics is specified in the penultimate column.
+In this case, the final column ("results/[...]") provides the genotype ("GT") inferred based on the likelihoods of the given genotypes ("PL").
+The format of these metrics is specified in the penultimate column (e.g., "GT:PL").
 Genotypes are encoded as integers corresponding to REF and ALT alleles (e.g., for diploids, 0/1 indicates heterozygous with one REF allele and one ALT allele, 0/0 homozygous for the REF allele, 1/1 homozygous for an ALT allele, and 1/2 heterozygous with two ALT alleles).
 
 The GATK Team also provide a useful [guide to the Variant Call Format](https://gatk.broadinstitute.org/hc/en-us/articles/360035531692-VCF-Variant-Call-Format).
@@ -1279,10 +1279,24 @@ grep -v '#' results/bcftools/SRR3166543_top1M_variants_filtered.vcf | wc -l
 
 ### Output:
 ```
-   62188
+   62110
 ```
 
 * * *
 
 ## Step 6. Visualising the alignments and variants
+
+
+## Summary
+
+We have used command-line tools to execute sequential data processing and analysis steps in a bioinformatics pipeline for variant calling.
+Each step required input and output files that conform to standardised formats for storing genomics data.
+
+Applying the steps outlined below, we identified DNA sequence differences (variants) in the genome of the L*er* ecotype of *A. thaliana* relative to the reference genome assembly for the Columbia (Col-0) ecotype:
+
+1. Evaluation of sequencing read quality, including at the level of individual bases ([FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
+2. Removal of technical sequences (e.g., sequencing adapters) and low-quality bases ([Cutadapt](https://cutadapt.readthedocs.io/en/stable/))
+3. Alignment of reads (from L*er*) to a reference genome (for Col-0) ([Bowtie 2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml))
+4. Filtering of alignments based on the quality of these mappings to the reference genome ([SAMtools](http://www.htslib.org/doc/samtools.html))
+5. Detection of DNA sequence differences between the L*er* and Col-0 genomes (variant calling) ([BCFtools](http://www.htslib.org/doc/bcftools.html))
 
