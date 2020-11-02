@@ -1385,20 +1385,19 @@ What can you infer from this? Is the allelic variation you observe in the L*er* 
 
   ### Output:
   ```
-    1232431   1232441   1232451   1232461   1232471   1232481   1232491   1232501   1232511   1232521
-CCCCAAAAATTCATAATTTTTTTCTCCAGTTTTCCGGTTTGGTTTGAATTGAATTGGTTCATTCAACACCTTTGGTCAGAGGTGAAGTAGGGAGCTTTCAATTTAGGTTTA
-A.............K................................................................................................
-a,,,,           ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-A.............*............                  ..................................................................
-A.............*...............
-a,,,,,,,,,,,,,*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-                 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+      1232431   1232441   1232451   1232461   1232471   1232481   1232491   1232501   1232511   1232521
+  CCCCAAAAATTCATAATTTTTTTCTCCAGTTTTCCGGTTTGGTTTGAATTGAATTGGTTCATTCAACACCTTTGGTCAGAGGTGAAGTAGGGAGCTTTCAATTTAGGTTTA
+  A.............K................................................................................................
+  a,,,,           ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  A.............*............                  ..................................................................
+  A.............*...............
+  a,,,,,,,,,,,,,*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+                   ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   ```
   
   Consistent with the information in the filtered VCF file (`results/bcftools/SRR3166543_top1M_variants_filtered.vcf`), 4 reads ("DP=4") covering position 1232427 of chromosome 1 support the presence of an adenine base in L*er*, whereas a cytosine is present at this position of the reference genome for Col-0.
   Additionally, 3 reads ("DP=3") covering position 1232441 of chromosome 1 indicate deletion of an adenine base in L*er* relative to the reference allele, which is also consistent with the VCF file.
 </p></details>
-
 
 
 
