@@ -10,7 +10,7 @@ If you have any questions or comments about the practical, please email Andy Toc
 
 - The practical session will run via Zoom ([link]())
 - We will use a shared Google Doc for you to post questions ([link]()
-- We will use a virtual environment that you can access from your internet browser; you will receive details for login by email. All of the software we'll be using today has been pre-installed in this virtual environment, as software installation can be a time-consuming task. Nonetheless, links to the software installation pages are provided throughout, which you can refer back to later if you want to run subsequent analyses on your own computer.
+- We will use a virtual Linux environment that you can access from your internet browser; you will receive details for login by email. All of the software we'll be using today has been pre-installed in this virtual environment, as software installation can be a time-consuming task. Nonetheless, links to the software installation pages are provided throughout, which you can refer back to later if you want to run subsequent analyses on your own computer.
 
 * * * 
 
@@ -41,8 +41,12 @@ Some applications require high sequencing depth of coverage of specific parts of
 Others require greater breadth of coverage of the genome, such as projects aimed at assembling genomes or genomic regions from scratch, termed [*de novo* assembly](https://en.wikipedia.org/wiki/De_novo_sequence_assemblers).
 Therefore, the different sequencing read lengths, qualities, abundances and error rates that are associated with different technologies need to be taken into account in order to make the right choice.
 
-This practical aims to familiarise you with Illumina next-generation sequencing data and some of the software available for their analysis.
-
+This practical aims to familiarise you with Illumina next-generation sequencing data and some of the command-line software tools available for their analysis.
+Command-line tools are central to most bioinformatics workflows as they enable efficient, flexible, automated and reproducible data processing and analysis.
+Don't worry if you have little or no experience with using a command-line interface, as we'll start with some straightforward commands so that you feel comfortable navigating around the file system using this interface rather than a graphical user interface (GUI).
+And of course, please feel free to ask any questions about this aspect during the practical.
+Additionally, this [cheat sheet](https://www.git-tower.com/blog/command-line-cheat-sheet/) should help to familiarise you with some commonly used commands.
+ 
 * * *
 
 ## The data
