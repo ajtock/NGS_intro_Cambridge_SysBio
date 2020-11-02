@@ -1215,7 +1215,7 @@ mkdir results/bcftools/
 
 To enable variant calling, we also need to calculate read coverage throughout the reference genome using the [`bcftools mpileup`](http://www.htslib.org/doc/bcftools.html#mpileup) command.
 The `-O` option dictates the output file format, with `b` specifying a compressed BCF file, the binary counterpart to the [Variant Call Format (VCF)](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
-The `-o` option is used to specify the output file itself, which should include `.bcf` extension in this case.
+The `-o` option is used to specify the output file itself, which should include a `.bcf` extension in this case.
 Without this option specified, the output is written to stdout by default, rather than to a file. 
 The `-f` option should be followed by the path to the reference genome in FASTA format (including the `.fa` extension), which must be indexed with `samtools faidx` before running `bcftools mpileup`.
 
@@ -1337,36 +1337,70 @@ Options:
                Set level of verbosity
 ```
 
+View the alignments using `samtools tview`.
+
+```
+samtools tview results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam \
+               genome/TAIR10_chr_all.fa
+```
+
+Then type `?` to see what options are available for visualisation and navigation.
+Type `g` and enter "1:127021" to go to position 127021 of chromosome 1.
+
+### Output:
+```
+127021    127031    127041    127051    127061    127071    127081    127091    127101    127111    127121
+TTCCATCGATTTTTGTATCCACTTTACTACTTGCATTTGAAGTATCCCTTGTAACCGTAACAGTCAAGTCTCTAACTGTCTCGGAATAGAGAACTTCGGAGTCTTCTTCAG
+........................................................................C......................................
+.............                      ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,c,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+......................................    ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,c,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+..T.............................................                                                         ,,,,,,
+     ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,c,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+                                            ............................C......................................
+```
+
+The first and second lines of the output denote the coordinates and sequence in the reference genome for Col-0.
+The third line shows the consensus sequence based on the aligned reads shown beneath it.
+On subsequent lines, reads aligning to the forward or reverse strand of the reference genome are indicated by strings of "." or "," characters, respectively, where the aligned sequence matches the reference sequence.
+Sites where the aligned reads from L*er* contain base calls that differ from the reference sequence are indicated with the appropriate uppercase (forward strand) or lowercase (reverse strand) letter (e.g., "A", "C", "G", "T", or [IUPAC base ambiguity code](https://www.bioinformatics.org/sms/iupac.html)).  
+A single "*" character denotes a single-base deletion in the aligned reads relative to the reference sequence, whereas a single gap in the reference sequence indicates a single-base insertion in the aligned reads relative to the reference. 
+
+Consistent with the information in the filtered VCF file (`results/bcftools/SRR3166543_top1M_variants_filtered.vcf`), 4 reads ("DP=4") covering position 127093 of chromosome 1 support the presence of single-nucleotide variant in the form of a cytosine base in L*er*, whereas a thymine is present at this position of the reference genome for Col-0.
+Only 1 read from L*er* indicates that a thymine is present at position 127023 of chromosome 1, while 2 reads from L*er* support the presence of a cytosine at this position, as is observed in the reference sequence.
+
 ### Exercise 8 
 
-Based on the usage example and options listed in the output printed above, use `samtools tview` to visualise alignments to coordinate 158640 of chromosome 1 of the reference genome.
-What can you infer from this? Is the allelic variation in the L*er* alignments relative to the Col-0 reference consistent with that detailed in the filtered VCF file?
+You can also specify in the `samtools tview` command a specific location to inspect.
+Based on the usage example and options listed in the output printed above, use `samtools tview` to visualise alignments to position 1232427 of chromosome 1 of the reference genome.
+What can you infer from this? Is the allelic variation you observe in the L*er* alignments relative to the Col-0 reference consistent with that detailed in the filtered VCF file?
 
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
   ```
-  samtools tview -p 1:158640 \
+  samtools tview -p 1:1232427 \
                  results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam \
                  genome/TAIR10_chr_all.fa
   ```
 
-  The first and second lines of the output denote the coordinates and sequence in the reference genome for Col-0.
-  The third line shows the consensus sequence based on the aligned reads shown beneath it, with gaps indicating insertions relative to the reference genome.
-  On subsequent lines, reads aligning to the forward or reverse strand of the reference genome are indicated by strings of "." or "," characters, respectively, where the aligned sequence matches the reference sequence.
-  Sites where the aligned reads from L*er* contain base calls that differ from the reference sequence are indicated with the appropriate letter ("A", "C", "G", "T", or [IUPAC base ambiguity code](https://www.bioinformatics.org/sms/iupac.html)).  
-
-  Consistent with the information in the filtered VCF file (
+  ### Output:
+  ```
+    1232431   1232441   1232451   1232461   1232471   1232481   1232491   1232501   1232511   1232521
+CCCCAAAAATTCATAATTTTTTTCTCCAGTTTTCCGGTTTGGTTTGAATTGAATTGGTTCATTCAACACCTTTGGTCAGAGGTGAAGTAGGGAGCTTTCAATTTAGGTTTA
+A.............K................................................................................................
+a,,,,           ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+A.............*............                  ..................................................................
+A.............*...............
+a,,,,,,,,,,,,,*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+                 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  ```
+  
+  Consistent with the information in the filtered VCF file (`results/bcftools/SRR3166543_top1M_variants_filtered.vcf`), 4 reads ("DP=4") covering position 1232427 of chromosome 1 support the presence of an adenine base in L*er*, whereas a cytosine is present at this position of the reference genome for Col-0.
+  Additionally, 3 reads ("DP=3") covering position 1232441 of chromosome 1 indicate deletion of an adenine base in L*er* relative to the reference allele, which is also consistent with the VCF file.
 </p></details>
 
-### Output:
-```
- 158641    158651    158661    158671     158681    158691    158701    158711    158721    158731    158741
-ATAAAAAAGACACAGCGGATCCTGTTTTTTTCTTTTTT*TCTCAGAAGTACTAAAACATGTTAGTAATAATTAACTCGAGTTTTTTTGTTTGCATGTGTTTGAATTACTGTAATT
-G..................................... ..G.........................................................................
-G.....................................G..G...............       ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-G.....................................G..G......................................G.............
-                                                                       ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,```
+
+
 
 * * *
 
