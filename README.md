@@ -645,6 +645,17 @@ What proportion of read pairs and base calls passed the filters?
 
   You'll need to include the following options in your command:
   `-a`, `-A`, `--quality-cutoff`, `--overlap`, `--minimum-length`, `--output`, `--paired-output`
+
+  To make long commands more intelligible, I tend to write them over multiple lines by appending " \" to the end of each line and indenting lines after the first. 
+
+  To redirect stdout and stderr:
+  ```
+  (executableFile --option1 this \
+                  --option2 that \
+                  --input inFile \
+                  --output outFile) \
+  &> uniquely_named_report.log
+  ```
 </p></details>
 
 <details>
@@ -659,7 +670,8 @@ What proportion of read pairs and base calls passed the filters?
             --output results/cutadapt/SRR3166543_top1M_1_trimmed.fastq.gz \
             --paired-output results/cutadapt/SRR3166543_top1M_2_trimmed.fastq.gz \
             fastq/SRR3166543_top1M_1.fastq.gz \
-            fastq/SRR3166543_top1M_2.fastq.gz) &> results/cutadapt/SRR3166543_top1M_cutadapt_report.log
+            fastq/SRR3166543_top1M_2.fastq.gz) \
+  &> results/cutadapt/SRR3166543_top1M_cutadapt_report.log
   ```
 
   97% of read pairs and 95.9% of base calls remain after cleaning.
@@ -1289,6 +1301,72 @@ grep -v '#' results/bcftools/SRR3166543_top1M_variants_filtered.vcf | wc -l
 * * *
 
 ## Step 6. Visualising the alignments and variants
+
+It's good practice to visualise aligned NGS data in a [genome browser](https://en.wikipedia.org/wiki/Genome_browser), as this allows you to see how the data are distributed throughout a genome and in relation to annotated genomic features such as genes.
+It can also reveal problems with the data, such as regions with unduly low read coverage or alignment anomalies.
+Exploring the data in this way can also motivate new questions about the underlying biology, thereby informing hypotheses that can be formally tested in downstream analyses.
+
+A quick and basic way to visualise aligned reads is with [`samtools tview`](http://www.htslib.org/doc/samtools-tview.html).
+For this to work, we need to index the BAM file containing the filtered alignments using [`samtools index`](http://www.htslib.org/doc/samtools-index.html).
+
+```
+samtools index results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam
+```
+
+Have a look at the documentation available for `samtools tview` by running it without any options specified (this program doesn't have a `--help` option).
+
+```
+samtools tview
+```
+
+### Output:
+```
+Usage: samtools tview [options] <aln.bam> [ref.fasta]
+Options:
+   -d display      output as (H)tml or (C)urses or (T)ext 
+   -X              include customized index file
+   -p chr:pos      go directly to this position
+   -s STR          display only reads from this sample or group
+   -w INT          display width (with -d T only)
+      --input-fmt-option OPT[=VAL]
+               Specify a single input file format option in the form
+               of OPTION or OPTION=VALUE
+      --reference FILE
+               Reference sequence FASTA FILE [null]
+      --verbosity INT
+               Set level of verbosity
+```
+
+### Exercise 8 
+
+Based on the usage example and options listed in the output printed above, use `samtools tview` to visualise alignments to coordinate 158640 of chromosome 1 of the reference genome.
+What can you infer from this? Is the allelic variation in the L*er* alignments relative to the Col-0 reference consistent with that detailed in the filtered VCF file?
+
+<details>
+  <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
+
+  ```
+  samtools tview -p 1:158640 \
+                 results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam \
+                 genome/TAIR10_chr_all.fa
+  ```
+
+  The first and second lines of the output denote the coordinates and sequence in the reference genome for Col-0.
+  The third line shows the consensus sequence based on the aligned reads shown beneath it, with gaps indicating insertions relative to the reference genome.
+  On subsequent lines, reads aligning to the forward or reverse strand of the reference genome are indicated by strings of "." or "," characters, respectively, where the aligned sequence matches the reference sequence.
+  Sites where the aligned reads from L*er* contain base calls that differ from the reference sequence are indicated with the appropriate letter ("A", "C", "G", "T", or [IUPAC base ambiguity code](https://www.bioinformatics.org/sms/iupac.html)).  
+
+  Consistent with the information in the filtered VCF file (
+</p></details>
+
+### Output:
+```
+ 158641    158651    158661    158671     158681    158691    158701    158711    158721    158731    158741
+ATAAAAAAGACACAGCGGATCCTGTTTTTTTCTTTTTT*TCTCAGAAGTACTAAAACATGTTAGTAATAATTAACTCGAGTTTTTTTGTTTGCATGTGTTTGAATTACTGTAATT
+G..................................... ..G.........................................................................
+G.....................................G..G...............       ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+G.....................................G..G......................................G.............
+                                                                       ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,```
 
 * * *
 
