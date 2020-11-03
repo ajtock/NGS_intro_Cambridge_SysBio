@@ -98,7 +98,7 @@ Data in FASTQ format conform to these standards:
 On your virtual desktop, you should see a shortcut to a command-line terminal (a black square with a dollar symbol followed by an underscore) towards the bottom of the screen.
 This provides a command-line interface for interacting with and navigating around the file system of the computer, as opposed to a graphical user interface (GUI).
 On opening this terminal window, you should see that your current working directory (folder) is `~/Course_Materials` (the tilde symbol (`~`) is shorthand for your home directory).
-This is followed by the command prompt ("$" followed by a cursor) where you can type text to issue commands that the computer will execute.
+This is followed by the command prompt (`$` followed by a cursor) where you can type text to issue commands that the computer will execute.
 
 Run this command to see the absolute (full) path to your current working directory printed to the terminal window:
 
