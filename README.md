@@ -1506,6 +1506,11 @@ In this way, each time the pipeline is run, a different sample name would be spe
 
 If you have time, use a text editor to write a [bash script](https://www.linux.com/training-tutorials/writing-simple-bash-script/) named `variant_calling_pipeline.sh` that combines the commands we have run in each of the five steps of the pipeline.
 
+There are two text editors available in the virtual environment, the first of which is a lot more sophisticated:
+
+> Applications > Accessories > Atom
+> Applications > Accessories > Text Editor
+
 <details>
   <summary><em><strong>Hint</strong> (click to reveal/hide)</em></summary><p>
 
