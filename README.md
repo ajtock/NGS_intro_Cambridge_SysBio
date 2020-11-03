@@ -42,7 +42,8 @@ Others require greater breadth of coverage of the genome, such as projects aimed
 Therefore, the different sequencing read lengths, qualities, abundances and error rates that are associated with different technologies need to be taken into account in order to make the right choice.
 
 This practical aims to familiarise you with Illumina next-generation sequencing (NGS) data and some of the command-line software tools available for their analysis.
-Command-line tools are central to most bioinformatics workflows as they enable efficient, flexible, automated and reproducible data processing and analysis.
+Command-line tools are central to most bioinformatics pipelines/workflows as they enable efficient, flexible, automated and reproducible data processing and analysis.
+Linux operating systems are preferred for running bioinformatics analyses, as most of the command-line tools available for these analyses have been developed primarily for these systems (we are using the Ubuntu Linux distribution today).
 Don't worry if you have little or no experience with using a command-line interface, as we'll start with some straightforward commands so that you feel comfortable navigating around the file system using this interface rather than a graphical user interface (GUI).
 And of course, please feel free to ask any questions about this aspect during the practical.
 Additionally, this [cheat sheet](https://www.git-tower.com/blog/command-line-cheat-sheet/) should help to familiarise you with some commonly used commands.
@@ -1309,6 +1310,8 @@ It's good practice to visualise aligned NGS reads in a [genome browser](https://
 It can also reveal problems with the data, including regions with unduly low read coverage or alignment anomalies.
 Exploring the data in this way can also motivate new questions about the underlying biology, thereby informing hypotheses that can be formally tested in subsequent analyses.
 
+### Step 6.1. Using `samtools tview`
+
 A quick and basic way to visualise aligned reads is with [`samtools tview`](http://www.htslib.org/doc/samtools-tview.html).
 For this to work, we need to index the BAM file containing the filtered alignments using [`samtools index`](http://www.htslib.org/doc/samtools-index.html).
 
@@ -1367,7 +1370,7 @@ The first and second lines of the output denote the coordinates and sequence in 
 The third line shows the consensus sequence based on the aligned reads shown beneath it.
 On subsequent lines, reads aligning to the forward or reverse strand of the reference genome are indicated by strings of "." or "," characters, respectively, where the aligned sequence matches the reference sequence.
 Sites where the aligned reads from L*er* contain base calls that differ from the reference sequence are indicated with the appropriate uppercase (forward strand) or lowercase (reverse strand) letter (e.g., "A", "C", "G", "T", or [IUPAC base ambiguity code](https://www.bioinformatics.org/sms/iupac.html)).  
-A single "\*" character denotes a single-base deletion in the aligned reads relative to the reference sequence, whereas a single gap in the reference sequence indicates a single-base insertion in the aligned reads relative to the reference. 
+A single "*" character denotes a single-base deletion in the aligned reads relative to the reference sequence, whereas a single gap in the reference sequence indicates a single-base insertion in the aligned reads relative to the reference. 
 
 Consistent with the information in the filtered VCF file (`results/bcftools/SRR3166543_top1M_variants_filtered.vcf`), 4 reads ("DP=4") covering position 127093 of chromosome 1 support the presence of single-nucleotide variant (SNV) in the form of a cytosine base in L*er*, whereas a thymine is present at this position of the reference genome for Col-0.
 Only 1 read from L*er* indicates that a thymine is present at position 127023 of chromosome 1, while 2 reads from L*er* support the presence of a cytosine at this position, as is observed in the reference sequence.
@@ -1406,9 +1409,49 @@ Is the allelic variation you observe in the L*er* alignments relative to the Col
   Additionally, 3 reads ("DP=3") covering position 1232441 of chromosome 1 indicate deletion of an adenine base in L*er* relative to the reference allele, as is reported in the VCF file.
 </p></details>
 
+### Step 6.2. Using Integrative Genomics Viewer (IGV)
+
+To visually explore the genomic locations of read alignments and variants in relation to annotated features of interest (e.g., genes, transposable elements, epigenetic marks), a more versatile and sophisticated genome browser is required.
+A widely used example of this is the [IIntegrative Genomics Viewer (IGV)](http://software.broadinstitute.org/software/igv/):
+
+> "The Integrative Genomics Viewer (IGV) is a high-performance, easy-to-use, interactive tool for the visual exploration of genomic data. It supports flexible integration of all the common types of genomic data and metadata, investigator-generated or publicly available, loaded from local or cloud sources."
+
+As with the other tools we have used today, IGV is pre-installed in the virtual environment.
+But unlike the other tools, IGV has a graphical user interface (GUI).
+Run `igv` at the command prompt to start it.
 
 
 
+
+
+
+
+
+\textsf{igv}
+\bigskip
+
+An \textsf{igv} window should open showing the \textit{Arabidopsis thaliana} genome. If it does not, select it from the pull-down menu.
+\bigskip
+
+From the \textsf{File} menu, select \textsf{Load from file ...}
+\bigskip
+
+Find and load the file ler.sorted.bam
+\bigskip
+
+To go to the first sequence we looked at using \textsf{samtools tview}, enter \textsf{Chr1:1447740} in the second box along and click \textsf{Go}.
+\bigskip
+
+You can pan in and out using the bars between the minus and plus in the top right hand corner. You can scroll left and right by clicking and holding the central portion of the screen.
+\bigskip
+
+How does this compare with \textsf{samtools tview}? What additional information do you see?
+\bigskip
+
+Genome browers are very useful and versatile. You can add further ``tracks'' of data (e.g., aligned RNA-seq reads, and features of interest).
+
+
+To have a look at these regions and discover whether they are in or near any features (e.g., genes), you could use the Genome Browser at The Arabidopsis Information Resource (TAIR) at \url{http://www.arabidopsis.org/}. Most of the consortia that have sequenced genomes have a website with a genome browser and other useful tools.
 
 * * *
 
@@ -1425,3 +1468,5 @@ Applying the steps outlined below, we identified DNA sequence differences (varia
 4. Filtering of alignments based on the quality of these mappings to the reference genome ([SAMtools](http://www.htslib.org/doc/samtools.html))
 5. Detection of DNA sequence differences between the L*er* and Col-0 genomes (variant calling) ([BCFtools](http://www.htslib.org/doc/bcftools.html))
 
+* * *
+* * *
