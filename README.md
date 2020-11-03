@@ -111,7 +111,7 @@ pwd
 /home/ubuntu/Course_Materials
 ```
 
-This is a useful command to run every now and again to check exactly where you're working in the directory structure, because you'll often expect to find particular files in subdirectories of your current working directory.
+This is a useful command to run every now and again to check exactly where you're working in the directory structure, because often you'll expect to find particular files in subdirectories of your current working directory.
 
 Run `ls` to list the contents of your current working directory.
 Navigate into the `NGS_intro_Cambridge_SysBio/` subdirectory with `cd NGS_intro_Cambridge_SysBio/` (<ins>c</ins>hange <ins>d</ins>irectory to `NGS_intro_Cambridge_SysBio/`), and run `ls` again to see its contents.
