@@ -1420,10 +1420,19 @@ As with the other tools we have used today, IGV is pre-installed in the virtual 
 But unlike the other tools, IGV has a graphical user interface (GUI).
 Run `igv` at the command prompt to start it.
 
+When it opens, click on the top-left drop-down menu and select "A. thaliana (TAIR10)".
+You may need to select "More..." first to see available reference genomes other than "Human hg19".
 
+To load the filtered read alignments in BAM format, navigate through the "File" menu to its location in the file system:
 
+> File > Load from File... > Course_Materials/NGS_intro_Cambridge_SysBio/results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam
 
+Load the VCF file containing filtered variant sites in the same way:
 
+> File > Load from File... > Course_Materials/NGS_intro_Cambridge_SysBio/results/bcftools/SRR3166543_top1M_variants_filtered.vcf
+
+At the top of the browser, there's a left–right scrollable rectangular panel showing coordinates in the reference genome sequence.
+You can select indi
 
 
 
