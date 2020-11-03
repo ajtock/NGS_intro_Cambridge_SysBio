@@ -41,7 +41,7 @@ Some applications require high sequencing depth of coverage of specific parts of
 Others require greater breadth of coverage of the genome, such as projects aimed at assembling genomes or genomic regions from scratch, termed [*de novo* assembly](https://en.wikipedia.org/wiki/De_novo_sequence_assemblers).
 Therefore, the different sequencing read lengths, qualities, abundances and error rates that are associated with different technologies need to be taken into account in order to make the right choice.
 
-This practical aims to familiarise you with Illumina next-generation sequencing data and some of the command-line software tools available for their analysis.
+This practical aims to familiarise you with Illumina next-generation sequencing (NGS) data and some of the command-line software tools available for their analysis.
 Command-line tools are central to most bioinformatics workflows as they enable efficient, flexible, automated and reproducible data processing and analysis.
 Don't worry if you have little or no experience with using a command-line interface, as we'll start with some straightforward commands so that you feel comfortable navigating around the file system using this interface rather than a graphical user interface (GUI).
 And of course, please feel free to ask any questions about this aspect during the practical.
@@ -69,9 +69,12 @@ To this end, these are the steps in the pipeline that we will work through seque
 
 1. Evaluation of sequencing read quality, including at the level of individual bases
 2. Removal of technical sequences (e.g., sequencing adapters) and low-quality bases
-3. Alignment of reads (from L*er*) to a reference genome (for Col-0)
+3. Alignment of reads (from L*er*) to a reference sequence (for Col-0)
 4. Filtering of alignments based on the quality of these mappings to the reference genome
 5. Detection of DNA sequence differences between the L*er* and Col-0 genomes (variant calling)
+
+Bioinformatics pipelines that work with other types of NGS data (such as RNA-seq or ChIP-seq) apply the first four of these steps.
+This practical should therefore give you a general feel for how NGS data processing and analysis pipelines work.
 
 * * *
 
@@ -433,7 +436,7 @@ If in future you are working with many FASTQ files, [MultiQC](https://multiqc.in
 ## Step 2. Removing technical sequences and low-quality bases using Cutadapt
 
 There are several tools available for filtering and trimming reads to remove technical sequences (e.g., sequencing adapters) and low-quality bases, including [Cutadapt](https://cutadapt.readthedocs.io/en/stable/) and [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic).
-Removing these sequences is important because it means that downstream analyses won't be compromised by base calls in which we have low confidence, or by the presence of technical sequences that do not reflect the biology of the sample we have sequenced.
+Removing these sequences is important because it means that subsequent analyses won't be compromised by base calls in which we have low confidence, or by the presence of technical sequences that do not reflect the biology of the sample we have sequenced.
 In the case of aligning reads to a reference genome assembly, for example, read cleaning tends to increase the alignment rate.
 
 We're going to use Cutadapt for this step in the pipeline, so let's have a look at a usage example and the available options.
@@ -646,7 +649,7 @@ What proportion of read pairs and base calls passed the filters?
   You'll need to include the following options in your command:
   `-a`, `-A`, `--quality-cutoff`, `--overlap`, `--minimum-length`, `--output`, `--paired-output`
 
-  To make long commands more intelligible, I tend to write them over multiple lines by appending " \" to the end of each line and indenting lines after the first. 
+  To make long commands more intelligible, I tend to write them over multiple lines by appending " \" (without the speech marks) to the end of each line and indenting lines after the first. 
 
   To redirect stdout and stderr:
   ```
@@ -1022,7 +1025,7 @@ From left to right, the 11 mandatory fields are:
      
     For example, a read that is the first mate in a pair, and aligns to the reverse strand of the reference sequence, as part of a proper paired-end alignment will have flag 83 (= 64 + 16 + 2 + 1).
      
-    This is a useful [tool for decoding SAM flags](https://broadinstitute.github.io/picard/explain-flags.html), and can be used to inform downstream filtering of the alignments.
+    This is a useful [tool for decoding SAM flags](https://broadinstitute.github.io/picard/explain-flags.html), and can be used to inform subsequent filtering of the alignments.
      
 3. Name of reference sequence where alignment occurs, or ordinal ID if no name was provided.
 
@@ -1176,8 +1179,8 @@ samtools view results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_
 
 Next we'll apply the [`samtools sort`](http://www.htslib.org/doc/samtools-sort.html) command to sort alignments in the BAM file by their coordinates in the reference genome, such that alignments to the beginning of chromosome 1 will precede alignments to the end of chromosome 5.
 Sorting alignments by their location in the reference genome is the default behaviour of this command, but other options can be specified to order alignments in different ways (e.g., by read name, with `-n`).
-Different downstream analyses require differently sorted alignment files.
-We are sorting by coordinates as this is necessary for downstream identification of genetic variants between the genomes of two *A. thaliana* ecotypes.
+Different types of downstream analyses require differently sorted alignment files.
+We are sorting by coordinates as this is necessary for subsequent identification of genetic variants between the genomes of two *A. thaliana* ecotypes.
 We've actually already coordinate-sorted the alignments as part of the piped commands that removed duplicates, but it's a good idea to apply this coordinate-sorting step here just in case the duplicate-removal step of the pipeline has been skipped.
 
 As is the case for `samtools view`, the `-o` part of this command is used to specify the output file.
@@ -1302,9 +1305,9 @@ grep -v '#' results/bcftools/SRR3166543_top1M_variants_filtered.vcf | wc -l
 
 ## Step 6. Visualising the alignments and variants
 
-It's good practice to visualise aligned NGS data in a [genome browser](https://en.wikipedia.org/wiki/Genome_browser), as this allows you to see how the data are distributed throughout a genome and in relation to annotated genomic features such as genes.
-It can also reveal problems with the data, such as regions with unduly low read coverage or alignment anomalies.
-Exploring the data in this way can also motivate new questions about the underlying biology, thereby informing hypotheses that can be formally tested in downstream analyses.
+It's good practice to visualise aligned NGS reads in a [genome browser](https://en.wikipedia.org/wiki/Genome_browser), as this allows you to see how the data are distributed throughout a genome and in relation to annotated genomic features of interest, such as genes.
+It can also reveal problems with the data, including regions with unduly low read coverage or alignment anomalies.
+Exploring the data in this way can also motivate new questions about the underlying biology, thereby informing hypotheses that can be formally tested in subsequent analyses.
 
 A quick and basic way to visualise aligned reads is with [`samtools tview`](http://www.htslib.org/doc/samtools-tview.html).
 For this to work, we need to index the BAM file containing the filtered alignments using [`samtools index`](http://www.htslib.org/doc/samtools-index.html).
@@ -1344,8 +1347,9 @@ samtools tview results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup
                genome/TAIR10_chr_all.fa
 ```
 
-Then type `?` to see what options are available for visualisation and navigation.
-Type `g` and enter "1:127021" to go to position 127021 of chromosome 1.
+Then type `?` to see the options available for visualisation and navigation.
+Type any key to exit the "Help" menu.
+To navigate to position 127021 of chromosome 1, type `g` and in the dialogue box enter "1:127021" (without the speech marks).
 
 ### Output:
 ```
@@ -1363,16 +1367,19 @@ The first and second lines of the output denote the coordinates and sequence in 
 The third line shows the consensus sequence based on the aligned reads shown beneath it.
 On subsequent lines, reads aligning to the forward or reverse strand of the reference genome are indicated by strings of "." or "," characters, respectively, where the aligned sequence matches the reference sequence.
 Sites where the aligned reads from L*er* contain base calls that differ from the reference sequence are indicated with the appropriate uppercase (forward strand) or lowercase (reverse strand) letter (e.g., "A", "C", "G", "T", or [IUPAC base ambiguity code](https://www.bioinformatics.org/sms/iupac.html)).  
-A single "*" character denotes a single-base deletion in the aligned reads relative to the reference sequence, whereas a single gap in the reference sequence indicates a single-base insertion in the aligned reads relative to the reference. 
+A single "\*" character denotes a single-base deletion in the aligned reads relative to the reference sequence, whereas a single gap in the reference sequence indicates a single-base insertion in the aligned reads relative to the reference. 
 
 Consistent with the information in the filtered VCF file (`results/bcftools/SRR3166543_top1M_variants_filtered.vcf`), 4 reads ("DP=4") covering position 127093 of chromosome 1 support the presence of single-nucleotide variant (SNV) in the form of a cytosine base in L*er*, whereas a thymine is present at this position of the reference genome for Col-0.
 Only 1 read from L*er* indicates that a thymine is present at position 127023 of chromosome 1, while 2 reads from L*er* support the presence of a cytosine at this position, as is observed in the reference sequence.
 
+Type `q` to exit `samtools tview`.
+
 ### Exercise 8 
 
-You can also specify in the `samtools tview` command a specific location to inspect.
-Based on the usage example and options listed in the output printed above, use `samtools tview` to visualise alignments to position 1232427 of chromosome 1 of the reference genome.
-What can you infer from this? Is the allelic variation you observe in the L*er* alignments relative to the Col-0 reference consistent with that detailed in the filtered VCF file?
+You can also include in the `samtools tview` command a specific location to inspect, thereby bypassing the part involving the dialogue box in the example above.
+Based on the usage example and options listed above, use [`samtools tview`](http://www.htslib.org/doc/samtools-tview.html) to visualise alignments to position 1232427 of chromosome 1 of the reference genome.
+What can you infer from this?
+Is the allelic variation you observe in the L*er* alignments relative to the Col-0 reference consistent with that detailed in the filtered VCF file?
 
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
@@ -1394,10 +1401,12 @@ What can you infer from this? Is the allelic variation you observe in the L*er* 
   a,,,,,,,,,,,,,*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
                    ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
   ```
-  
+
   Consistent with the information in the filtered VCF file (`results/bcftools/SRR3166543_top1M_variants_filtered.vcf`), 4 reads ("DP=4") covering position 1232427 of chromosome 1 support the presence of an adenine base in L*er*, whereas a cytosine is present at this position of the reference genome for Col-0.
-  Additionally, 3 reads ("DP=3") covering position 1232441 of chromosome 1 indicate deletion of an adenine base in L*er* relative to the reference allele, which is also consistent with the VCF file.
+  Additionally, 3 reads ("DP=3") covering position 1232441 of chromosome 1 indicate deletion of an adenine base in L*er* relative to the reference allele, as is reported in the VCF file.
 </p></details>
+
+
 
 
 
