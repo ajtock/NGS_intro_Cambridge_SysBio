@@ -124,7 +124,8 @@ cd /home/ubuntu/Course_Materials/NGS_intro_Cambridge_SysBio/
 ```
 
 Let's have a look at one of the gzip-compressed FASTQ files to inspect its format.
-Use `zcat` and `head` to print the first eight lines of `SRR3166543_top1M_1.fastq.gz` (contained within the `fastq/` subdirectory of your current working directoy) to the terminal window.
+
+Use `zcat` and `head` to print the first eight lines of `SRR3166543_top1M_1.fastq.gz` to the terminal window.
 This printed output is called standard output (stdout), and can be redirected to a file by appending ` > filename.txt` to the command.
 We need to use `zcat` here to uncompress the gzip-compressed file.
 The `cat` command prints the contents of already uncompressed files, or con<ins>cat</ins>enates and prints the contents of multiple already uncompressed files. 
