@@ -1420,7 +1420,7 @@ As with the other tools we have used today, IGV is pre-installed in the virtual 
 But unlike the other tools, IGV has a graphical user interface (GUI).
 Run `igv` at the command prompt to start it.
 
-When it opens, click on the top-left drop-down menu and select "A. thaliana (TAIR10)".
+When it opens, click on the top-left drop-down menu and select the "A. thaliana (TAIR10)" reference genome.
 You may need to select "More..." first to see available reference genomes other than "Human hg19".
 
 To load the filtered read alignments in BAM format, navigate through the "File" menu to its location in the file system:
@@ -1431,36 +1431,24 @@ Load the VCF file containing filtered variant sites in the same way:
 
 > File > Load from File... > Course_Materials/NGS_intro_Cambridge_SysBio/results/bcftools/SRR3166543_top1M_variants_filtered.vcf
 
-At the top of the browser, there's a left–right scrollable rectangular panel showing coordinates in the reference genome sequence.
-You can select indi
+At the top of the browser, there's a left–right scrollable, in–out zoomable rectangular panel showing coordinates in the reference genome sequence.
+You can select individual sequences (e.g., chromosomes) within the reference sequence by clicking on their names within in the drop-down menu to the right of the genome selection drop-down menu at the top-left of the window.
+Alternatively, you can specify a particular locus or range of coordinates by typing in the box to the right of these two drop-down menus (hover over the text-entry box to see examples of how loci can be specified here).
+You can scroll left and right by clicking and dragging the cursor over the central part of the window.
+You can zoom in and out using the "-" and "+" buttons (or the bars between them) at the top-right of the window.
 
+Beneath the panel showing reference genomic coordinates, you should see five "tracks":
+1. The filtered variants in the VCF file, displayed as rectangles marking variant sites in the reference sequence. Right-click on the left-hand panel for this track (in which the VCF filename is displayed) and select "Color By > Allele Fraction" so that rectangles marking variants will be coloured according to the number of different alleles observed among the aligned reads. Beneath this, the track also shows colour-coded rectangles denoting the genotype of the sample at the variant site; cyan = heterozygous, blue = homozygous, filtered variant sites = transparent (the latter would be visible if we had annotated rather than removed variants based on our filtering criteria).  
+2. Counts of aligned reads covering each genomic coordinate ("SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam Coverage"). You may need to zoom in to see this and the subsequent track, either by clicking and dragging the cursor to cover the region of interest in the genomic coordinates panel, or using the zoom-in buttons at the top-right of the browser.
+3. Aligned reads, with sequences matching the reference sequence are shown in grey, and base calls that differ from the reference coloured differently according to the base called. Reads that aligned to the forward or reverse strand of the reference sequence are displayed with a pointed rightmost or leftmost edge, respectively.
+4. The reference nucloetide sequence with 3-frame amino acid translations optionally displayed below. The reverse complement of the reference sequence can be displayed by clicking on the black arrow in the left-hand panel for this track.
+5. Annotated genes in the *Arabidopsis thaliana* reference genome.
 
-
-\textsf{igv}
-\bigskip
-
-An \textsf{igv} window should open showing the \textit{Arabidopsis thaliana} genome. If it does not, select it from the pull-down menu.
-\bigskip
-
-From the \textsf{File} menu, select \textsf{Load from file ...}
-\bigskip
-
-Find and load the file ler.sorted.bam
-\bigskip
-
-To go to the first sequence we looked at using \textsf{samtools tview}, enter \textsf{Chr1:1447740} in the second box along and click \textsf{Go}.
-\bigskip
-
-You can pan in and out using the bars between the minus and plus in the top right hand corner. You can scroll left and right by clicking and holding the central portion of the screen.
-\bigskip
-
-How does this compare with \textsf{samtools tview}? What additional information do you see?
-\bigskip
-
-Genome browers are very useful and versatile. You can add further ``tracks'' of data (e.g., aligned RNA-seq reads, and features of interest).
-
-
-To have a look at these regions and discover whether they are in or near any features (e.g., genes), you could use the Genome Browser at The Arabidopsis Information Resource (TAIR) at \url{http://www.arabidopsis.org/}. Most of the consortia that have sequenced genomes have a website with a genome browser and other useful tools.
+Move to different loci in the reference sequences and hover over variant sites and read alignments to see more information.
+The Broad Institute provides more details on how [alignments](http://software.broadinstitute.org/software/igv/AlignmentData) and [variants](http://software.broadinstitute.org/software/igv/viewing_vcf_files) are visualised in IGV.
+Many "tracks" corresponding to different samples and data types (e.g., wild type and mutant genotypes, ChIP-seq and RNA-seq read coverage, as well as loci indicative of epigenetic modifications) can be loaded and displayed together, thereby providing a composite picture of the genetic, epigenetic and expression profiles of individual loci.
+Genome browsers are therefore very useful for exploratory analyses.
+Several web-based browsers are also available for different species with assembled genomes, such as those provided by [Ensembl](https://www.ensembl.org/index.html), [UCSC](https://genome.ucsc.edu/), [Phytozome](https://phytozome-next.jgi.doe.gov/), and [The Arabidopsis Information Resource (TAIR)](https://www.arabidopsis.org/).
 
 * * *
 
@@ -1476,6 +1464,32 @@ Applying the steps outlined below, we identified DNA sequence differences (varia
 3. Alignment of reads (from L*er*) to a reference genome (for Col-0) ([Bowtie 2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml))
 4. Filtering of alignments based on the quality of these mappings to the reference genome ([SAMtools](http://www.htslib.org/doc/samtools.html))
 5. Detection of DNA sequence differences between the L*er* and Col-0 genomes (variant calling) ([BCFtools](http://www.htslib.org/doc/bcftools.html))
+
+* * *
+
+### Exercise 8 (optional)
+
+To make these steps run as part of an automated and reproducible bioinformatics pipeline, it's necessary to combine the commands into one script.
+As bioinformatics pipelines tend to be applied to multiple samples, it would be useful to write this script with a variable corresponding to sample name.
+In this way, each time the pipeline is run, a different sample name would be specified to set this variable.
+If you have time, use a text editor to write a [bash script](https://www.linux.com/training-tutorials/writing-simple-bash-script/) named `variant_calling_pipeline.sh` that combines the commands we have run in each of the five steps of workflow.
+
+<details>
+  <summary><em><strong>Hint</strong> (click to reveal/hide)</em></summary><p>
+
+  ### First few lines of a bash script for running a bioinformatics pipeline:
+  ```
+  !#/bin/bash
+
+  # Description: bash script for automated processing and genomic alignment
+  # of paired-end reads followed by variant calling
+  
+  # Usage:
+  # bash variant_calling_pipeline.sh SRR3166543_top1M
+
+   
+  ```
+</p></details>
 
 * * *
 * * *
