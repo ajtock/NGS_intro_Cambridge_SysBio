@@ -793,7 +793,7 @@ How many distinct sequences corresponding to nuclear chromosomes and non-nuclear
 
 To align the cleaned read pairs (`SRR3166543_top1M_1_trimmed.fastq.gz` and `SRR3166543_top1M_2_trimmed.fastq.gz`) to the reference genome, we're going to use [Bowtie 2](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml), a fast and memory-efficient tool that indexes the reference genome with an [FM-index](https://en.wikipedia.org/wiki/FM-index) based on the [Burrows–Wheeler Transform (BWT)](https://en.wikipedia.org/wiki/Burrows%E2%80%93Wheeler_transform).
 From [Li and Durbin (2009) *Bioinformatics* **25**](https://doi.org/10.1093/bioinformatics/btp324):
-> "Essentially, using backward search [...] with BWT, we are able to effectively mimic the top-down traversal on the prefix trie of the genome with relatively small memory footprint [...] and to count the number of exact hits of a string of length *m* in *O*(*m*) time independent of the size of the genome."
+> "Essentially, using backward search [...] with BWT, we are able to effectively mimic the top-down traversal on the prefix trie of the genome with relatively small memory footprint [...] and to count the number of exact hits of a string of length *m* in *O*(*m*) time independent of the size of the genome."  
 
 Other programs for aligning short (NGS) reads to large reference sequences include [BWA](https://github.com/lh3/bwa), [HISAT2](http://daehwankimlab.github.io/hisat2/) and [STAR](https://github.com/alexdobin/STAR).
 [minimap2](https://github.com/lh3/minimap2) was developed primarily for aligning long-read data (e.g., PacBio or Oxford Nanopore reads) to large reference sequences. 
@@ -1445,7 +1445,7 @@ Is the allelic variation you observe in the L*er* alignments relative to the Col
 To visually explore the genomic locations of read alignments and variants in relation to annotated features of interest (e.g., genes, transposable elements, epigenetic marks), a more versatile and sophisticated genome browser is required.
 A widely used example of this is the [IIntegrative Genomics Viewer (IGV)](http://software.broadinstitute.org/software/igv/):
 
-> "The Integrative Genomics Viewer (IGV) is a high-performance, easy-to-use, interactive tool for the visual exploration of genomic data. It supports flexible integration of all the common types of genomic data and metadata, investigator-generated or publicly available, loaded from local or cloud sources."
+> "The Integrative Genomics Viewer (IGV) is a high-performance, easy-to-use, interactive tool for the visual exploration of genomic data. It supports flexible integration of all the common types of genomic data and metadata, investigator-generated or publicly available, loaded from local or cloud sources."  
 
 As with the other tools we have used today, IGV is pre-installed in the virtual environment.
 But unlike the other tools, IGV has a graphical user interface (GUI).
@@ -1456,11 +1456,11 @@ You may need to select "More..." first to see available reference genomes other 
 
 To load the filtered read alignments in BAM format, navigate through the "File" menu to its location in the file system:
 
-> File > Load from File... > Course_Materials/NGS_intro_Cambridge_SysBio/results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam
+> File > Load from File... > Course_Materials/NGS_intro_Cambridge_SysBio/results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam  
 
 Load the VCF file containing filtered variant sites in the same way:
 
-> File > Load from File... > Course_Materials/NGS_intro_Cambridge_SysBio/results/bcftools/SRR3166543_top1M_variants_filtered.vcf
+> File > Load from File... > Course_Materials/NGS_intro_Cambridge_SysBio/results/bcftools/SRR3166543_top1M_variants_filtered.vcf  
 
 At the top of the browser, there's a left–right scrollable, in–out zoomable rectangular panel showing coordinates in the reference genome sequence.
 You can select individual sequences (e.g., chromosomes) within the reference sequence by clicking on their names within in the drop-down menu to the right of the genome selection drop-down menu at the top-left of the window.
@@ -1508,8 +1508,8 @@ If you have time, use a text editor to write a [bash script](https://www.linux.c
 
 There are two text editors available in the virtual environment, the first of which is a lot more sophisticated:
 
-> Applications > Accessories > Atom
-> Applications > Accessories > Text Editor
+> Applications > Accessories > Atom  
+> Applications > Accessories > Text Editor  
 
 <details>
   <summary><em><strong>Hint</strong> (click to reveal/hide)</em></summary><p>
