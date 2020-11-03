@@ -1470,8 +1470,9 @@ Applying the steps outlined below, we identified DNA sequence differences (varia
 ### Exercise 8 (optional)
 
 To make these steps run as part of an automated and reproducible bioinformatics pipeline, it's necessary to combine the commands into one script.
-As bioinformatics pipelines tend to be applied to multiple samples, it would be useful to write this script with a variable corresponding to sample name.
+As bioinformatics pipelines tend to be applied to multiple samples, it would be useful to write this script with a variable corresponding to the sample name.
 In this way, each time the pipeline is run, a different sample name would be specified to set this variable.
+
 If you have time, use a text editor to write a [bash script](https://www.linux.com/training-tutorials/writing-simple-bash-script/) named `variant_calling_pipeline.sh` that combines the commands we have run in each of the five steps of workflow.
 
 <details>
@@ -1482,12 +1483,47 @@ If you have time, use a text editor to write a [bash script](https://www.linux.c
   !#/bin/bash
 
   # Description: bash script for automated processing and genomic alignment
-  # of paired-end reads followed by variant calling
-  
+  # of sample-specific paired-end NGS reads followed by variant calling
+  # This script assumes that files containing paired-end NGS reads in
+  # gzip-compressed FASTQ format are located in a subdirectory named "fastq/",
+  # relative to the working directory within which this script is run
+
   # Usage:
   # bash variant_calling_pipeline.sh SRR3166543_top1M
+  # Or make the script executable before running:
+  # chmod +x variant_calling_pipeline.sh # required prior to first use only
+  # ./variant_calling_pipeline.sh SRR3166543_top1M
 
-   
+  # Define a variable corresponding to the sample name, using the first argument ($1)
+  # passed to variant_calling_pipeline.sh at the command prompt
+  # (e.g., "SRR3166543_top1M" in the usage example above)
+  sample=$1
+
+  # Create a directory to contain the FastQC output if it doesn't exist
+  [ -d results/fastqc/raw_reads ] || mkdir -p results/fastqc/raw_reads
+
+  # Evaluate raw read quality (for both reads in a pair) using FastQC
+  (fastqc --outdir results/fastqc/raw_reads \
+          fastq/${sample}*.fastq.gz) \
+  &> results/fastqc/raw_reads/${sample}_fastqc_raw_report.log
+
+  # Create a directory to contain the FastQC output if it doesn't exist
+  [ -d results/cutadapt/ ] || mkdir results/cutadapt/
+
+  # Clean the raw reads using Cutadapt
+  # (this assumes Illumina Truseq adapter sequences are to be removed)
+  (cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA \
+            -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
+            --quality-cutoff 20 \
+            --overlap 4 \
+            --minimum-length 30 \
+            --output results/cutadapt/${sample}_1_trimmed.fastq.gz \
+            --paired-output results/cutadapt/${sample}_2_trimmed.fastq.gz \
+            fastq/${sample}_1.fastq.gz \
+            fastq/${sample}_2.fastq.gz) \
+  &> results/cutadapt/${sample}_cutadapt_report.log
+
+  # Commands for subsequent steps of the pipeline would follow below 
   ```
 </p></details>
 
