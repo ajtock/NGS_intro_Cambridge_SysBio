@@ -1504,7 +1504,7 @@ To make these steps run as part of an automated and reproducible bioinformatics 
 As bioinformatics pipelines tend to be applied to multiple samples, it would be useful to write this script with a variable corresponding to the sample name.
 In this way, each time the pipeline is run, a different sample name would be specified to set this variable.
 
-If you have time, use a text editor to write a [bash script](https://www.linux.com/training-tutorials/writing-simple-bash-script/) named `variant_calling_pipeline.sh` that combines the commands we have run in each of the five steps of workflow.
+If you have time, use a text editor to write a [bash script](https://www.linux.com/training-tutorials/writing-simple-bash-script/) named `variant_calling_pipeline.sh` that combines the commands we have run in each of the five steps of the pipeline.
 
 <details>
   <summary><em><strong>Hint</strong> (click to reveal/hide)</em></summary><p>
