@@ -1522,7 +1522,7 @@ If you have time, use a text editor to write a [bash script](https://www.linux.c
   # Usage:
   # bash variant_calling_pipeline.sh SRR3166543_top1M
   # Or make the script executable before running:
-  # chmod +x variant_calling_pipeline.sh # required prior to first use only
+  # chmod +x variant_calling_pipeline.sh # required before first use only
   # ./variant_calling_pipeline.sh SRR3166543_top1M
 
   # Define a variable corresponding to the sample name, using the first argument ($1)
