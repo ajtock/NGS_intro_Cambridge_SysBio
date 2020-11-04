@@ -1242,7 +1242,7 @@ The most abundant type of genetic variant is the single-nucleotide polymorphism 
 
 We will use [BCFtools](http://www.htslib.org/doc/bcftools.html) to identify sites in the reference genome that differ between L*er* and Col-0, based on the BAM file containing coordinate-sorted alignments of L*er* reads to the Col-0 reference genome.
 
-For this, we need to index the FASTA-format reference genome using `samtools faidx`, which will generate `genome/TAIR10_chr_all.fa.fai` (although this file isn't explicitly included in the next command).
+For this, we need to index the FASTA-format reference genome using `samtools faidx`, which will generate `genome/TAIR10_chr_all.fa.fai` (although this file isn't explicitly included in the subsequent BCFtools commands).
 As in previous steps, we should also make an output directory.
 
 ```
