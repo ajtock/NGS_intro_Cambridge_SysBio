@@ -806,7 +806,7 @@ Other programs for aligning short (NGS) reads to large reference sequences inclu
 [minimap2](https://github.com/lh3/minimap2) was developed primarily for aligning long-read data (e.g., PacBio or Oxford Nanopore reads) to large reference sequences. 
 Alignment to a reference genome requires index files specific to the alignment software being used.
 
-**You don't need to generate these index files in this case, as they have already been created in the `genome/` directory using a `bowtie2-build` command to save time.**
+**You don't need to generate these index files in this case, as they have already been created in the `genome/` directory (using a `bowtie2-build` command) to save time.**
 
 As we already have the genome index files, have a look at the Bowtie 2 `--help` output for information about example usage and options.
 Type `q` to quit the `less` program when you've finished inspecting the output.
