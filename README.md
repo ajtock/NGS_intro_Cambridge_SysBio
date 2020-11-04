@@ -1418,8 +1418,7 @@ Type `q` to exit `samtools tview`.
 You can also include in the `samtools tview` command a specific location to inspect, thereby bypassing the part involving the dialogue box in the example above.
 Based on the usage example and options listed above, use [`samtools tview`](http://www.htslib.org/doc/samtools-tview.html) to visualise alignments to position 1232427 of chromosome 1 of the reference genome.
 
-**Questions:** What can you infer from this?
-Is the allelic variation you observe in the L*er* alignments relative to the Col-0 reference consistent with that detailed in the filtered VCF file?
+**Question:** Is the allelic variation you observe in the L*er* alignments relative to the Col-0 reference consistent with that detailed in the filtered VCF file?
 
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
