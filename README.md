@@ -114,13 +114,13 @@ pwd
 This is a useful command to run every now and again to check exactly where you're working in the directory structure, because often you'll expect to find particular files in subdirectories of your current working directory.
 
 Run `ls` to list the contents of your current working directory.
-Navigate into the `NGS_intro_Cambridge_SysBio/` subdirectory with `cd NGS_intro_Cambridge_SysBio/` (<ins>c</ins>hange <ins>d</ins>irectory to `NGS_intro_Cambridge_SysBio/`), and run `ls` again to see its contents.
-Navigate into the `fastq/` and `genome/` subdirectories of `NGS_intro_Cambridge_SysBio/` using `cd` and `cd ..` commands (the latter of which navigates one directory up in the directory structure), and list their contents using `ls`.
+Navigate into the `NGS_intro/` subdirectory with `cd NGS_intro/` (<ins>c</ins>hange <ins>d</ins>irectory to `NGS_intro/`), and run `ls` again to see its contents.
+Navigate into the `fastq/` and `genome/` subdirectories of `NGS_intro/` using `cd` and `cd ..` commands (the latter of which navigates one directory up in the directory structure), and list their contents using `ls`.
 This process of navigating around the directory structure has involved issuing `cd` commands followed by *relative paths*.
 It's also possible and sometimes more appropriate to navigate to particular locations in the directory structure using *absolute paths*:
 
 ```
-cd /home/ubuntu/Course_Materials/NGS_intro_Cambridge_SysBio/
+cd /home/ubuntu/Course_Materials/NGS_intro/
 ```
 
 Let's have a look at one of the gzip-compressed FASTQ files to inspect its format.
@@ -210,7 +210,7 @@ fastqc --version
 FastQC v0.11.9
 ```
 
-The `--version` and `--help` options are usually, but not always, available for most tools.
+The `--version` and `--help` options are available for most tools.
 The latter generally shows an example of typical usage of the executable file with arguments, along with a list of options for the program.
 "Piping" the output into the `less` command using `|` allows you to scroll through the output with the `up` and `down` keys.
 Type `q` to quit the `less` program when you've finished inspecting the output.
@@ -1456,11 +1456,11 @@ You may need to select "More..." first to see available reference genomes other 
 
 To load the filtered read alignments in BAM format, navigate through the "File" menu to its location in the file system:
 
-> File > Load from File... > Course_Materials/NGS_intro_Cambridge_SysBio/results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam  
+> File > Load from File... > Course_Materials/NGS_intro/results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam  
 
 Load the VCF file containing filtered variant sites in the same way:
 
-> File > Load from File... > Course_Materials/NGS_intro_Cambridge_SysBio/results/bcftools/SRR3166543_top1M_variants_filtered.vcf  
+> File > Load from File... > Course_Materials/NGS_intro/results/bcftools/SRR3166543_top1M_variants_filtered.vcf  
 
 At the top of the browser, there's a left–right scrollable, in–out zoomable rectangular panel showing coordinates in the reference genome sequence.
 You can select individual sequences (e.g., chromosomes) within the reference sequence by clicking on their names within in the drop-down menu to the right of the genome selection drop-down menu at the top-left of the window.
@@ -1547,7 +1547,7 @@ There are two text editors available in the virtual environment, the first of wh
   [ -d results/cutadapt/ ] || mkdir results/cutadapt/
 
   # Clean the raw reads using Cutadapt
-  # (this assumes Illumina Truseq adapter sequences are to be removed)
+  # (this assumes Illumina TruSeq adapter sequences are to be removed)
   (cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA \
             -A AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT \
             --quality-cutoff 20 \
