@@ -1081,14 +1081,14 @@ From left to right, the 11 mandatory fields are:
 
 For further details on SAM mandatory and optional fields, see the [Sequence Alignment/Map (SAM) format specification](https://samtools.github.io/hts-specs/SAMv1.pdf).
 
-**Question:** How many paired-end alignments are there?
+How many paired-end alignments are there?
 
 ```
 samtools view results/bowtie2/SRR3166543_top1M_MappedOn_TAIR10_chr_all.sam \
               | cut -f1 | sort | uniq | wc -l
 ```
 
-### Output (answer):
+### Output:
 ```
   970455
 ```
@@ -1199,14 +1199,14 @@ The log file should be empty in this case.
   ```
 </p></details>
 
-**Question:** How many paired-end alignments remain after filtering?
+How many paired-end alignments remain after filtering?
 
 ```
 samtools view results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique.bam \
               | cut -f1 | sort | uniq | wc -l
 ```
 
-### Output (answer):
+### Output:
 ```
   537821
 ```
