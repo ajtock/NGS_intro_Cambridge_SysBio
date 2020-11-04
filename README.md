@@ -685,7 +685,7 @@ What proportion of read pairs and base calls passed the filters?
   You'll need to include the following options in your command:
   `-a`, `-A`, `--quality-cutoff`, `--overlap`, `--minimum-length`, `--output`, `--paired-output`
 
-  To make long commands more intelligible, I tend to write them over multiple lines by appending " \" (without the speech marks) to the end of each line and indenting lines after the first. 
+  To make long commands more intelligible, I tend to write them over multiple lines by appending " \\" (without the speech marks) to the end of each line, and indenting lines after the first. 
 
   To redirect stdout and stderr:
   ```
