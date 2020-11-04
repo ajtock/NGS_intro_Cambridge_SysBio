@@ -23,10 +23,11 @@ Despite their higher throughput, the reads are shorter and of lower quality than
 One next-generation sequencing (NGS) technology has come to dominate: [Illumina sequencing by synthesis (SBS)](https://www.illumina.com/documents/products/techspotlights/techspotlight_sequencing.pdf) on Genome Analyzer, HiSeq, MiSeq, NextSeq and NovaSeq instruments.
 This technology was developed by Cambridge scientists Shankar Balasubramanian and David Klenerman in the Department of Chemistry, who formed a company called Solexa in 1998.
 Illumina acquired Solexa in 2007.
+
+This [animation](https://www.youtube.com/watch?v=fCd6B5HRaZ8) shows in detail how Illumina sequencing by synthesis works.
 The method uses flow cells containing clusters of clonally amplified DNA fragments.
 The underlying nucleotide sequence of each fragment is determined based on signal emitted by each cluster under laser excitation of a fluorescently labelled nucleotide that has been added to an extending sequence complementary to the fragment.
-Billions of clusters per flow cell are sequenced simultaneously, and an image is captured for each successive base along the DNA fragment, with read length dependent on the method employed. 
-This [animation](https://www.youtube.com/watch?v=fCd6B5HRaZ8) shows in detail how Illumina sequencing by synthesis works.
+Millions or even billions of clusters per flow cell are sequenced simultaneously, during which for each cluster an image is captured for each successive base along the DNA fragment, with read length dependent on the method employed. 
 
 Due in large part to this breakthrough technology, we have seen the cost of sequencing a single person’s genome drop from a prohibitive US$10 million in 2007 to ~US$1,000 by mid-2015!
 There have been various refinements to Illumina’s technology, including the use of [patterned flow cells](https://emea.illumina.com/science/technology/next-generation-sequencing/sequencing-technology/patterned-flow-cells.html) that have billions of ordered nanowells.
@@ -44,6 +45,7 @@ Therefore, the different sequencing read lengths, qualities, abundances and erro
 This practical aims to familiarise you with Illumina next-generation sequencing (NGS) data and some of the command-line software tools available for their analysis.
 Command-line tools are central to most bioinformatics pipelines/workflows as they enable efficient, flexible, automated and reproducible data processing and analysis.
 Linux operating systems are preferred for running bioinformatics analyses, as most of the command-line tools available for these analyses have been developed primarily for these systems (we are using the Ubuntu Linux distribution today).
+
 Don't worry if you have little or no experience with using a command-line interface, as we'll start with some straightforward commands so that you feel comfortable navigating around the file system using this interface rather than a graphical user interface (GUI).
 And of course, please feel free to ask any questions about this aspect during the practical.
 Additionally, this [cheat sheet](https://www.git-tower.com/blog/command-line-cheat-sheet/) should help to familiarise you with some commonly used commands.
@@ -53,8 +55,10 @@ Additionally, this [cheat sheet](https://www.git-tower.com/blog/command-line-che
 ## The data
 
 The NGS data we are going to analyse are derived from whole-genome sequencing of the Landsberg *erecta* (L*er*) [ecotype](https://en.wikipedia.org/wiki/Ecotype) of the [diploid](https://www.genome.gov/genetics-glossary/Diploid) model plant species [*Arabidopsis thaliana*](https://en.wikipedia.org/wiki/Arabidopsis_thaliana), and were published in [Zapata et al. (2016) *PNAS* **113**](https://www.pnas.org/content/113/28/E4052).
+
 The data are [paired-end reads](https://emea.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html) and so there are two files: `SRR3166543_top1M_1.fastq.gz` contains the first read in each pair and `SRR3166543_top1M_2.fastq.gz` the second.
 Each read in a pair was sequenced with 100 chemistry cycles on an [Illumina HiSeq 2000](https://www.illumina.com/documents/products/datasheets/datasheet_hiseq2000.pdf), generating 100 consecutive base calls per read (2×100 bp).
+
 The reads were downloaded from the the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/view/SRR3166543), which "provides a comprehensive record of the world's nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation".
 The top 1 million reads (`top1M`) in each of the two files were extracted in order to reduce time spent on data processing in today's practical.
 
@@ -74,7 +78,8 @@ To this end, these are the steps in the pipeline that we will work through seque
 4. Filtering of alignments based on the quality of these mappings to the reference genome
 5. Detection of DNA sequence differences between the L*er* and Col-0 genomes (variant calling)
 
-Bioinformatics pipelines that work with other types of NGS data (such as RNA-seq or ChIP-seq) apply the first four of these steps.
+Variant calling is often an important part of genetic mapping studies aimed at dissecting the genetic basis of particular traits or conditions, or research into genetic variation within populations.
+Bioinformatics pipelines that work with other types of NGS data (such as RNA-seq or ChIP-seq) apply the first four of the steps above.
 This practical should therefore give you a general feel for how NGS data processing and analysis pipelines work.
 
 * * *
@@ -83,7 +88,7 @@ This practical should therefore give you a general feel for how NGS data process
 
 The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardised format that NGS data analysis tools have been developed to handle.
 These files are available in the online virtual environment that you're accessing remotely, so there's no need to download them.
-The files are located in the `fastq/` directory.
+The files are located in the `/home/ubuntu/Course_Materials/NGS_intro/fastq/` directory (folder).
 
 Data in FASTQ format conform to these standards:
 
