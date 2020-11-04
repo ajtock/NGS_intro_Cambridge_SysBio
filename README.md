@@ -1448,7 +1448,7 @@ Based on the usage example and options listed above, use [`samtools tview`](http
 ### Step 6.2. Using Integrative Genomics Viewer (IGV)
 
 To visually explore the genomic locations of read alignments and variants in relation to annotated features of interest (e.g., genes, transposable elements, epigenetic marks), a more versatile and sophisticated genome browser is required.
-A widely used example of this is the [IIntegrative Genomics Viewer (IGV)](http://software.broadinstitute.org/software/igv/):
+A widely used example of this is the [Integrative Genomics Viewer (IGV)](http://software.broadinstitute.org/software/igv/):
 
 > "The Integrative Genomics Viewer (IGV) is a high-performance, easy-to-use, interactive tool for the visual exploration of genomic data. It supports flexible integration of all the common types of genomic data and metadata, investigator-generated or publicly available, loaded from local or cloud sources."  
 
