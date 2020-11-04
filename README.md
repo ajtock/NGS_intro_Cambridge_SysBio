@@ -1482,8 +1482,10 @@ Beneath the panel showing reference genomic coordinates, you should see four or 
 
 Move to different loci in the reference sequences and hover over variant sites and read alignments to see more information.
 The Broad Institute provides more details on how [alignments](http://software.broadinstitute.org/software/igv/AlignmentData) and [variants](http://software.broadinstitute.org/software/igv/viewing_vcf_files) are visualised in IGV.
+
 Many "tracks" corresponding to different samples and data types (e.g., wild type and mutant genotypes, ChIP-seq and RNA-seq read coverage, as well as loci indicative of epigenetic modifications) can be loaded and displayed together, thereby providing a composite picture of the genetic, epigenetic and expression profiles of individual loci.
 Genome browsers are therefore very useful for exploratory analyses.
+
 Several web-based browsers are also available for different species with assembled genomes, such as those provided by [Ensembl](https://www.ensembl.org/index.html), [UCSC](https://genome.ucsc.edu/), [Phytozome](https://phytozome-next.jgi.doe.gov/), and [The Arabidopsis Information Resource (TAIR)](https://www.arabidopsis.org/).
 
 * * *
