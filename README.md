@@ -1346,7 +1346,7 @@ It's good practice to visualise aligned NGS reads in a [genome browser](https://
 It can also reveal problems with the data, including regions with unduly low read coverage or alignment anomalies.
 Exploring the data in this way can also motivate new questions about the underlying biology, thereby informing hypotheses that can be formally tested in subsequent analyses.
 
-### Step 6.1. Using samtools tview
+### Step 6.1. Using tview
 
 A quick and basic way to visualise aligned reads is with [`samtools tview`](http://www.htslib.org/doc/samtools-tview.html).
 For this to work, we need to index the BAM file containing the filtered alignments using [`samtools index`](http://www.htslib.org/doc/samtools-index.html).
