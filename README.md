@@ -691,8 +691,8 @@ What proportion of read pairs and base calls passed the filters?
   ```
   (executableFile --option1 this \
                   --option2 that \
-                  --input inFile \
-                  --output outFile) \
+                  --output outFile \
+                  inFile) \
   &> uniquely_named_report.log
   ```
 </p></details>
