@@ -204,7 +204,7 @@ Construct a command that will print the 1000th read in `SRR3166543_top1M_1.fastq
 ## Step 1. Evaluating read quality using FastQC
 
 Read quality can be evaluated in a more systematic way using dedicated software, such as [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
-Let's make sure FastQC is installed by invoking the executable file `fastqc` with an option that will report the version.
+Make sure FastQC is installed by invoking the executable file `fastqc` with an option that will report the version.
 
 ```
 fastqc --version
@@ -358,7 +358,7 @@ The `-p` option in the `mkdir` command below allows us to make a new directory c
 mkdir -p results/fastqc/raw_reads
 ```
 
-Now let's run FastQC on each of our two gzip-compressed FASTQ files located in the `fastq/` directory by using the `*.fastq.gz` wildcard.
+Now run FastQC on each of the two gzip-compressed FASTQ files located in the `fastq/` directory by using the `*.fastq.gz` wildcard.
 Compressed or uncompressed files can be provided as inputs.
 
 ```
@@ -476,7 +476,7 @@ There are several tools available for filtering and trimming reads to remove tec
 Removing these sequences is important because it means that subsequent analyses won't be compromised by base calls in which we have low confidence, or by the presence of technical sequences that do not reflect the biology of the sample we have sequenced.
 In the case of aligning reads to a reference genome assembly, for example, read cleaning tends to increase the alignment rate.
 
-We're going to use Cutadapt for this step in the pipeline, so let's have a look at a usage example and the available options.
+We're going to use Cutadapt for this step in the pipeline, so have a look at a usage example and the available options.
 Type `q` to quit the `less` program when you've finished inspecting the output.
 
 ```
@@ -717,7 +717,7 @@ Try to find a way to redirect the stdout and stderr (error messages, if any) gen
   **Answer:** 97% of read pairs and 95.9% of base calls remain after cleaning.
 </p></details>
 
-We can now use FastQC to evaluate the quality of the Cutadapt-trimmed reads, so let's make an output directory to contain the FastQC results.
+We can now use FastQC to evaluate the quality of the Cutadapt-trimmed reads, so make an output directory to contain the FastQC results.
 
 ```
 mkdir results/fastqc/trimmed_reads
@@ -968,13 +968,13 @@ Options (defaults in parentheses):
   -h/--help          print this usage message
 ```
 
-### Exercise 6
-
-First make a directory to contain the output file of read alignments that Bowtie 2 will generate.
+Make a directory to contain the output file of read alignments that Bowtie 2 will generate.
 
 ```
 mkdir results/bowtie2
 ```
+
+### Exercise 6
 
 Based on the usage example shown in the output printed above and the [Bowtie 2 manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml), write and run a `bowtie2` command that:
 1. uses the least sensitive (fastest) preset option for end-to-end read alignment
@@ -1099,7 +1099,7 @@ samtools view results/bowtie2/SRR3166543_top1M_MappedOn_TAIR10_chr_all.sam \
 
 Now that we have obtained read alignments in SAM format, it's necessary to use [SAMtools](http://www.htslib.org/doc/samtools.html) to filter out duplicate and ambiguous alignments, which could leave us with unreliable genotype information for Landsberg *erecta* (L*er*) at given genomic coordinates.
 
-First make an output directory to contain the filtered alignments.
+Make an output directory to contain the filtered alignments.
 
 ```
 pwd
