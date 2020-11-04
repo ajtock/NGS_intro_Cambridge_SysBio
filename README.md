@@ -116,7 +116,7 @@ cd /home/ubuntu/Course_Materials/NGS_intro/
 
 The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardised format that NGS data analysis tools have been developed to handle.
 These files are available in the online virtual environment that you're accessing remotely, so there's no need to download them.
-The files are located in the `/home/ubuntu/Course_Materials/NGS_intro/fastq/` directory (folder).
+The files are located in `/home/ubuntu/Course_Materials/NGS_intro/fastq/`.
 
 Data in FASTQ format conform to these standards:
 
