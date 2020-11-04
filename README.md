@@ -1171,7 +1171,7 @@ This [blog post](http://core-genomics.blogspot.com/2016/05/increased-read-duplic
 
 ### Exercise 7
 
-Consulting the SAMtools manual, run a [`samtools view`](http://www.htslib.org/doc/samtools-view.html) command that will:
+Consulting the [SAMtools manual](http://www.htslib.org/doc/samtools-view.html) and this [tool for decoding SAM flags](https://broadinstitute.github.io/picard/explain-flags.html), run a [`samtools view`](http://www.htslib.org/doc/samtools-view.html) command that will:
 1. include the SAM header section
 2. retain reads that each align as part of a proper ("concordant") paired-end alignment
 3. remove any unmapped reads
