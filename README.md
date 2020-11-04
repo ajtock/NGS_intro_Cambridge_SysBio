@@ -172,6 +172,7 @@ Is the first read composed of mostly high-quality or low-quality base calls?
 ### Exercise 1
 
 Construct a command that will print the 1000th read in `SRR3166543_top1M_1.fastq.gz` in order to inspect its quality.
+
 **Question:** Is the 1000th read generally better or worse than the first read?
 
 <details>
@@ -726,6 +727,7 @@ mkdir results/fastqc/trimmed_reads
 
 Write and run a `fastqc` command to evaluate the cleaned reads, specifying the newly created output directory for the FastQC results.
 Once this has run to completion, inspect the FastQC-generated HTML reports to see if the cleaning step improved the reads.
+
 **Question:** Is any further read cleaning required?
 
 <details>
@@ -763,6 +765,7 @@ This was previously downloaded from [The Arabidopsis Information Resource (TAIR)
 ### Exercise 5
 
 Run a command that will output the description line of each separate DNA sequence in `genome/TAIR10_chr_all.fa`.
+
 **Question:** How many distinct sequences corresponding to nuclear chromosomes and non-nuclear DNA-containing organelles are there?
 
 <details>
@@ -1416,6 +1419,7 @@ Type `q` to exit `samtools tview`.
 
 You can also include in the `samtools tview` command a specific location to inspect, thereby bypassing the part involving the dialogue box in the example above.
 Based on the usage example and options listed above, use [`samtools tview`](http://www.htslib.org/doc/samtools-tview.html) to visualise alignments to position 1232427 of chromosome 1 of the reference genome.
+
 **Questions:** What can you infer from this?
 Is the allelic variation you observe in the L*er* alignments relative to the Col-0 reference consistent with that detailed in the filtered VCF file?
 
