@@ -1256,7 +1256,7 @@ To enable variant calling, we also need to calculate read coverage throughout th
 The `-O` option dictates the output file format, with `b` specifying a compressed BCF file, the binary counterpart to the [Variant Call Format (VCF)](https://samtools.github.io/hts-specs/VCFv4.2.pdf).
 The `-o` option is used to specify the output file itself, which should include a `.bcf` extension in this case.
 Without this option specified, the output is written to stdout by default, rather than to a file. 
-The `-f` option should be followed by the path to the reference genome in FASTA format (including the `.fa` extension), which must be indexed with `samtools faidx` before running `bcftools mpileup`.
+The `-f` option should be followed by the path to the reference genome in FASTA format (including the `.fa` extension), which must be indexed with `samtools faidx` before running `bcftools mpileup` (as above).
 
 ```
 (bcftools mpileup -O b \
