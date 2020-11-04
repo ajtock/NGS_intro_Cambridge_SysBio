@@ -1221,7 +1221,7 @@ As is the case for `samtools view`, the `-o` part of this command is used to spe
 
 ```
 (samtools sort -o results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam \
-                  results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique.bam) \
+               results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique.bam) \
 &> results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort_report.log
 ```
 
