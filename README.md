@@ -1509,8 +1509,8 @@ Applying the steps outlined below, we identified DNA sequence differences (varia
 ### Exercise 8 (optional)
 
 To make these steps run as part of an automated and reproducible bioinformatics pipeline, it's necessary to combine the commands into one script.
-As bioinformatics pipelines tend to be applied to multiple samples, it would be useful to write this script with a variable corresponding to the sample name.
-In this way, each time the pipeline is run, a different sample name would be specified to set this variable.
+As bioinformatics pipelines tend to be applied to multiple samples, it would be useful to write this script such that the sample name is assigned to a [variable](https://en.wikipedia.org/wiki/Variable_(computer_science).
+In this way, each time the pipeline is run, a different sample name could be assigned to this variable.
 
 If you have time, use a text editor to write a [bash script](https://www.linux.com/training-tutorials/writing-simple-bash-script/) named `variant_calling_pipeline.sh` that combines the commands we have run in each of the five steps of the pipeline.
 
