@@ -1404,9 +1404,9 @@ TTCCATCGATTTTTGTATCCACTTTACTACTTGCATTTGAAGTATCCCTTGTAACCGTAACAGTCAAGTCTCTAACTGTC
 
 The first and second lines of the output denote the coordinates and sequence in the reference genome for Col-0.
 The third line shows the consensus sequence based on the aligned L*er* reads shown beneath it.
+
 On subsequent lines, reads aligning to the forward or reverse strand of the reference genome are indicated by strings of "." or "," characters, respectively, where the aligned sequence matches the reference sequence.
-Sites where the aligned reads from L*er* contain base calls that differ from the reference sequence are indicated with the appropriate uppercase (forward strand) or lowercase (reverse strand) letter (e.g., "A", "C", "G", "T", or [IUPAC base ambiguity code](https://www.bioinformatics.org/sms/iupac.html)).  
-A single "*" character denotes a single-base deletion in the aligned reads relative to the reference sequence, whereas a single gap in the reference sequence indicates a single-base insertion in the aligned reads relative to the reference. 
+Sites where the aligned reads from L*er* contain base calls that differ from the reference sequence are indicated with the appropriate uppercase (forward strand) or lowercase (reverse strand) letter (e.g., "A", "C", "G", or "T"). A single "*" character denotes a single-base deletion in the aligned reads relative to the reference sequence, whereas a single gap in the reference sequence indicates a single-base insertion in the aligned reads relative to the reference. 
 
 Consistent with the information in the filtered VCF file (`results/bcftools/SRR3166543_top1M_variants_filtered.vcf`), 4 reads ("DP=4") covering position 127093 of chromosome 1 support the presence of a single-nucleotide variant (SNV) in the form of a cytosine base in L*er*, whereas a thymine is present at this position of the reference genome for Col-0.
 Only 1 read from L*er* indicates that a thymine is present at position 127023 of chromosome 1, while 2 reads from L*er* support the presence of a cytosine at this position, as is observed in the reference sequence.
