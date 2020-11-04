@@ -350,7 +350,7 @@ BUGS
 ```
 
 In the output printed above, you will see the `--outdir` option, which allows you to specify an output directory to which the FastQC results will be written.
-However, this directory must exist before running FastQC, so we'd better make it if we want to make use of this option.
+However, this directory must exist before running FastQC, so we'd better make it if we want to use this option.
 The `-p` option in the `mkdir` command below allows us to make a new directory containing subdirectories.
 
 ```
