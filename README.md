@@ -1283,9 +1283,10 @@ Inclusion of the `-v` option tells `bcftools call` to output variant sites only,
 ### Step 5.3. Filtering variants
 
 To obtain a final set of high-confidence variant sites, we can use [`bcftools filter`](http://www.htslib.org/doc/bcftools.html#filter) to remove those that do not meet certain criteria.
-For this, we'll use the `-e` (short for `--exclude`) option to remove low-quality sites and sites where read depth is too low or too high.
-Another option would be to use the `-e` option in conjunction with `-s LowQual` (short for `--soft-filter LowQual`) to *annotate* (with the string "LowQual"), rather than exclude, low-quality sites and sites where read depth is too low or too high (very high read depths can indicate PCR amplification or other artefacts, some of which can also be removed by deduplicating reads or alignments).
-The first two thresholds set in this example are unrealistically low because we have been working with a very small sample of the reads in the original FASTQ files.
+For this, we'll use the `-e` (short for `--exclude`) option to remove low-quality sites and sites where read depth is too low or too high (very high read depths can indicate PCR amplification or other artefacts, some of which may have already been removed by deduplicating reads or alignments).
+Another option would be to use the `-e` option in conjunction with `-s LowQual` (short for `--soft-filter LowQual`) to *annotate* with the string "LowQual", rather than *exclude*, low-quality sites and sites where read depth is too low or too high.
+
+The first two thresholds set in the example below are unrealistically low because we have been working with a very small sample of the reads in the original FASTQ files.
 More appropriate filtering thresholds for a real analysis would be a minimum quality score (`QUAL`) of 20 and a minimum read depth (`DP`) of 10.
 
 ```
