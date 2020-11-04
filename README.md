@@ -1090,7 +1090,7 @@ samtools view results/bowtie2/SRR3166543_top1M_MappedOn_TAIR10_chr_all.sam \
 
 ### Output:
 ```
-  970455
+970455
 ```
 
 * * *
@@ -1160,7 +1160,7 @@ samtools view results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup.
 
 ### Output:
 ```
-  962754
+962754
 ```
 
 Therefore, 7,701 duplicate paired-end alignments were removed by `samtools markdup -r`. 
@@ -1208,7 +1208,7 @@ samtools view results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_
 
 ### Output:
 ```
-  537821
+537821
 ```
 
 Next we'll apply the [`samtools sort`](http://www.htslib.org/doc/samtools-sort.html) command to sort alignments in the BAM file by their coordinates in the reference genome, such that alignments to the beginning of chromosome 1 will precede alignments to the end of chromosome 5.
@@ -1335,7 +1335,7 @@ grep -v '#' results/bcftools/SRR3166543_top1M_variants_filtered.vcf | wc -l
 
 ### Output:
 ```
-   62110
+62110
 ```
 
 * * *
