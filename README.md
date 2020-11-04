@@ -86,20 +86,6 @@ This practical should therefore give you a general feel for how NGS data process
 
 ## Inspecting the reads in FASTQ format
 
-The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardised format that NGS data analysis tools have been developed to handle.
-These files are available in the online virtual environment that you're accessing remotely, so there's no need to download them.
-The files are located in the `/home/ubuntu/Course_Materials/NGS_intro/fastq/` directory (folder).
-
-Data in FASTQ format conform to these standards:
-
-| Line | Description |
-|--:|:--|
-| 1 | Begins with '@', followed by information about the read
-| 2 | The DNA sequence
-| 3 | Begins with '+'
-| 4 | A character string of the same length as the sequence, encoding quality scores for each base
-
-
 On your virtual desktop, you should see a shortcut to a command-line terminal (a black square with a dollar symbol followed by an underscore) towards the bottom of the screen.
 This provides a command-line interface for interacting with and navigating around the file system of the computer, as opposed to a graphical user interface (GUI).
 On opening this terminal window, you should see that your current working directory (folder) is `~/Course_Materials` (the tilde symbol (`~`) is shorthand for your home directory).
@@ -127,6 +113,19 @@ It's also possible and sometimes more appropriate to navigate to particular loca
 ```
 cd /home/ubuntu/Course_Materials/NGS_intro/
 ```
+
+The sequencing reads are contained in gzip-compressed [FASTQ](https://en.wikipedia.org/wiki/FASTQ_format) files, a standardised format that NGS data analysis tools have been developed to handle.
+These files are available in the online virtual environment that you're accessing remotely, so there's no need to download them.
+The files are located in the `/home/ubuntu/Course_Materials/NGS_intro/fastq/` directory (folder).
+
+Data in FASTQ format conform to these standards:
+
+| Line | Description |
+|--:|:--|
+| 1 | Begins with '@', followed by information about the read
+| 2 | The DNA sequence
+| 3 | Begins with '+'
+| 4 | A character string of the same length as the sequence, encoding quality scores for each base
 
 Let's have a look at one of the gzip-compressed FASTQ files to inspect its format.
 
