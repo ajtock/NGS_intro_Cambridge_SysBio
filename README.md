@@ -1403,7 +1403,7 @@ TTCCATCGATTTTTGTATCCACTTTACTACTTGCATTTGAAGTATCCCTTGTAACCGTAACAGTCAAGTCTCTAACTGTC
 ```
 
 The first and second lines of the output denote the coordinates and sequence in the reference genome for Col-0.
-The third line shows the consensus sequence based on the aligned reads shown beneath it.
+The third line shows the consensus sequence based on the aligned L*er* reads shown beneath it.
 On subsequent lines, reads aligning to the forward or reverse strand of the reference genome are indicated by strings of "." or "," characters, respectively, where the aligned sequence matches the reference sequence.
 Sites where the aligned reads from L*er* contain base calls that differ from the reference sequence are indicated with the appropriate uppercase (forward strand) or lowercase (reverse strand) letter (e.g., "A", "C", "G", "T", or [IUPAC base ambiguity code](https://www.bioinformatics.org/sms/iupac.html)).  
 A single "*" character denotes a single-base deletion in the aligned reads relative to the reference sequence, whereas a single gap in the reference sequence indicates a single-base insertion in the aligned reads relative to the reference. 
