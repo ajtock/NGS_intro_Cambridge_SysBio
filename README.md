@@ -771,7 +771,7 @@ Run a command that will output the description line of each separate DNA sequenc
 <details>
   <summary><em><strong>Hint</strong> (click to reveal/hide)</em></summary><p>
 
-  A command-line tool that could be used for this is an acronym for <ins>g</ins>lobal <ins>r</ins>egular <ins>e</ins>xpression <ins>p</ins>rint, combined with a character in speech marks that you know to be present in all sequence description lines of the FASTA file.
+  A command-line tool that could be used for this is `grep` (short for global regular expression print), combined with a character in speech marks that you know to be present in all sequence description lines of the FASTA file (each begins with `>`).
 </p></details>
 
 <details>
