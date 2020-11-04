@@ -43,7 +43,7 @@ Others require greater breadth of coverage of the genome, such as projects aimed
 Therefore, the different sequencing read lengths, qualities, abundances and error rates that are associated with different technologies need to be taken into account in order to make the right choice.
 
 This practical aims to familiarise you with Illumina next-generation sequencing (NGS) data and some of the command-line software tools available for their analysis.
-Command-line tools are central to most bioinformatics pipelines/workflows as they enable efficient, flexible, automated and reproducible data processing and analysis.
+Command-line tools are central to most bioinformatics pipelines as they enable efficient, flexible, automated and reproducible data processing and analysis.
 Linux operating systems are preferred for running bioinformatics analyses, as most of the command-line tools available for these analyses have been developed primarily for these systems (we are using the Ubuntu Linux distribution today).
 
 Don't worry if you have little or no experience with using a command-line interface, as we'll start with some straightforward commands so that you feel comfortable navigating around the file system using this interface rather than a graphical user interface (GUI).
@@ -64,7 +64,7 @@ The top 1 million reads (`top1M`) in each of the two files were extracted in ord
 
 * * *
 
-## The pipeline/workflow
+## The pipeline
 
 Bioinformatics pipelines or workflows consist of sequential data processing and analysis steps that utilise different software tools, with the output file(s) from one step often serving as the input file(s) for the subsequent step(s).
 These pipelines require input files that conform to standardised formats for storing different types of genomics data.
@@ -78,7 +78,7 @@ To this end, these are the steps in the pipeline that we will work through seque
 4. Filtering of alignments based on the quality of these mappings to the reference genome
 5. Detection of DNA sequence differences between the L*er* and Col-0 genomes (variant calling)
 
-Variant calling is often an important part of genetic mapping studies aimed at dissecting the genetic basis of particular traits or conditions, or research into genetic variation within populations.
+Variant calling is often an important part of genetic mapping studies aimed at dissecting the genetic basis of particular traits or conditions, and of research into genetic variation within populations.
 Bioinformatics pipelines that work with other types of NGS data (such as RNA-seq or ChIP-seq) apply the first four of the steps above.
 This practical should therefore give you a general feel for how NGS data processing and analysis pipelines work.
 
