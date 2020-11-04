@@ -752,7 +752,7 @@ Once this has run to completion, inspect the FastQC-generated HTML reports to se
 
 Now we have removed adapters and low-quality bases from the sequencing reads, we can proceed with the next step in the pipeline: alignment of these cleaned read pairs from the Landsberg *erecta* (L*er*) ecotype to a reference genome assembly for the Columia (Col-0) ecotype.
 These two [ecotypes](https://en.wikipedia.org/wiki/Ecotype) are genetically distinct true-breeding lines within the diploid plant species *Arabidopsis thaliana*.
-Therefore, while they are genetically different from one another, they are each homozygous at every locus (position) on each chromosome.
+Therefore, while they are genetically different from one another, they are each homozygous at most loci (positions) on each chromosome.
 
 Reference genome assemblies are stored in [FASTA format](https://en.wikipedia.org/wiki/FASTA_format), with one of the following file extensions: `.fa`, `.fas` or `.fasta`.
 For species with chromosome-level assemblies, each chromosome is represented as a separate nucleotide sequence in the FASTA file.
