@@ -1349,7 +1349,7 @@ Exploring the data in this way can also motivate new questions about the underly
 ### Step 6.1. Using tview
 
 A quick and basic way to visualise aligned reads is with [`samtools tview`](http://www.htslib.org/doc/samtools-tview.html).
-For this to work, we need to index the BAM file containing the filtered alignments using [`samtools index`](http://www.htslib.org/doc/samtools-index.html).
+For this to work, we need to index the BAM file containing the filtered and coordinate-sorted alignments using [`samtools index`](http://www.htslib.org/doc/samtools-index.html).
 
 ```
 samtools index results/samtools/SRR3166543_top1M_MappedOn_TAIR10_chr_all_markdup_unique_sort.bam
