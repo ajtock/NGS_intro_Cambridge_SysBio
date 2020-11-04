@@ -1321,11 +1321,11 @@ The columns contain information about the the location and nature of the variant
 | QUAL | `.` when quality filters were not applied, `PASS` where filters were passed, or named filters the variant site failed
 | INFO | Additional information, including read depth across all samples (DP) and alternate allele count (AC)
 
-In this case, the final column ("results/[...]") provides the genotype ("GT") inferred based on the likelihoods of the given genotypes ("PL").
-The format of these metrics is specified in the penultimate column (e.g., "GT:PL").
+In this case, the final column ("results/[...]") provides the inferred genotype ("GT") of L*er* at the variant site, based on the likelihoods of the possible genotypes ("PL").
 Genotypes are encoded as integers corresponding to REF and ALT alleles (e.g., for diploids, 0/1 indicates heterozygous with one REF allele and one ALT allele, 0/0 homozygous for the REF allele, 1/1 homozygous for an ALT allele, and 1/2 heterozygous with two ALT alleles).
+The format of these metrics is specified in the penultimate column (e.g., "GT:PL").
 
-The GATK Team also provide a useful [guide to the Variant Call Format](https://gatk.broadinstitute.org/hc/en-us/articles/360035531692-VCF-Variant-Call-Format).
+The GATK Team wrote a useful [guide to the Variant Call Format](https://gatk.broadinstitute.org/hc/en-us/articles/360035531692-VCF-Variant-Call-Format).
 
 We can use the `grep` and `wc` commands to count the number variant sites in the VCF file.
 
