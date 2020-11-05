@@ -458,11 +458,11 @@ firefox SRR3166543_top1M_1_fastqc.html SRR3166543_top1M_2_fastqc.html
 <details>
   <summary><em><strong>Solution</strong> (click to reveal/hide)</em></summary><p>
 
-  They are generally high-quality sequencing reads. However, there are some issues that should be addressed:
+  **Answer:** They are generally high-quality sequencing reads. However, there are some issues that should be addressed:
   1. Per-base sequence quality decreases towards the ends of the reads (particularly towards their 3′ ends)
   2. There are some duplicated reads, which may have resulted from [PCR](https://en.wikipedia.org/wiki/Polymerase_chain_reaction) amplification biases
   
-  **Answer:** The first issue can be resolved using software developed to trim off low-quality bases and sequencing adapters.
+  The first issue can be resolved using software developed to trim off low-quality bases and sequencing adapters.
   Duplication can be addressed by discarding either duplicate reads or duplicate alignments to a reference genome.
 </p></details>
 
@@ -747,6 +747,10 @@ Once this has run to completion, inspect the FastQC-generated HTML reports to se
 </p></details>
 
 * * *
+
+## Break
+
+* * * 
 
 ## Step 3. Aligning the cleaned reads to a reference genome assembly
 
@@ -1337,6 +1341,10 @@ grep -v '#' results/bcftools/SRR3166543_top1M_variants_filtered.vcf | wc -l
 ```
 62110
 ```
+
+* * *
+
+## Break
 
 * * *
 
