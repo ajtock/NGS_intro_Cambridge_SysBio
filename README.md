@@ -1247,7 +1247,7 @@ With a larger input BAM file, the stdout from the `samtools sort` command would 
 ## Step 5. Variant calling
 
 Variant calling is the identification of genetic differences between a query sequence and a reference sequence, with reference sequence coordinates and allele information reported.
-This process usually involves esimating variant frequency and removal of low-confidence potential variants.
+This process usually involves estimating variant frequency and removal of low-confidence potential variants.
 The most abundant type of genetic variant is the single-nucleotide polymorphism (SNP).
 
 We will use [BCFtools](http://www.htslib.org/doc/bcftools.html) to identify sites in the reference genome that differ between L*er* and Col-0, based on the BAM file containing coordinate-sorted alignments of L*er* reads to the Col-0 reference genome.
