@@ -10,7 +10,13 @@ If you have any questions or comments about the practical, please email Andy Toc
 
 - The practical session will run via Zoom ([link](https://us02web.zoom.us/j/89089665179?pwd=N29yZHZCa0lDNGF4ZisrZGpUUUREZz09))
 - We will use a shared Google Doc for you to post questions ([link](https://docs.google.com/document/d/136wAhexkROra3255uN6WjwRxMjOSWd3E9EdqnxwgBks))
-- We will use a Linux virtual environment that you can access from your internet browser; you will receive details for login by email. All of the software we'll be using today has been pre-installed in this virtual environment, as software installation can be a time-consuming task. Nonetheless, links to the software installation pages are provided throughout, which you can refer back to later if you want to run subsequent analyses on your own computer.
+- We will use a Linux virtual environment that you can access from your internet browser; you will receive details for login by email. All of the software we'll be using today has been pre-installed in this virtual environment, as software installation can be a time-consuming task. Nonetheless, links to the software installation pages are provided below, which you can refer back to later if you want to run subsequent analyses on your own computer:
+  * [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
+  * [Cutadapt](https://cutadapt.readthedocs.io/en/stable/installation.html)
+  * [Bowtie 2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
+  * [SAMtools](http://www.htslib.org/)
+  * [BCFtools](http://www.htslib.org/)
+  * [IGV](http://software.broadinstitute.org/software/igv/)
 
 * * * 
 
